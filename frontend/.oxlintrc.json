@@ -1,0 +1,36 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "react-perf", "typescript", "unicorn", "promise", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "off"
+  },
+  "env": {
+    "browser": true,
+    "es2024": true
+  },
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/react-in-jsx-scope": "off",
+    "react/exhaustive-deps": "error",
+    "react/jsx-key": "error",
+    "react/no-array-index-key": "warn",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-explicit-any": "error",
+    "typescript/no-non-null-assertion": "warn",
+    "eslint/no-console": ["warn", { "allow": ["warn", "error"] }],
+    "eslint/eqeqeq": ["error", "always", { "null": "ignore" }],
+    "eslint/no-param-reassign": "error",
+    "promise/no-return-wrap": "error",
+    "unicorn/prefer-node-protocol": "error"
+  },
+  "overrides": [
+    {
+      "files": ["vite.config.ts"],
+      "env": { "node": true }
+    }
+  ],
+  "ignorePatterns": ["dist", "node_modules", "coverage"]
+}
