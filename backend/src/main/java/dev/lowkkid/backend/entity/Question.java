@@ -50,6 +50,11 @@ public class Question {
     @JoinColumn(name = "lesson_id")
     private Lesson lesson;
 
+    /** Set instead of {@link #lesson} for questions that exist only in the practice tab. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subject_id")
+    private Subject subject;
+
     /** Expected value for {@link QuestionType#INPUT} questions. */
     @Column(name = "correct_answer")
     private String correctAnswer;

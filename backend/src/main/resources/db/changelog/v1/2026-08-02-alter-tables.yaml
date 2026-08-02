@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+
+  # Profile tab shows the real name of a student, which is separate from the telegram username.
+  - changeSet:
+      id: 2026-08-02-14-add-user-name-columns
+      author: lowkkid
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: first_name
+                  type: varchar
+              - column:
+                  name: last_name
+                  type: varchar
+
+  # Practice-only questions have no lesson, so they need their own link to a subject:
+  # the practice tab is always scoped to a single subject the student paid for.
+  - changeSet:
+      id: 2026-08-02-15-add-question-subject
+      author: lowkkid
+      changes:
+        - addColumn:
+            tableName: questions
+            columns:
+              - column:
+                  name: subject_id
+                  type: integer
+        - addForeignKeyConstraint:
+            constraintName: questions_subject_id_fkey
+            baseTableName: questions
+            baseColumnNames: subject_id
+            referencedTableName: subjects
+            referencedColumnNames: id
+        - sql:
+            sql: |
+              ALTER TABLE "questions" ADD CONSTRAINT "questions_owner_check"
+                CHECK (("lesson_id" IS NOT NULL) <> ("subject_id" IS NOT NULL));
+            rollback: ALTER TABLE "questions" DROP CONSTRAINT "questions_owner_check";

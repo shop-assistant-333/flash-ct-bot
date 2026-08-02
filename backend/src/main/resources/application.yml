@@ -14,3 +14,19 @@ spring:
   liquibase:
     enabled: ${LIQUIBASE_ENABLED:true}
     change-log: classpath:db/changelog/changelog-master.yaml
+
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
+  telegram:
+    # Bot token the initData signature is verified against.
+    bot-token: ${TELEGRAM_BOT_TOKEN:}
+    # How long an initData payload stays acceptable.
+    init-data-ttl: ${TELEGRAM_INIT_DATA_TTL:24h}
+  session:
+    # A session with no heartbeat for this long is considered closed; it also ends the
+    # practice deck, so the next launch reshuffles the questions.
+    idle-timeout: ${SESSION_IDLE_TIMEOUT:15m}
+  stats:
+    # Window the AI score prediction reasons over.
+    prediction-window: ${STATS_PREDICTION_WINDOW:30d}
