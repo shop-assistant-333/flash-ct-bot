@@ -1,0 +1,469 @@
+databaseChangeLog:
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+
+  - changeSet:
+      id: 2026-08-02-01-create-enum-types
+      author: lowkkid
+      changes:
+        - sql:
+            splitStatements: false
+            sql: |
+              CREATE TYPE user_role AS ENUM ('USER', 'ADMIN');
+              CREATE TYPE question_type AS ENUM ('SINGLE_ANSWER', 'MULTI_ANSWER', 'INPUT');
+      rollback:
+        - sql:
+            splitStatements: false
+            sql: |
+              DROP TYPE question_type;
+              DROP TYPE user_role;
+
+  - changeSet:
+      id: 2026-08-02-02-create-table-users
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+              - column:
+                  name: tg_id
+                  type: varchar
+              - column:
+                  name: username
+                  type: varchar
+              - column:
+                  name: role
+                  type: user_role
+                  defaultValue: USER
+
+  - changeSet:
+      id: 2026-08-02-03-create-table-subjects
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: subjects
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: subjects_pkey
+              - column:
+                  name: name
+                  type: varchar
+
+  - changeSet:
+      id: 2026-08-02-04-create-table-user-sessions
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: user_sessions
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_sessions_pkey
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: started_at
+                  type: timestamp
+              - column:
+                  name: ended_at
+                  type: timestamp
+        - addForeignKeyConstraint:
+            constraintName: user_sessions_user_id_fkey
+            baseTableName: user_sessions
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 2026-08-02-05-create-table-subscriptions
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: subscriptions
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: subscriptions_pkey
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paid_until
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: subscriptions_user_id_fkey
+            baseTableName: subscriptions
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: subscriptions_subject_id_fkey
+            baseTableName: subscriptions
+            baseColumnNames: subject_id
+            referencedTableName: subjects
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 2026-08-02-06-create-table-lessons
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: lessons
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: lessons_pkey
+              - column:
+                  name: title
+                  type: varchar
+              - column:
+                  name: description
+                  type: varchar
+              - column:
+                  name: order
+                  type: integer
+              - column:
+                  name: subject_id
+                  type: integer
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: lessons_subject_id_fkey
+            baseTableName: lessons
+            baseColumnNames: subject_id
+            referencedTableName: subjects
+            referencedColumnNames: id
+        - createIndex:
+            indexName: lessons_order_subject_id_idx
+            tableName: lessons
+            unique: true
+            columns:
+              - column:
+                  name: order
+              - column:
+                  name: subject_id
+
+  - changeSet:
+      id: 2026-08-02-07-create-table-user-practice-stats
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: user_practice_stats
+            columns:
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_practice_stats_pkey
+              - column:
+                  name: current_streak
+                  type: integer
+                  defaultValueNumeric: 0
+              - column:
+                  name: best_streak
+                  type: integer
+                  defaultValueNumeric: 0
+        - addForeignKeyConstraint:
+            constraintName: user_practice_stats_user_id_fkey
+            baseTableName: user_practice_stats
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 2026-08-02-08-create-table-questions
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: questions
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: questions_pkey
+              - column:
+                  name: title
+                  type: varchar
+              - column:
+                  name: type
+                  type: question_type
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order
+                  type: integer
+              - column:
+                  name: lesson_id
+                  type: integer
+              - column:
+                  name: correct_answer
+                  type: varchar
+              - column:
+                  name: explanation
+                  type: varchar
+        - addForeignKeyConstraint:
+            constraintName: questions_lesson_id_fkey
+            baseTableName: questions
+            baseColumnNames: lesson_id
+            referencedTableName: lessons
+            referencedColumnNames: id
+        - createIndex:
+            indexName: questions_order_lesson_id_idx
+            tableName: questions
+            unique: true
+            columns:
+              - column:
+                  name: order
+              - column:
+                  name: lesson_id
+
+  - changeSet:
+      id: 2026-08-02-09-create-table-answer-options
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: answer_options
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: answer_options_pkey
+              - column:
+                  name: question_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_correct
+                  type: boolean
+                  defaultValueBoolean: false
+        - addForeignKeyConstraint:
+            constraintName: answer_options_question_id_fkey
+            baseTableName: answer_options
+            baseColumnNames: question_id
+            referencedTableName: questions
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 2026-08-02-10-create-table-user-subject-progress
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: user_subject_progress
+            columns:
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: current_lesson
+                  type: integer
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            constraintName: user_subject_progress_pkey
+            tableName: user_subject_progress
+            columnNames: user_id, subject_id
+        - addForeignKeyConstraint:
+            constraintName: user_subject_progress_user_id_fkey
+            baseTableName: user_subject_progress
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: user_subject_progress_subject_id_fkey
+            baseTableName: user_subject_progress
+            baseColumnNames: subject_id
+            referencedTableName: subjects
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: user_subject_progress_current_lesson_fkey
+            baseTableName: user_subject_progress
+            baseColumnNames: current_lesson
+            referencedTableName: lessons
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 2026-08-02-11-create-table-user-attempts
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: user_attempts
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_attempts_pkey
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: lesson_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: started_at
+                  type: timestamp
+              - column:
+                  name: completed_at
+                  type: timestamp
+        - addForeignKeyConstraint:
+            constraintName: user_attempts_user_id_fkey
+            baseTableName: user_attempts
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: user_attempts_lesson_id_fkey
+            baseTableName: user_attempts
+            baseColumnNames: lesson_id
+            referencedTableName: lessons
+            referencedColumnNames: id
+
+  - changeSet:
+      id: 2026-08-02-12-create-table-user-answers
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: user_answers
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: user_answers_pkey
+              - column:
+                  name: attempt_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: question_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: answer_text
+                  type: varchar
+              - column:
+                  name: is_correct
+                  type: boolean
+              - column:
+                  name: answered_at
+                  type: timestamp
+        - addForeignKeyConstraint:
+            constraintName: user_answers_attempt_id_fkey
+            baseTableName: user_answers
+            baseColumnNames: attempt_id
+            referencedTableName: user_attempts
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: user_answers_question_id_fkey
+            baseTableName: user_answers
+            baseColumnNames: question_id
+            referencedTableName: questions
+            referencedColumnNames: id
+        - createIndex:
+            indexName: user_answers_attempt_id_question_id_idx
+            tableName: user_answers
+            unique: true
+            columns:
+              - column:
+                  name: attempt_id
+              - column:
+                  name: question_id
+
+  - changeSet:
+      id: 2026-08-02-13-create-table-user-answer-options
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: user_answer_options
+            columns:
+              - column:
+                  name: user_answer_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: answer_option_id
+                  type: integer
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            constraintName: user_answer_options_pkey
+            tableName: user_answer_options
+            columnNames: user_answer_id, answer_option_id
+        - addForeignKeyConstraint:
+            constraintName: user_answer_options_user_answer_id_fkey
+            baseTableName: user_answer_options
+            baseColumnNames: user_answer_id
+            referencedTableName: user_answers
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            constraintName: user_answer_options_answer_option_id_fkey
+            baseTableName: user_answer_options
+            baseColumnNames: answer_option_id
+            referencedTableName: answer_options
+            referencedColumnNames: id
