@@ -5,6 +5,7 @@
 
 interface TelegramWebApp {
   readonly initData: string
+  readonly colorScheme: 'light' | 'dark'
   ready: () => void
   expand: () => void
   onEvent: (event: 'themeChanged' | 'viewportChanged', handler: () => void) => void

@@ -14,10 +14,31 @@ export const router = createBrowserRouter([
     errorElement: <ErrorScreen />,
     children: [
       {
-        path: ROUTES.home,
+        path: ROUTES.homework,
         lazy: async () => {
-          const { HomePage } = await import('@/pages/home/home-page')
-          return { Component: HomePage }
+          const { HomeworkPage } = await import('@/pages/homework/homework-page')
+          return { Component: HomeworkPage }
+        },
+      },
+      {
+        path: ROUTES.practice,
+        lazy: async () => {
+          const { PracticePage } = await import('@/pages/practice/practice-page')
+          return { Component: PracticePage }
+        },
+      },
+      {
+        path: ROUTES.statistics,
+        lazy: async () => {
+          const { StatisticsPage } = await import('@/pages/statistics/statistics-page')
+          return { Component: StatisticsPage }
+        },
+      },
+      {
+        path: ROUTES.profile,
+        lazy: async () => {
+          const { ProfilePage } = await import('@/pages/profile/profile-page')
+          return { Component: ProfilePage }
         },
       },
       {

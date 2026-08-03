@@ -22,7 +22,7 @@ export function ErrorScreen() {
       <button
         type="button"
         onClick={() => window.location.reload()}
-        className="rounded-xl bg-accent px-4 py-2 text-accent-fg disabled:cursor-not-allowed disabled:opacity-50"
+        className="min-h-11 rounded-control bg-primary px-4 py-2 font-semibold text-primary-fg transition-colors duration-150 active:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
       >
         Обновить
       </button>

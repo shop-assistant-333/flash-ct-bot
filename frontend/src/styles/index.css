@@ -1,42 +1,188 @@
 /*
- * Global baseline + design tokens. Component styles live in the markup as
- * Tailwind utilities; only cross-cutting rules belong here.
+ * Global stylesheet: Tailwind + the theme mapping + a thin baseline.
  *
- * Colors follow the Telegram theme variables the client injects, with
- * fallbacks so the app is readable in a plain browser tab too. Every token
- * below is exposed as a utility, e.g. `--color-surface` → `bg-surface`.
+ * Component styles live in the markup as Tailwind utilities. The only things
+ * that belong here are the token→utility mapping, cross-cutting element
+ * defaults, and utilities Tailwind cannot express (safe areas).
+ *
+ * Design rules: ../../style-guide.md
  */
 
 @import 'tailwindcss';
+@import './tokens.css';
 
+/*
+ * `dark:` follows our own attribute instead of the OS preference, because the
+ * theme is dictated by the Telegram client. Needed only for the rare case a
+ * semantic token cannot express something — reach for tokens first.
+ */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
+ * `inline` keeps the utilities pointing at `var(--token)` instead of baking in
+ * the light value, which is what makes theme switching work without a rebuild.
+ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-overlay: var(--overlay);
+
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-fg: var(--primary-fg);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-fg: var(--primary-soft-fg);
+  --color-link: var(--link);
+
+  --color-success: var(--success);
+  --color-success-fg: var(--success-fg);
+  --color-success-soft: var(--success-soft);
+  --color-success-soft-fg: var(--success-soft-fg);
+
+  --color-danger: var(--danger);
+  --color-danger-fg: var(--danger-fg);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-soft-fg: var(--danger-soft-fg);
+
+  --color-warning: var(--warning);
+  --color-warning-fg: var(--warning-fg);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-soft-fg: var(--warning-soft-fg);
+
+  --color-streak: var(--streak);
+  --color-streak-soft: var(--streak-soft);
+  --color-streak-soft-fg: var(--streak-soft-fg);
+
+  --shadow-card: var(--elevation-card);
+  --shadow-nav: var(--elevation-nav);
+  --shadow-pop: var(--elevation-pop);
+}
+
+/* Theme-independent scales. */
 @theme {
-  --color-bg: var(--tg-theme-bg-color, #ffffff);
-  --color-surface: var(--tg-theme-secondary-bg-color, #f4f4f5);
-  --color-fg: var(--tg-theme-text-color, #18181b);
-  --color-muted: var(--tg-theme-hint-color, #71717a);
-  --color-link: var(--tg-theme-link-color, #2563eb);
-  --color-accent: var(--tg-theme-button-color, #3b82f6);
-  --color-accent-fg: var(--tg-theme-button-text-color, #ffffff);
-  --color-danger: var(--tg-theme-destructive-text-color, #dc2626);
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Mobile-first type scale. Line heights are generous — questions and
+     explanations are long-form Russian text read on a phone. */
+  --text-xs: 0.75rem; /* 12 — badges, timestamps */
+  --text-xs--line-height: 1.33;
+  --text-sm: 0.875rem; /* 14 — secondary text, captions */
+  --text-sm--line-height: 1.43;
+  --text-base: 1rem; /* 16 — body, answer options */
+  --text-base--line-height: 1.5;
+  --text-lg: 1.125rem; /* 18 — question text, card titles */
+  --text-lg--line-height: 1.5;
+  --text-xl: 1.25rem; /* 20 — screen titles */
+  --text-xl--line-height: 1.4;
+  --text-2xl: 1.5rem; /* 24 — stat numbers */
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 2rem; /* 32 — predicted score, streak counter */
+  --text-3xl--line-height: 1.15;
+
+  /* Semantic radii: pick by role, not by size. */
+  --radius-control: 0.75rem; /* buttons, inputs, answer options */
+  --radius-card: 1rem; /* lesson cards, stat tiles */
+  --radius-sheet: 1.25rem; /* bottom sheets, modals */
+
+  /* Height of the fixed bottom navigation, excluding the safe-area inset. */
+  --spacing-nav: 4rem;
+  /* Content column: a phone-width app that stays centred on desktop. */
+  --container-app: 30rem;
+
+  --animate-shake: shake 0.32s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
+/* Wrong-answer feedback. Motion is suppressed by the reduced-motion block below. */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+/* Safe areas: Telegram draws its own chrome over the viewport on some clients. */
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/*
+ * The horizontal screen gutter: 16px everywhere, widening only when a notch or
+ * rounded corner needs more. Use it instead of `px-4` on anything full-width.
+ */
+@utility px-gutter {
+  padding-left: max(calc(var(--spacing) * 4), env(safe-area-inset-left));
+  padding-right: max(calc(var(--spacing) * 4), env(safe-area-inset-right));
+}
+
+/* Bottom padding for scrollable content that sits under the fixed navigation. */
+@utility pb-nav-safe {
+  padding-bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom));
 }
 
 @layer base {
+  /*
+   * Tailwind v4 defaults `border-color` to `currentColor`, which makes every
+   * bare `border` utility inherit the text colour. Our hairline token is the
+   * sane default instead.
+   */
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+  }
+
   :root {
-    color-scheme: light dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     min-height: 100dvh;
-    /* Telegram draws its own header over the viewport top on some clients. */
-    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
-      env(safe-area-inset-left);
-    background-color: var(--color-bg);
-    color: var(--color-fg);
+    background-color: var(--bg);
+    color: var(--fg);
     font-family: var(--font-sans);
+    /* The mini-app is not a web page: no grey tap flashes, no rubber-banding. */
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  /* One focus style for the whole app — never remove it, never restyle it. */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--primary-soft);
+    color: var(--primary-soft-fg);
+  }
+
+  button,
+  [role='button'],
+  a {
+    touch-action: manipulation;
   }
 }
 

@@ -1,0 +1,114 @@
+/*
+ * Design tokens — the single source of truth for colour in the app.
+ *
+ * Every value is defined twice: once for the light theme (`:root`) and once for
+ * the dark one (`[data-theme='dark']`). The `data-theme` attribute is written on
+ * <html> by the inline script in index.html before first paint and kept in sync
+ * with the Telegram client by `@/shared/lib/theme`.
+ *
+ * Tokens are semantic ("what it is for"), never literal ("what colour it is"),
+ * so a screen written once works in both themes with no `dark:` variants.
+ * See ../../style-guide.md for the rules that govern their use.
+ */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces — bg is the page, surface sits on it, raised floats above both. */
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eef0f4;
+  --border: #e3e6ec;
+  --border-strong: #cdd3dd;
+  --overlay: rgb(16 24 40 / 0.45);
+
+  /* Text — three levels only: primary, secondary, and de-emphasised. */
+  --fg: #101828;
+  --muted: #4e5867;
+  --subtle: #6e7787;
+
+  /* Brand — actions, selection, progress, focus. */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-fg: #ffffff;
+  --primary-soft: #eef0fe;
+  --primary-soft-fg: #3730a3;
+  --link: #4f46e5;
+
+  /* Correct answer, completed lesson, active subscription. */
+  --success: #15803d;
+  --success-fg: #ffffff;
+  --success-soft: #e7f7ed;
+  --success-soft-fg: #14532d;
+
+  /* Wrong answer, destructive action, failed request. */
+  --danger: #dc2626;
+  --danger-fg: #ffffff;
+  --danger-soft: #fdecec;
+  --danger-soft-fg: #b01d1d;
+
+  /* Subscription about to expire, non-blocking warnings. */
+  --warning: #b45309;
+  --warning-fg: #ffffff;
+  --warning-soft: #fdf3e3;
+  --warning-soft-fg: #92500c;
+
+  /* Practice streak — the only purely decorative accent. */
+  --streak: #ea580c;
+  --streak-soft: #fff0e4;
+  --streak-soft-fg: #9a3412;
+
+  /* Elevation. Light theme leans on shadow, dark theme on surface lightness. */
+  --elevation-card: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.04);
+  --elevation-nav: 0 -8px 24px rgb(16 24 40 / 0.08);
+  --elevation-pop: 0 12px 32px rgb(16 24 40 / 0.16);
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --bg: #0f141c;
+  --surface: #171e28;
+  --surface-raised: #1e2733;
+  --surface-sunken: #0a0f16;
+  --border: #2a3441;
+  --border-strong: #3a4655;
+  --overlay: rgb(0 0 0 / 0.6);
+
+  --fg: #e9edf3;
+  --muted: #9aa5b4;
+  --subtle: #6e7a8a;
+
+  /* Saturated brand colours vibrate on dark backgrounds — these are the lighter,
+     desaturated steps, which is also why the button text flips to near-black. */
+  --primary: #818cf8;
+  --primary-hover: #a5b4fc;
+  --primary-fg: #10131f;
+  --primary-soft: #1e2340;
+  --primary-soft-fg: #c7cdff;
+  --link: #818cf8;
+
+  --success: #4ade80;
+  --success-fg: #08210f;
+  --success-soft: #10261a;
+  --success-soft-fg: #86efac;
+
+  --danger: #f87171;
+  --danger-fg: #2a0a0a;
+  --danger-soft: #2a1517;
+  --danger-soft-fg: #fca5a5;
+
+  --warning: #fbbf24;
+  --warning-fg: #241703;
+  --warning-soft: #2a2110;
+  --warning-soft-fg: #fcd34d;
+
+  --streak: #fb923c;
+  --streak-soft: #2c1b10;
+  --streak-soft-fg: #fdba74;
+
+  --elevation-card: 0 1px 2px rgb(0 0 0 / 0.5);
+  --elevation-nav: 0 -8px 24px rgb(0 0 0 / 0.5);
+  --elevation-pop: 0 16px 40px rgb(0 0 0 / 0.6);
+}
