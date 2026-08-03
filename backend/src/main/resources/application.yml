@@ -30,3 +30,23 @@ app:
   stats:
     # Window the AI score prediction reasons over.
     prediction-window: ${STATS_PREDICTION_WINDOW:30d}
+    # Fewer answers than this inside the window and the score is reported as null instead.
+    prediction-min-answers: ${STATS_PREDICTION_MIN_ANSWERS:20}
+  ai:
+    # Chat completions endpoint of the model the score estimate is asked of. Any provider
+    # speaking the OpenAI dialect works; while api-key is empty the estimate is computed
+    # locally instead and no external call is made.
+    base-url: ${AI_BASE_URL:https://api.deepseek.com/v1}
+    api-key: ${AI_API_KEY:}
+    model: ${AI_MODEL:deepseek-chat}
+    timeout: ${AI_TIMEOUT:20s}
+    # The model does not reliably know how ЦЭ/ЦТ is scored, so the rules are spelled out here.
+    # This is the text to replace once the client provides their own wording.
+    system-prompt: >
+      Ты помогаешь школьникам из Беларуси готовиться к ЦЭ/ЦТ. По статистике ученика за последний
+      месяц оцени, какой балл он получил бы на экзамене сейчас. Экзамен оценивается по стобалльной
+      шкале и покрывает всю программу предмета, а не только те темы, которые ученик успел
+      прорешать: темы без единого ответа считай непройденными и снижай за них оценку. Учитывай,
+      что задания в приложении разбиты по темам неравномерно, поэтому опирайся на долю верных
+      ответов, а не на их количество. Ответь строго объектом JSON с двумя полями: "score" — целое
+      число от 0 до 100, "comment" — одно-два предложения по-русски о том, что подтянуть.

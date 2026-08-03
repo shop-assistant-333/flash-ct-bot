@@ -1,10 +1,78 @@
 package dev.lowkkid.backend.repository;
 
 import dev.lowkkid.backend.entity.UserAnswer;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
+
+    @EntityGraph(attributePaths = "selectedOptions")
+    List<UserAnswer> findByAttempt_Id(Long attemptId);
+
+    boolean existsByAttempt_IdAndQuestion_Id(Long attemptId, Integer questionId);
+
+    boolean existsByQuestion_Id(Integer questionId);
+
+    long countByAttempt_Id(Long attemptId);
+
+    /** Counters over every homework answer of the student in one subject. */
+    @Query("""
+            select count(a) as answered, count(case when a.correct = true then 1 end) as correct
+            from UserAnswer a
+            where a.attempt.user.id = :userId
+              and a.attempt.lesson.subject.id = :subjectId
+            """)
+    Counters countAll(@Param("userId") Integer userId, @Param("subjectId") Integer subjectId);
+
+    /** The same counters limited to a window, which is what the score prediction reasons over. */
+    @Query("""
+            select count(a) as answered, count(case when a.correct = true then 1 end) as correct
+            from UserAnswer a
+            where a.attempt.user.id = :userId
+              and a.attempt.lesson.subject.id = :subjectId
+              and a.answeredAt >= :from
+            """)
+    Counters countSince(@Param("userId") Integer userId,
+                        @Param("subjectId") Integer subjectId,
+                        @Param("from") LocalDateTime from);
+
+    @Query("""
+            select a.attempt.lesson.id as lessonId,
+                   count(a) as answered,
+                   count(case when a.correct = true then 1 end) as correct
+            from UserAnswer a
+            where a.attempt.user.id = :userId
+              and a.attempt.lesson.subject.id = :subjectId
+            group by a.attempt.lesson.id
+            """)
+    List<LessonCounters> countByLesson(@Param("userId") Integer userId, @Param("subjectId") Integer subjectId);
+
+    /**
+     * How many stored answers point at the given options: dropping such an option would rewrite
+     * the history of a student.
+     */
+    @Query("select count(a) from UserAnswer a join a.selectedOptions o where o.id in :optionIds")
+    long countAnswersUsingOptions(@Param("optionIds") Collection<Integer> optionIds);
+
+    interface Counters {
+
+        long getAnswered();
+
+        long getCorrect();
+    }
+
+    interface LessonCounters {
+
+        Integer getLessonId();
+
+        long getAnswered();
+
+        long getCorrect();
+    }
 }
