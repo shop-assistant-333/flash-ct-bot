@@ -1,104 +1,42 @@
 /*
- * Global baseline only. Component styles live next to their component
- * (CSS Modules: `component.module.css`), never here.
+ * Global baseline + design tokens. Component styles live in the markup as
+ * Tailwind utilities; only cross-cutting rules belong here.
  *
  * Colors follow the Telegram theme variables the client injects, with
- * fallbacks so the app is readable in a plain browser tab too.
+ * fallbacks so the app is readable in a plain browser tab too. Every token
+ * below is exposed as a utility, e.g. `--color-surface` → `bg-surface`.
  */
 
-:root {
+@import 'tailwindcss';
+
+@theme {
   --color-bg: var(--tg-theme-bg-color, #ffffff);
   --color-surface: var(--tg-theme-secondary-bg-color, #f4f4f5);
-  --color-text: var(--tg-theme-text-color, #18181b);
-  --color-text-muted: var(--tg-theme-hint-color, #71717a);
+  --color-fg: var(--tg-theme-text-color, #18181b);
+  --color-muted: var(--tg-theme-hint-color, #71717a);
+  --color-link: var(--tg-theme-link-color, #2563eb);
   --color-accent: var(--tg-theme-button-color, #3b82f6);
-  --color-accent-text: var(--tg-theme-button-text-color, #ffffff);
+  --color-accent-fg: var(--tg-theme-button-text-color, #ffffff);
   --color-danger: var(--tg-theme-destructive-text-color, #dc2626);
 
-  --space-2: 0.5rem;
-  --space-4: 1rem;
-  --space-6: 1.5rem;
-  --radius: 0.75rem;
-
-  font-family:
-    system-ui,
-    -apple-system,
-    'Segoe UI',
-    Roboto,
-    sans-serif;
-  line-height: 1.5;
-  color-scheme: light dark;
-  color: var(--color-text);
-  background-color: var(--color-bg);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+@layer base {
+  :root {
+    color-scheme: light dark;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-body {
-  margin: 0;
-  min-height: 100dvh;
-  /* Telegram draws its own header over the viewport top on some clients. */
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
-    env(safe-area-inset-left);
-}
-
-h1,
-h2,
-h3,
-p {
-  margin: 0 0 var(--space-4);
-}
-
-a {
-  color: var(--color-accent);
-}
-
-button {
-  font: inherit;
-  padding: var(--space-2) var(--space-4);
-  border: none;
-  border-radius: var(--radius);
-  color: var(--color-accent-text);
-  background-color: var(--color-accent);
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.app-shell {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: var(--space-6) var(--space-4);
-}
-
-.error-screen {
-  text-align: center;
-  color: var(--color-danger);
-}
-
-.spinner {
-  display: block;
-  width: 1.5rem;
-  height: 1.5rem;
-  margin: var(--space-6) auto;
-  border: 2px solid var(--color-surface);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: spin 0.7s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
+  body {
+    min-height: 100dvh;
+    /* Telegram draws its own header over the viewport top on some clients. */
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+      env(safe-area-inset-left);
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
   }
 }
 

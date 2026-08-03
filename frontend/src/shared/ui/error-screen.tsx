@@ -1,3 +1,4 @@
+import { TriangleAlert } from 'lucide-react'
 import { isRouteErrorResponse, useRouteError } from 'react-router'
 
 import { isApiError } from '@/shared/api'
@@ -14,10 +15,15 @@ export function ErrorScreen() {
   const error = useRouteError()
 
   return (
-    <section className="error-screen">
-      <h1>Что-то пошло не так</h1>
-      <p>{describe(error)}</p>
-      <button type="button" onClick={() => window.location.reload()}>
+    <section className="flex flex-col items-center gap-4 text-center">
+      <TriangleAlert aria-hidden className="size-8 text-danger" />
+      <h1 className="text-xl font-semibold text-danger">Что-то пошло не так</h1>
+      <p className="text-muted">{describe(error)}</p>
+      <button
+        type="button"
+        onClick={() => window.location.reload()}
+        className="rounded-xl bg-accent px-4 py-2 text-accent-fg disabled:cursor-not-allowed disabled:opacity-50"
+      >
         Обновить
       </button>
     </section>
