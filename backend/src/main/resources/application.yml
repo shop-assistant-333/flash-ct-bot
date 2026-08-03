@@ -3,8 +3,8 @@ spring:
     name: backend
   datasource:
     url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:exam_preparation}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    username: ${DB_USERNAME:lowkkid}
+    password: ${DB_PASSWORD:422400Aa422400}
     driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: ${JPA_SHOW_SQL:false}

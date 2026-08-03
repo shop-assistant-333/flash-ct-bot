@@ -46,8 +46,7 @@ import java.util.TreeMap;
 public class TelegramAuthService implements AuthService {
 
     private static final String HMAC_SHA256 = "HmacSHA256";
-    /** Fields telegram adds around the payload and which are not part of what is signed. */
-    private static final Set<String> UNSIGNED_FIELDS = Set.of("hash", "signature");
+    private static final Set<String> UNSIGNED_FIELDS = Set.of("hash");
 
     private final UserRepository userRepository;
     private final ObjectMapper objectMapper;
