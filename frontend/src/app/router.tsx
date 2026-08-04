@@ -21,6 +21,13 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: ROUTES.lesson,
+        lazy: async () => {
+          const { LessonPage } = await import('@/pages/lesson/lesson-page')
+          return { Component: LessonPage }
+        },
+      },
+      {
         path: ROUTES.practice,
         lazy: async () => {
           const { PracticePage } = await import('@/pages/practice/practice-page')

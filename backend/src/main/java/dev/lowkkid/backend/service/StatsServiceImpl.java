@@ -13,7 +13,6 @@ import dev.lowkkid.backend.repository.UserAnswerRepository;
 import dev.lowkkid.backend.repository.UserAnswerRepository.Counters;
 import dev.lowkkid.backend.repository.UserAnswerRepository.LessonCounters;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
-import dev.lowkkid.backend.repository.UserAttemptRepository.SubjectAttemptCount;
 import dev.lowkkid.backend.repository.UserPracticeStatsRepository;
 import dev.lowkkid.backend.repository.UserSessionRepository;
 import dev.lowkkid.backend.security.CurrentUser;

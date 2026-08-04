@@ -1,6 +1,6 @@
 import { Check, X } from 'lucide-react'
 
-import type { AnswerOptionDto } from '../api/practice-api'
+import type { AnswerOptionDto } from '@/shared/api'
 
 export type OptionVisualState = 'idle' | 'selected' | 'correct' | 'incorrect'
 

@@ -1,17 +1,17 @@
-import { Inbox, LoaderCircle, LockKeyhole } from 'lucide-react'
+import { Inbox, LockKeyhole } from 'lucide-react'
 import { useState } from 'react'
 
 import { isApiError } from '@/shared/api'
+import type { SubmitAnswerRequest } from '@/shared/api'
+import { AnswerFeedback } from '@/shared/ui/answer-feedback'
+import { Button } from '@/shared/ui/button'
+import { QuestionView } from '@/shared/ui/question-view'
 import { Spinner } from '@/shared/ui/spinner'
+import { StateMessage } from '@/shared/ui/state-message'
 
-import type { SubmitPracticeAnswerRequest } from '../api/practice-api'
 import { useAdvancePractice } from '../hooks/use-advance-practice'
 import { usePracticeQuestion } from '../hooks/use-practice-question'
 import { useSubmitPracticeAnswer } from '../hooks/use-submit-practice-answer'
-import { PracticeFeedback } from './practice-feedback'
-import { PracticeQuestionBody } from './practice-question-body'
-import { PracticeStateMessage } from './practice-state-message'
-import { StreakBadge } from './streak-badge'
 
 interface PracticeDeckProps {
   subjectId: number
@@ -33,7 +33,7 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
 
     if (isApiError(error) && error.is('PRACTICE_DECK_EMPTY')) {
       return (
-        <PracticeStateMessage
+        <StateMessage
           icon={Inbox}
           title="Пока нет вопросов для практики"
           description="Загляните позже — база пополняется"
@@ -43,7 +43,7 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
 
     if (isApiError(error) && error.is('SUBSCRIPTION_EXPIRED')) {
       return (
-        <PracticeStateMessage
+        <StateMessage
           icon={LockKeyhole}
           title="Подписка на предмет закончилась"
           description="Продлите доступ, чтобы продолжить практику"
@@ -52,7 +52,7 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
     }
 
     return (
-      <PracticeStateMessage
+      <StateMessage
         icon={Inbox}
         title="Не получилось загрузить вопрос"
         description="Проверьте соединение и попробуйте ещё раз"
@@ -61,9 +61,8 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
     )
   }
 
-  const { question, streak } = questionQuery.data
+  const { question } = questionQuery.data
   const result = submitMutation.data?.result
-  const currentStreak = submitMutation.data?.streak ?? streak
   const answered = result !== undefined
 
   function toggleOption(optionId: number) {
@@ -77,7 +76,7 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
   }
 
   function handleSubmit() {
-    const body: SubmitPracticeAnswerRequest =
+    const body: SubmitAnswerRequest =
       question.type === 'INPUT'
         ? { questionId: question.id, answerText }
         : { questionId: question.id, selectedOptionIds }
@@ -97,40 +96,23 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <StreakBadge streak={currentStreak} />
-
-      <PracticeQuestionBody
+      <QuestionView
         question={question}
         selectedOptionIds={selectedOptionIds}
         answerText={answerText}
-        result={result}
+        verdict={result}
         onToggleOption={toggleOption}
         onChangeText={setAnswerText}
       />
 
-      {result ? <PracticeFeedback result={result} /> : null}
+      {result ? <AnswerFeedback verdict={result} /> : null}
 
       {answered ? (
-        <button
-          type="button"
-          onClick={handleNext}
-          className="min-h-11 w-full rounded-control bg-primary px-4 py-3 font-semibold text-primary-fg transition-colors duration-150 active:bg-primary-hover"
-        >
-          Следующий вопрос
-        </button>
+        <Button onClick={handleNext}>Следующий вопрос</Button>
       ) : (
-        <button
-          type="button"
-          disabled={!canSubmit || submitMutation.isPending}
-          onClick={handleSubmit}
-          className="flex min-h-11 w-full items-center justify-center rounded-control bg-primary px-4 py-3 font-semibold text-primary-fg transition-colors duration-150 active:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {submitMutation.isPending ? (
-            <LoaderCircle aria-hidden className="size-5 animate-spin" />
-          ) : (
-            'Проверить'
-          )}
-        </button>
+        <Button onClick={handleSubmit} disabled={!canSubmit} loading={submitMutation.isPending}>
+          Проверить
+        </Button>
       )}
 
       {submitMutation.isError ? (

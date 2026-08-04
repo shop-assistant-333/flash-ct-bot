@@ -21,7 +21,6 @@ public class WebConfig implements WebMvcConfigurer {
     private final AdminAccessInterceptor adminAccessInterceptor;
     private final CurrentUserArgumentResolver currentUserArgumentResolver;
 
-    /** Origin the mini app is served from; the telegram webview sends it on every request. */
     @Value("${app.cors.allowed-origins}")
     private String[] allowedOrigins;
 
@@ -43,7 +42,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins(allowedOrigins)
+                .allowedOriginPatterns(allowedOrigins)
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*");
     }

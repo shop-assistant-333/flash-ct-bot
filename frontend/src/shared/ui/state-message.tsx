@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react'
 
-interface PracticeStateMessageProps {
+interface StateMessageProps {
   icon: LucideIcon
   title: string
   description: string
@@ -8,12 +8,7 @@ interface PracticeStateMessageProps {
 }
 
 /** Empty / no-access / load-error placeholder — style guide §4 "пустое состояние". */
-export function PracticeStateMessage({
-  icon: Icon,
-  title,
-  description,
-  action,
-}: PracticeStateMessageProps) {
+export function StateMessage({ icon: Icon, title, description, action }: StateMessageProps) {
   return (
     <div className="flex flex-col items-center gap-2 py-10 text-center">
       <Icon aria-hidden className="size-8 text-subtle" />

@@ -141,6 +141,14 @@
   padding-bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom));
 }
 
+/*
+ * Resting place of a sticky action button: just above the fixed navigation,
+ * with the usual 8px breathing room. Pairs with `sticky`.
+ */
+@utility bottom-nav-safe {
+  bottom: calc(var(--spacing-nav) + env(safe-area-inset-bottom) + var(--spacing) * 2);
+}
+
 @layer base {
   /*
    * Tailwind v4 defaults `border-color` to `currentColor`, which makes every

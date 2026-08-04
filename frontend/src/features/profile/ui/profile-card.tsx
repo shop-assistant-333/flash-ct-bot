@@ -5,12 +5,12 @@ interface ProfileCardProps {
 }
 
 function getInitials(firstName: string, lastName: string, username: string): string {
-  const initials = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ""}`.trim()
+  const initials = `${firstName.charAt(0)}${lastName ? lastName.charAt(0) : ''}`.trim()
   return initials !== '' ? initials.toUpperCase() : username.charAt(0).toUpperCase()
 }
 
 export function ProfileCard({ profile }: ProfileCardProps) {
-  const fullName = `${profile.firstName} ${profile.lastName ? profile.lastName : ""}`.trim()
+  const fullName = `${profile.firstName} ${profile.lastName ? profile.lastName : ''}`.trim()
 
   return (
     <div className="flex items-center gap-4 rounded-card bg-surface p-4 shadow-card">

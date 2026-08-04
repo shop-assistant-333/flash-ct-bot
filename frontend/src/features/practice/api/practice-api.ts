@@ -1,24 +1,5 @@
 import { http } from '@/shared/api'
-
-export type QuestionType = 'SINGLE_ANSWER' | 'MULTI_ANSWER' | 'INPUT'
-
-export interface AnswerOptionDto {
-  id: number
-  text: string
-}
-
-export interface QuestionDto {
-  id: number
-  title: string
-  type: QuestionType
-  order: number
-  options: AnswerOptionDto[]
-}
-
-export interface StreakDto {
-  current: number
-  best: number
-}
+import type { AnswerResultDto, QuestionDto, StreakDto, SubmitAnswerRequest } from '@/shared/api'
 
 export interface PracticeQuestionDto {
   subjectId: number
@@ -26,21 +7,6 @@ export interface PracticeQuestionDto {
   streak: StreakDto
   position: number
   deckSize: number
-}
-
-export interface SubmitPracticeAnswerRequest {
-  questionId: number
-  selectedOptionIds?: number[]
-  answerText?: string
-}
-
-export interface AnswerResultDto {
-  questionId: number
-  correct: boolean
-  correctOptionIds: number[]
-  correctAnswer: string | null
-  explanation: string
-  lastQuestion: boolean
 }
 
 export interface PracticeAnswerResultDto {
@@ -57,7 +23,7 @@ export function fetchNextPracticeQuestion(
 
 export function submitPracticeAnswer(
   subjectId: number,
-  body: SubmitPracticeAnswerRequest,
+  body: SubmitAnswerRequest,
 ): Promise<PracticeAnswerResultDto> {
   return http.post<PracticeAnswerResultDto>('/practice/answer', {
     query: { subjectId },

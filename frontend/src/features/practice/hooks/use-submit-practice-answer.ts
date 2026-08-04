@@ -1,14 +1,27 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { submitPracticeAnswer, type SubmitPracticeAnswerRequest } from '../api/practice-api'
+import type { SubmitAnswerRequest } from '@/shared/api'
+
+import { practiceKeys } from '../api/practice-keys'
+import { submitPracticeAnswer } from '../api/practice-api'
 
 /**
- * No cache invalidation on success: the deck cursor already moved server-side,
- * but the UI keeps showing this question's feedback until the student asks for
- * the next one — see `useAdvancePractice`.
+ * No question-data invalidation on success: the deck cursor already moved
+ * server-side, but the UI keeps showing this question's feedback until the
+ * student asks for the next one — see `useAdvancePractice`. The streak is
+ * patched into the cached question straight away though, so anything reading
+ * that cache (the deck, the header badge) reflects it instantly instead of
+ * waiting for the next question to load.
  */
 export function useSubmitPracticeAnswer(subjectId: number) {
+  const queryClient = useQueryClient()
+
   return useMutation({
-    mutationFn: (body: SubmitPracticeAnswerRequest) => submitPracticeAnswer(subjectId, body),
+    mutationFn: (body: SubmitAnswerRequest) => submitPracticeAnswer(subjectId, body),
+    onSuccess: (data) => {
+      queryClient.setQueryData(practiceKeys.next(subjectId), (current) =>
+        current === undefined ? current : { ...current, streak: data.streak },
+      )
+    },
   })
 }

@@ -1,7 +1,7 @@
 import { Flame } from 'lucide-react'
 import { useState } from 'react'
 
-import type { StreakDto } from '../api/practice-api'
+import type { StreakDto } from '@/shared/api'
 
 interface StreakBadgeProps {
   streak: StreakDto
@@ -22,13 +22,12 @@ export function StreakBadge({ streak }: StreakBadgeProps) {
       role="status"
       aria-live="polite"
       onAnimationEnd={() => setShake(false)}
-      className={`flex items-center gap-2 self-start rounded-control bg-streak-soft px-4 py-3 ${
+      className={`flex items-center gap-1 self-start rounded-control bg-streak-soft px-4 py-2 ${
         shake ? 'animate-shake' : ''
       }`}
     >
       <Flame aria-hidden className="size-6 text-streak" />
-      <span className="text-3xl font-bold text-streak-soft-fg tabular-nums">{streak.current}</span>
-      <span className="text-sm text-muted">рекорд {streak.best}</span>
+      <span className="text-2xl font-bold text-streak-soft-fg tabular-nums">{streak.current}</span>
     </div>
   )
 }
