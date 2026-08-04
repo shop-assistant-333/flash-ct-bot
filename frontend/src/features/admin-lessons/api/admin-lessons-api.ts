@@ -1,0 +1,98 @@
+import { http, type QuestionType } from '@/shared/api'
+
+export interface AdminLessonItem {
+  id: number
+  subjectId: number
+  title: string
+  description: string
+  order: number
+  questionCount: number
+}
+
+export interface AdminAnswerOptionDto {
+  id: number
+  text: string
+  correct: boolean
+}
+
+/**
+ * Needed here only to list and reorder the questions of a lesson. The questions
+ * feature declares its own copy on purpose — merging both into
+ * `shared/api/dto.ts` is task F, so two parallel tasks never edit one file.
+ */
+export interface AdminQuestionDto {
+  id: number
+  /** Exactly one of `lessonId` / `subjectId` is set. */
+  lessonId: number | null
+  subjectId: number | null
+  title: string
+  type: QuestionType
+  order: number
+  correctAnswer: string | null
+  explanation: string
+  options: AdminAnswerOptionDto[]
+}
+
+export interface AdminLessonDto {
+  id: number
+  subjectId: number
+  title: string
+  description: string
+  order: number
+  questions: AdminQuestionDto[]
+}
+
+export interface LessonRequest {
+  subjectId: number
+  title: string
+  description?: string
+  /** Left out by the forms: without it the lesson goes to the end of the list. */
+  order?: number
+}
+
+/** The part of `LessonRequest` a form owns; `subjectId` comes from the route. */
+export interface LessonDraft {
+  title: string
+  description: string
+}
+
+export interface ReorderRequest {
+  ids: number[]
+}
+
+export function fetchSubjectLessons(
+  subjectId: number,
+  signal: AbortSignal,
+): Promise<AdminLessonItem[]> {
+  return http.get<AdminLessonItem[]>(`/admin/subjects/${subjectId}/lessons`, { signal })
+}
+
+export function reorderSubjectLessons(
+  subjectId: number,
+  body: ReorderRequest,
+): Promise<AdminLessonItem[]> {
+  return http.put<AdminLessonItem[]>(`/admin/subjects/${subjectId}/lessons/order`, { json: body })
+}
+
+export function fetchAdminLesson(lessonId: number, signal: AbortSignal): Promise<AdminLessonDto> {
+  return http.get<AdminLessonDto>(`/admin/lessons/${lessonId}`, { signal })
+}
+
+export function createLesson(body: LessonRequest): Promise<AdminLessonDto> {
+  return http.post<AdminLessonDto>('/admin/lessons', { json: body })
+}
+
+export function updateLesson(lessonId: number, body: LessonRequest): Promise<AdminLessonDto> {
+  return http.put<AdminLessonDto>(`/admin/lessons/${lessonId}`, { json: body })
+}
+
+export function deleteLesson(lessonId: number): Promise<void> {
+  return http.delete<void>(`/admin/lessons/${lessonId}`)
+}
+
+export function reorderLessonQuestions(
+  lessonId: number,
+  body: ReorderRequest,
+): Promise<AdminQuestionDto[]> {
+  return http.put<AdminQuestionDto[]>(`/admin/lessons/${lessonId}/questions/order`, { json: body })
+}
