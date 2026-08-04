@@ -6,7 +6,10 @@ import { useSessionTracking } from '@/features/session'
 import { Spinner } from '@/shared/ui/spinner'
 
 /**
- * Wraps every route: shared chrome goes here (navigation, safe-area padding, …).
+ * Wraps every student route: shared chrome goes here (navigation, safe-area
+ * padding, …). Mounted behind `RequireRole role="USER"`, which is why session
+ * tracking can live here — an admin never opens a session. Admin chrome is
+ * `admin-layout.tsx`.
  *
  * `pb-nav-safe` reserves the space the fixed tab bar covers, so no screen has to
  * know about it. Layout rules: ../../style-guide.md

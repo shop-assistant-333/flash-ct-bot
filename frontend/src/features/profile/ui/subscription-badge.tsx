@@ -1,7 +1,8 @@
 import { Check, Clock, X } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
-import type { SubscriptionItem } from '../api/profile-api'
+import type { SubscriptionItem } from '@/shared/api'
+
 import { getSubscriptionStatus, type SubscriptionStatus } from '../lib/subscription-status'
 
 interface SubscriptionBadgeProps {

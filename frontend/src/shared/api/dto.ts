@@ -3,6 +3,28 @@
  * backend/API.md as is. Feature-local DTOs stay in the feature.
  */
 
+/** ISO local date-time without a zone: "2026-12-31T23:59:59". */
+export type LocalDateTime = string
+
+export type UserRole = 'USER' | 'ADMIN'
+
+export interface SubscriptionItem {
+  subjectId: number
+  subjectName: string
+  paidUntil: LocalDateTime
+  /** false once the paid period is over. */
+  active: boolean
+}
+
+/** Envelope of every paginated admin list. */
+export interface PageResponse<T> {
+  content: T[]
+  page: number
+  size: number
+  totalElements: number
+  totalPages: number
+}
+
 export type QuestionType = 'SINGLE_ANSWER' | 'MULTI_ANSWER' | 'INPUT'
 
 export interface AnswerOptionDto {

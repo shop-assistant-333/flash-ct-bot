@@ -1,4 +1,4 @@
-import type { SubscriptionItem } from '../api/profile-api'
+import type { SubscriptionItem } from '@/shared/api'
 
 export type SubscriptionStatus = 'active' | 'expiring' | 'expired'
 

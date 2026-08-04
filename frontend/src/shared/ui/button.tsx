@@ -5,7 +5,9 @@ import { buttonClasses, type ButtonVariant } from '@/shared/ui/button-styles'
 
 interface ButtonProps {
   children: ReactNode
-  onClick: () => void
+  /** Optional: a `submit` button is driven by the `<form onSubmit>` around it. */
+  onClick?: () => void
+  type?: 'button' | 'submit'
   variant?: ButtonVariant
   disabled?: boolean
   /** Swaps the label for a spinner without changing the button size — style guide §4. */
@@ -16,13 +18,14 @@ interface ButtonProps {
 export function Button({
   children,
   onClick,
+  type = 'button',
   variant = 'primary',
   disabled = false,
   loading = false,
 }: ButtonProps) {
   return (
     <button
-      type="button"
+      type={type}
       disabled={disabled || loading}
       onClick={onClick}
       className={buttonClasses(variant)}

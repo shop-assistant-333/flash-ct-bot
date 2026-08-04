@@ -1,4 +1,5 @@
-import type { SubscriptionItem } from '../api/profile-api'
+import type { SubscriptionItem } from '@/shared/api'
+
 import { formatDate } from '../lib/format-date'
 import { SubscriptionBadge } from './subscription-badge'
 

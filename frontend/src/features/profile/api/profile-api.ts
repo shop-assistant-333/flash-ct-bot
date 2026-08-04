@@ -1,13 +1,5 @@
 import { http } from '@/shared/api'
-
-export type UserRole = 'USER' | 'ADMIN'
-
-export interface SubscriptionItem {
-  subjectId: number
-  subjectName: string
-  paidUntil: string
-  active: boolean
-}
+import type { SubscriptionItem, UserRole } from '@/shared/api'
 
 export interface ProfileDto {
   id: number

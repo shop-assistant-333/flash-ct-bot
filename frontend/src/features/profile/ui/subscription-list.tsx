@@ -1,6 +1,7 @@
 import { BookX } from 'lucide-react'
 
-import type { SubscriptionItem } from '../api/profile-api'
+import type { SubscriptionItem } from '@/shared/api'
+
 import { SubscriptionListItem } from './subscription-list-item'
 
 interface SubscriptionListProps {

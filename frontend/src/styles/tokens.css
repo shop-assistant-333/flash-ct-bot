@@ -44,6 +44,7 @@
 
   /* Wrong answer, destructive action, failed request. */
   --danger: #dc2626;
+  --danger-hover: #b91c1c;
   --danger-fg: #ffffff;
   --danger-soft: #fdecec;
   --danger-soft-fg: #b01d1d;
@@ -95,6 +96,7 @@
   --success-soft-fg: #86efac;
 
   --danger: #f87171;
+  --danger-hover: #fca5a5;
   --danger-fg: #2a0a0a;
   --danger-soft: #2a1517;
   --danger-soft-fg: #fca5a5;

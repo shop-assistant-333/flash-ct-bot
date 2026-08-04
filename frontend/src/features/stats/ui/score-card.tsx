@@ -3,6 +3,7 @@ import { LoaderCircle, Sparkles } from 'lucide-react'
 import { ProgressBar } from '@/shared/ui/progress-bar'
 
 import { usePrediction } from '../hooks/use-prediction'
+import { formatRelativeTime } from '../lib/format'
 
 interface ScoreCardProps {
   subjectId: number
@@ -74,12 +75,21 @@ export function ScoreCard({ subjectId }: ScoreCardProps) {
           )}
 
           <p className="text-sm text-muted">{data.comment}</p>
+
+          {data.computedAt === null ? null : (
+            <p className="text-xs text-subtle">
+              Оценка ИИ по результатам домашних заданий за последний месяц. Обновлено{' '}
+              {formatRelativeTime(data.computedAt)}
+            </p>
+          )}
         </>
       ) : null}
 
-      <p className="text-xs text-subtle">
-        Оценка ИИ по результатам домашних заданий за последний месяц.
-      </p>
+      {!data && (
+        <p className="text-xs text-subtle">
+          Оценка ИИ по результатам домашних заданий за последний месяц.
+        </p>
+      )}
     </article>
   )
 }

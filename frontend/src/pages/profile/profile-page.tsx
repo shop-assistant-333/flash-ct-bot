@@ -1,26 +1,27 @@
-import {TriangleAlert} from 'lucide-react'
+import { TriangleAlert } from 'lucide-react'
 
-import {ProfileCard, SubscriptionList, useProfile} from '@/features/profile'
-import {PageHeader} from '@/shared/ui/page-header'
-import {Spinner} from '@/shared/ui/spinner'
-import {ThemeToggle} from '@/shared/ui/theme-toggle'
+import { ProfileCard, SubscriptionList, useProfile } from '@/features/profile'
+import { PageHeader } from '@/shared/ui/page-header'
+import { Spinner } from '@/shared/ui/spinner'
+import { ThemeToggle } from '@/shared/ui/theme-toggle'
 
 export function ProfilePage() {
   const profileQuery = useProfile()
 
   return (
     <section className="flex flex-col gap-6">
-      <PageHeader title="Профиль" description="Данные аккаунта и доступ к предметам"/>
-      {profileQuery.isPending ? <Spinner/> : null}
+      <PageHeader title="Профиль" description="Данные аккаунта и доступ к предметам" />
+      {profileQuery.isPending ? <Spinner /> : null}
 
-      {!profileQuery.data ? <div className="flex flex-col gap-2">
+      {!profileQuery.data ? (
+        <div className="flex flex-col gap-2">
           <h2 className="text-sm font-medium text-muted">Тема оформления</h2>
-          <ThemeToggle/>
+          <ThemeToggle />
         </div>
-        : null}
+      ) : null}
       {profileQuery.isError ? (
         <div className="flex flex-col items-center gap-3 rounded-card bg-surface p-6 text-center shadow-card">
-          <TriangleAlert aria-hidden className="size-6 text-danger"/>
+          <TriangleAlert aria-hidden className="size-6 text-danger" />
           <p className="text-sm text-muted">Не удалось загрузить профиль</p>
           <button
             type="button"
@@ -34,15 +35,15 @@ export function ProfilePage() {
 
       {profileQuery.data ? (
         <>
-          <ProfileCard profile={profileQuery.data}/>
+          <ProfileCard profile={profileQuery.data} />
           <div className="flex flex-col gap-2">
             <h2 className="text-sm font-medium text-muted">Тема оформления</h2>
-            <ThemeToggle/>
+            <ThemeToggle />
           </div>
 
           <div className="flex flex-col gap-2">
             <h2 className="text-sm font-medium text-muted">Предметы</h2>
-            <SubscriptionList subscriptions={profileQuery.data.subscriptions}/>
+            <SubscriptionList subscriptions={profileQuery.data.subscriptions} />
           </div>
         </>
       ) : null}

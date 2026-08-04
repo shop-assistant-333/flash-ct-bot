@@ -48,6 +48,7 @@
   --color-success-soft-fg: var(--success-soft-fg);
 
   --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
   --color-danger-fg: var(--danger-fg);
   --color-danger-soft: var(--danger-soft);
   --color-danger-soft-fg: var(--danger-soft-fg);

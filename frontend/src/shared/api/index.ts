@@ -3,10 +3,14 @@ export type { ApiErrorBody, ApiErrorCode } from './api-error'
 export type {
   AnswerOptionDto,
   AnswerResultDto,
+  LocalDateTime,
+  PageResponse,
   QuestionDto,
   QuestionType,
   StreakDto,
   SubmitAnswerRequest,
+  SubscriptionItem,
+  UserRole,
 } from './dto'
 export { http, request } from './http'
 export { createQueryClient } from './query-client'
