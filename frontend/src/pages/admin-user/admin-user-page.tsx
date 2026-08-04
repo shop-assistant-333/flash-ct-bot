@@ -1,5 +1,5 @@
-import { UserX, WifiOff } from 'lucide-react'
-import { useNavigate, useParams } from 'react-router'
+import { ChevronLeft, UserX, WifiOff } from 'lucide-react'
+import { Link, useNavigate, useParams } from 'react-router'
 
 import { ADMIN_ROUTES } from '@/app/routes'
 import { useAdminSubjects } from '@/features/admin-subjects'
@@ -16,6 +16,17 @@ import { isApiError } from '@/shared/api'
 import { PageHeader } from '@/shared/ui/page-header'
 import { Spinner } from '@/shared/ui/spinner'
 import { StateMessage } from '@/shared/ui/state-message'
+
+/** Same way back as on a lesson screen: first element of the page, every state. */
+const BACK_TO_USERS = (
+  <Link
+    to={ADMIN_ROUTES.users}
+    className="-ml-1 flex min-h-11 items-center gap-1 self-start text-sm text-muted"
+  >
+    <ChevronLeft aria-hidden className="size-4" />
+    Все пользователи
+  </Link>
+)
 
 export function AdminUserPage() {
   const params = useParams()
@@ -35,12 +46,12 @@ export function AdminUserPage() {
   if (notFound) {
     return (
       <section className="flex flex-col gap-6">
+        {BACK_TO_USERS}
         <PageHeader title="Пользователь" />
         <StateMessage
           icon={UserX}
           title="Пользователь не найден"
           description="Возможно, его удалили — вернитесь к списку"
-          action={{ label: 'К списку', onClick: () => void navigate(ADMIN_ROUTES.users) }}
         />
       </section>
     )
@@ -49,6 +60,7 @@ export function AdminUserPage() {
   if (userQuery.isError) {
     return (
       <section className="flex flex-col gap-6">
+        {BACK_TO_USERS}
         <PageHeader title="Пользователь" />
         <StateMessage
           icon={WifiOff}
@@ -63,6 +75,7 @@ export function AdminUserPage() {
   if (userQuery.isPending) {
     return (
       <section className="flex flex-col gap-6">
+        {BACK_TO_USERS}
         <PageHeader title="Пользователь" />
         <Spinner />
       </section>
@@ -73,6 +86,7 @@ export function AdminUserPage() {
 
   return (
     <section className="flex flex-col gap-6">
+      {BACK_TO_USERS}
       <PageHeader title={userDisplayName(user)} description={`@${user.username}`} />
 
       <div className="flex flex-col gap-2">
