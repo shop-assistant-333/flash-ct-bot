@@ -10,6 +10,7 @@ import { Spinner } from '@/shared/ui/spinner'
 import { StateMessage } from '@/shared/ui/state-message'
 
 import { useAdvancePractice } from '../hooks/use-advance-practice'
+import { usePracticeAnswer } from '../hooks/use-practice-answer'
 import { usePracticeQuestion } from '../hooks/use-practice-question'
 import { useSubmitPracticeAnswer } from '../hooks/use-submit-practice-answer'
 
@@ -20,6 +21,7 @@ interface PracticeDeckProps {
 /** One subject's practice loop: question → answer → feedback → next. */
 export function PracticeDeck({ subjectId }: PracticeDeckProps) {
   const questionQuery = usePracticeQuestion(subjectId)
+  const answerQuery = usePracticeAnswer(subjectId)
   const submitMutation = useSubmitPracticeAnswer(subjectId)
   const advance = useAdvancePractice(subjectId)
 
@@ -62,7 +64,8 @@ export function PracticeDeck({ subjectId }: PracticeDeckProps) {
   }
 
   const { question } = questionQuery.data
-  const result = submitMutation.data?.result
+  const cachedAnswer = answerQuery.data
+  const result = cachedAnswer?.result.questionId === question.id ? cachedAnswer.result : undefined
   const answered = result !== undefined
 
   function toggleOption(optionId: number) {

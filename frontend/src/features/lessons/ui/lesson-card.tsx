@@ -41,6 +41,7 @@ function meta(lesson: LessonItem): string {
 
 export function LessonCard({ lesson, number, href }: LessonCardProps) {
   const locked = lesson.status === 'LOCKED'
+  const completed = lesson.status === 'COMPLETED'
 
   const body = (
     <>
@@ -79,7 +80,7 @@ export function LessonCard({ lesson, number, href }: LessonCardProps) {
       ) : (
         <Link
           to={href}
-          className={`${CARD_CLASSES} text-fg transition-colors duration-150 active:bg-surface-sunken`}
+          className={`${CARD_CLASSES} text-fg transition-colors duration-150 active:bg-surface-sunken ${completed ? 'opacity-75' : ''}`}
         >
           {body}
         </Link>

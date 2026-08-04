@@ -27,7 +27,9 @@ export default defineConfig(({ mode }) => {
       allowedHosts: [
         '.trycloudflare.com',
         '.ngrok-free.app',
+        '.ngrok-free.dev',
         '.ngrok.io',
+        '.ngrok.app',
         ...(env.DEV_ALLOWED_HOSTS?.split(',')
           .map((host) => host.trim())
           .filter(Boolean) ?? []),

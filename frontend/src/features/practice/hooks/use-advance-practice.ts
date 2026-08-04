@@ -7,6 +7,7 @@ export function useAdvancePractice(subjectId: number) {
   const queryClient = useQueryClient()
 
   return () => {
+    queryClient.removeQueries({ queryKey: practiceKeys.answer(subjectId) })
     void queryClient.invalidateQueries({ queryKey: practiceKeys.next(subjectId) })
   }
 }

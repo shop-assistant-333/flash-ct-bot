@@ -12,16 +12,23 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <!--
       Resolves the colour theme before first paint, so the app never flashes
-      light before React mounts. Telegram dictates the theme when it is present;
-      outside it we fall back to the OS preference. Kept in sync afterwards by
+      light before React mounts. A pinned preference from the profile screen
+      (localStorage) wins; otherwise Telegram dictates the theme when present,
+      falling back to the OS preference outside it. Kept in sync afterwards by
       src/shared/lib/theme.ts — keep the two in agreement.
     -->
     <script>
       ;(function () {
-        var tg = window.Telegram && window.Telegram.WebApp
-        var scheme =
-          (tg && tg.colorScheme) ||
-          (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        var stored = localStorage.getItem('theme-preference')
+        var scheme
+        if (stored === 'light' || stored === 'dark') {
+          scheme = stored
+        } else {
+          var tg = window.Telegram && window.Telegram.WebApp
+          scheme =
+            (tg && tg.colorScheme) ||
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+        }
         document.documentElement.dataset.theme = scheme === 'dark' ? 'dark' : 'light'
       })()
     </script>

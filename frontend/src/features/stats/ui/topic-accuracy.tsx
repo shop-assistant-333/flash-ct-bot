@@ -88,12 +88,6 @@ export function TopicAccuracy({ lessons }: TopicAccuracyProps) {
           {expanded ? 'Свернуть' : `Показать все (${sorted.length})`}
         </Button>
       ) : null}
-
-      {solvedAnything ? (
-        <p className="text-xs text-subtle">
-          Ниже {WEAK_BELOW}% — тему стоит повторить, от {STRONG_FROM}% — тема закрыта.
-        </p>
-      ) : null}
     </section>
   )
 }

@@ -1,6 +1,6 @@
 import { BookOpenCheck, ChartColumn, Dumbbell, User } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-import { NavLink, useLocation } from 'react-router'
+import { NavLink, useLocation, useNavigation } from 'react-router'
 
 import { ROUTES } from '@/app/routes'
 
@@ -29,6 +29,10 @@ const TABS: readonly Tab[] = [
  */
 export function BottomNav() {
   const { pathname } = useLocation()
+  // While a navigation is in flight, isActive still reflects the *current*
+  // (pre-navigation) URL — suppress it so the tab being left doesn't stay lit
+  // alongside the one being tapped (isPending), which would highlight both.
+  const hasPendingNavigation = useNavigation().state === 'loading'
 
   return (
     <nav
@@ -41,9 +45,11 @@ export function BottomNav() {
             <NavLink
               to={to}
               end={end}
-              className={({ isActive }) =>
+              className={({ isActive, isPending }) =>
                 `flex h-full flex-col items-center justify-center gap-1 transition-colors duration-150 ${
-                  isActive || (branch !== undefined && pathname.startsWith(branch))
+                  isPending ||
+                  (!hasPendingNavigation &&
+                    (isActive || (branch !== undefined && pathname.startsWith(branch))))
                     ? 'text-primary'
                     : 'text-subtle'
                 }`
