@@ -6,3 +6,7 @@ export { useAdminSubjects } from './hooks/use-admin-subjects'
  */
 export { adminSubjectsKeys } from './api/admin-subjects-keys'
 export type { SubjectDto } from './api/admin-subjects-api'
+export { CreateSubjectModal } from './ui/create-subject-modal'
+export { RenameSubjectModal } from './ui/rename-subject-modal'
+export { SubjectDetails } from './ui/subject-details'
+export { SubjectsList } from './ui/subjects-list'
