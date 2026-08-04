@@ -22,12 +22,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import jakarta.annotation.PreDestroy;
+import lombok.extern.slf4j.Slf4j;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +46,7 @@ import java.util.stream.Collectors;
  * <p>Everything here stays readable once the paid period is over: a student should not lose the
  * history of what they solved because a subscription lapsed.
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class StatsServiceImpl implements StatsService {
@@ -61,10 +68,26 @@ public class StatsServiceImpl implements StatsService {
     private int predictionMinAnswers;
 
     /**
-     * Estimates already produced, keyed by what they were produced from: a new answer changes the
-     * key and therefore the estimate, while reopening the tab costs nothing.
+     * Latest estimate produced for each student/subject, alongside the answer counts it was
+     * produced from. A new answer makes the stored key stop matching the current one, which marks
+     * the entry stale without discarding it: the stale estimate keeps being served instantly while
+     * a fresh one is computed in the background, so a request never blocks on the model.
      */
-    private final Map<PredictionKey, PredictionDto> predictions = new ConcurrentHashMap<>();
+    private final Map<StudentKey, CacheEntry> predictions = new ConcurrentHashMap<>();
+
+    /** Students currently being re-estimated, so a burst of requests doesn't queue up N model calls. */
+    private final Set<StudentKey> refreshing = ConcurrentHashMap.newKeySet();
+
+    /**
+     * The model call is the slow part, not this pool: virtual threads are cheap enough that one per
+     * in-flight refresh needs no bound of its own.
+     */
+    private final ExecutorService predictionExecutor = Executors.newVirtualThreadPerTaskExecutor();
+
+    @PreDestroy
+    void shutdownPredictionExecutor() {
+        predictionExecutor.shutdown();
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -84,9 +107,10 @@ public class StatsServiceImpl implements StatsService {
     }
 
     /**
-     * Deliberately not wrapped in a transaction of its own: the call to the model can take
-     * seconds, and holding a database connection open for the whole of it would be paid for by
-     * every other request.
+     * Never blocks on the model. A fresh estimate is either already cached, or gets computed on a
+     * background thread while this call returns immediately with whatever it can: the previous
+     * (stale) estimate if one exists, otherwise a {@code pending} placeholder. The caller is
+     * expected to poll again shortly while {@code pending} is {@code true}.
      */
     @Override
     public PredictionDto prediction(CurrentUser user, Integer subjectId) {
@@ -94,29 +118,56 @@ public class StatsServiceImpl implements StatsService {
         Counters window = userAnswerRepository.countSince(user.id(), subjectId, windowStart());
 
         if (window.getAnswered() < predictionMinAnswers) {
-            return new PredictionDto(subjectId, null, notEnoughData(window), LocalDateTime.now());
+            return new PredictionDto(subjectId, null, notEnoughData(window), null, false);
         }
 
+        StudentKey studentKey = new StudentKey(user.id(), subjectId);
         PredictionKey key = new PredictionKey(user.id(), subjectId, window.getAnswered(), window.getCorrect());
-        PredictionDto cached = predictions.get(key);
-        if (cached != null) {
-            return cached;
+        CacheEntry entry = predictions.get(studentKey);
+
+        if (entry != null && entry.key().equals(key)) {
+            return entry.dto();
         }
 
-        List<Lesson> lessons = lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId);
-        ScorePredictor.Prediction prediction = scorePredictor.predict(new ScorePredictor.Input(
-                subscription.getSubject().getName(),
-                (int) predictionWindow.toDays(),
-                toPeriod(window),
-                byLesson(user.id(), subjectId, lessons),
-                lessonsCompleted(user.id(), subjectId),
-                lessons.size()));
+        if (refreshing.add(studentKey)) {
+            String subjectName = subscription.getSubject().getName();
+            predictionExecutor.execute(() -> refresh(user.id(), subjectId, subjectName, studentKey, key, window));
+        }
 
-        PredictionDto result = new PredictionDto(
-                subjectId, prediction.score(), prediction.comment(), LocalDateTime.now());
-        predictions.keySet().removeIf(stored -> stored.sameStudent(key));
-        predictions.put(key, result);
-        return result;
+        if (entry != null) {
+            return pending(entry.dto());
+        }
+        return new PredictionDto(subjectId, null, "Считаем прогноз, обновите через несколько секунд", null, true);
+    }
+
+    /**
+     * Runs off the request thread; failures are logged and swallowed so a flaky model call never
+     * surfaces past whichever estimate is already cached - the next poll simply retries.
+     */
+    private void refresh(Integer userId, Integer subjectId, String subjectName,
+                         StudentKey studentKey, PredictionKey key, Counters window) {
+        try {
+            List<Lesson> lessons = lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId);
+            ScorePredictor.Prediction prediction = scorePredictor.predict(new ScorePredictor.Input(
+                    subjectName,
+                    (int) predictionWindow.toDays(),
+                    toPeriod(window),
+                    byLesson(userId, subjectId, lessons),
+                    lessonsCompleted(userId, subjectId),
+                    lessons.size()));
+
+            PredictionDto result = new PredictionDto(
+                    subjectId, prediction.score(), prediction.comment(), LocalDateTime.now(), false);
+            predictions.put(studentKey, new CacheEntry(key, result));
+        } catch (Exception exception) {
+            log.warn("Background score prediction failed for user {} subject {}", userId, subjectId, exception);
+        } finally {
+            refreshing.remove(studentKey);
+        }
+    }
+
+    private static PredictionDto pending(PredictionDto stale) {
+        return new PredictionDto(stale.subjectId(), stale.score(), stale.comment(), stale.computedAt(), true);
     }
 
     /** Every lesson of the subject, untouched ones included: a blank topic is a result too. */
@@ -172,10 +223,14 @@ public class StatsServiceImpl implements StatsService {
                 stats.getBestStreak() == null ? 0 : stats.getBestStreak());
     }
 
+    /** What a cached estimate was produced from: a new answer changes this and stales the entry. */
     private record PredictionKey(Integer userId, Integer subjectId, long answered, long correct) {
+    }
 
-        private boolean sameStudent(PredictionKey other) {
-            return userId.equals(other.userId()) && subjectId.equals(other.subjectId());
-        }
+    /** Identifies a student/subject regardless of how many answers they currently have. */
+    private record StudentKey(Integer userId, Integer subjectId) {
+    }
+
+    private record CacheEntry(PredictionKey key, PredictionDto dto) {
     }
 }

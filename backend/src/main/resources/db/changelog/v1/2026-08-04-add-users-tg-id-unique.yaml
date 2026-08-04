@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+
+  # tg_id is the only identity a Telegram user actually can't change; nothing stopped two
+  # rows from claiming the same one before this, which is exactly the bug behind the
+  # duplicate 'lowkkid' row. NULL stays allowed for users an admin pre-creates by username,
+  # before they have ever opened the mini app - Postgres UNIQUE does not conflict on NULLs.
+  - changeSet:
+      id: 2026-08-04-01-add-users-tg-id-unique
+      author: lowkkid
+      changes:
+        - addUniqueConstraint:
+            tableName: users
+            columnNames: tg_id
+            constraintName: users_tg_id_key

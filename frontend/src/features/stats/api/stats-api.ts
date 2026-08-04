@@ -29,3 +29,15 @@ export interface StatsDto {
 export function fetchStats(subjectId: number, signal: AbortSignal): Promise<StatsDto> {
   return http.get<StatsDto>('/stats', { query: { subjectId }, signal })
 }
+
+export interface PredictionDto {
+  subjectId: number
+  score: number | null
+  comment: string
+  computedAt: string | null
+  pending: boolean
+}
+
+export function fetchPrediction(subjectId: number, signal: AbortSignal): Promise<PredictionDto> {
+  return http.get<PredictionDto>('/stats/prediction', { query: { subjectId }, signal })
+}

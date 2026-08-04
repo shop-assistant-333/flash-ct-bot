@@ -33,7 +33,7 @@ export function SubjectStats({ subjectId }: SubjectStatsProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      <ScoreCard stats={statsQuery.data} />
+      <ScoreCard subjectId={subjectId} />
       <StatsOverview stats={statsQuery.data} />
       <TopicAccuracy lessons={statsQuery.data.byLesson} />
     </div>
