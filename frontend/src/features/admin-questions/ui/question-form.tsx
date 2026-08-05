@@ -2,13 +2,12 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 
 import { isApiError } from '@/shared/api'
-import { fieldErrors } from '@/shared/lib/form-errors'
+import { errorProp, fieldErrors } from '@/shared/lib/form-errors'
 import { Button } from '@/shared/ui/button'
 import { SelectField } from '@/shared/ui/select-field'
 import { TextField } from '@/shared/ui/text-field'
 import { TextareaField } from '@/shared/ui/textarea-field'
 
-import { errorProp } from '../lib/error-prop'
 import { QUESTION_TYPE_OPTIONS, toQuestionType } from '../lib/question-type'
 import {
   normalizeOptions,

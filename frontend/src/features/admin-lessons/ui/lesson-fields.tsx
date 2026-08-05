@@ -1,3 +1,4 @@
+import { errorProp } from '@/shared/lib/form-errors'
 import { TextField } from '@/shared/ui/text-field'
 import { TextareaField } from '@/shared/ui/textarea-field'
 
@@ -8,11 +9,6 @@ interface LessonFieldsProps {
   onChange: (values: LessonDraft) => void
   /** Per-field messages of a failed backend validation. */
   errors: Record<string, string>
-}
-
-/** `exactOptionalPropertyTypes`: no message means no `error` prop at all. */
-function errorProp(message: string | undefined): { error?: string } {
-  return message === undefined ? {} : { error: message }
 }
 
 /** The two fields of a lesson — shared by the create sheet and the edit form. */

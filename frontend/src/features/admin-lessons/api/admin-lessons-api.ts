@@ -1,4 +1,5 @@
-import { http, type QuestionType } from '@/shared/api'
+import { http } from '@/shared/api'
+import type { AdminQuestionDto } from '@/shared/api'
 
 export interface AdminLessonItem {
   id: number
@@ -7,30 +8,6 @@ export interface AdminLessonItem {
   description: string
   order: number
   questionCount: number
-}
-
-export interface AdminAnswerOptionDto {
-  id: number
-  text: string
-  correct: boolean
-}
-
-/**
- * Needed here only to list and reorder the questions of a lesson. The questions
- * feature declares its own copy on purpose — merging both into
- * `shared/api/dto.ts` is task F, so two parallel tasks never edit one file.
- */
-export interface AdminQuestionDto {
-  id: number
-  /** Exactly one of `lessonId` / `subjectId` is set. */
-  lessonId: number | null
-  subjectId: number | null
-  title: string
-  type: QuestionType
-  order: number
-  correctAnswer: string | null
-  explanation: string
-  options: AdminAnswerOptionDto[]
 }
 
 export interface AdminLessonDto {

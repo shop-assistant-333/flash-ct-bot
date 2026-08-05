@@ -2,13 +2,12 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 
 import type { UserRole } from '@/shared/api'
-import { fieldErrors } from '@/shared/lib/form-errors'
+import { errorProp, fieldErrors } from '@/shared/lib/form-errors'
 import { Button } from '@/shared/ui/button'
 import { SelectField } from '@/shared/ui/select-field'
 import { TextField } from '@/shared/ui/text-field'
 
 import type { AdminUserItem, UserRequest } from '../api/admin-users-api'
-import { errorProp } from '../lib/field-error'
 
 interface UserFormProps {
   /** Undefined on the "new user" screen; otherwise the values to start from. */

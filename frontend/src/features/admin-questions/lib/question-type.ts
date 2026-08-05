@@ -1,11 +1,6 @@
 import type { QuestionType } from '@/shared/api'
+import { QUESTION_TYPE_LABEL } from '@/shared/lib/question-type'
 import type { SelectOption } from '@/shared/ui/select-field'
-
-export const QUESTION_TYPE_LABEL: Record<QuestionType, string> = {
-  SINGLE_ANSWER: 'Один вариант',
-  MULTI_ANSWER: 'Несколько вариантов',
-  INPUT: 'Ввод ответа',
-}
 
 export const QUESTION_TYPE_OPTIONS: SelectOption[] = [
   { value: 'SINGLE_ANSWER', label: QUESTION_TYPE_LABEL.SINGLE_ANSWER },

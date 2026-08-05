@@ -2,13 +2,12 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 
 import type { LocalDateTime, SubscriptionItem } from '@/shared/api'
+import { errorProp } from '@/shared/lib/form-errors'
 import { toDateInput, toLocalDateTime } from '@/shared/lib/local-date-time'
 import { Button } from '@/shared/ui/button'
 import { Modal } from '@/shared/ui/modal'
 import { SelectField } from '@/shared/ui/select-field'
 import { TextField } from '@/shared/ui/text-field'
-
-import { errorProp } from '../lib/field-error'
 
 export interface SubjectOption {
   id: number

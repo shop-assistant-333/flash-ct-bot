@@ -1,25 +1,5 @@
 import { http } from '@/shared/api'
-import type { QuestionType } from '@/shared/api'
-
-/** Unlike the student `AnswerOptionDto`, the admin one carries the verdict. */
-export interface AdminAnswerOptionDto {
-  id: number
-  text: string
-  correct: boolean
-}
-
-export interface AdminQuestionDto {
-  id: number
-  /** Exactly one of `lessonId` / `subjectId` is filled — see backend/API.md, "Вопросы". */
-  lessonId: number | null
-  subjectId: number | null
-  title: string
-  type: QuestionType
-  order: number
-  correctAnswer: string | null
-  explanation: string
-  options: AdminAnswerOptionDto[]
-}
+import type { AdminQuestionDto, QuestionType } from '@/shared/api'
 
 export interface AnswerOptionRequest {
   /** Absent for a new option; the backend creates it. */

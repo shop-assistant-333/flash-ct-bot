@@ -1,13 +1,13 @@
 import { ListChecks } from 'lucide-react'
 
+import type { AdminQuestionDto } from '@/shared/api'
 import { LinkButton } from '@/shared/ui/link-button'
 import { ListRow } from '@/shared/ui/list-row'
+import { QuestionTypeBadge } from '@/shared/ui/question-type-badge'
 import { ReorderableList } from '@/shared/ui/reorderable-list'
 import { StateMessage } from '@/shared/ui/state-message'
 
-import type { AdminQuestionDto } from '../api/admin-lessons-api'
 import { useReorderLessonQuestions } from '../hooks/use-reorder-lesson-questions'
-import { QuestionTypeBadge } from './question-type-badge'
 
 interface LessonQuestionsProps {
   lessonId: number

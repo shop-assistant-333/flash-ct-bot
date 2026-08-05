@@ -1,10 +1,6 @@
-import type { QuestionType } from '@/shared/api'
+import type { AdminQuestionDto, QuestionType } from '@/shared/api'
 
-import type {
-  AdminQuestionDto,
-  AnswerOptionRequest,
-  QuestionRequest,
-} from '../api/admin-questions-api'
+import type { AnswerOptionRequest, QuestionRequest } from '../api/admin-questions-api'
 
 /**
  * Draft of one answer option. A freshly added option has no backend id yet, so

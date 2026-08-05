@@ -1,11 +1,11 @@
 import { ListPlus, WifiOff } from 'lucide-react'
 
 import { ListRow } from '@/shared/ui/list-row'
+import { QuestionTypeBadge } from '@/shared/ui/question-type-badge'
 import { Spinner } from '@/shared/ui/spinner'
 import { StateMessage } from '@/shared/ui/state-message'
 
 import { usePracticeQuestions } from '../hooks/use-practice-questions'
-import { QuestionTypeBadge } from './question-type-badge'
 
 interface PracticeQuestionsListProps {
   subjectId: number
