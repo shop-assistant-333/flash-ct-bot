@@ -1,0 +1,123 @@
+name: Frontend CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci-cd.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: frontend-ci-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SERVER_HOST: ${{ secrets.SERVER_HOST }}
+  SERVER_USER: ${{ secrets.SERVER_USER }}
+  SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+  SERVER_FRONTEND_DEPLOY_PATH: ${{ secrets.SERVER_FRONTEND_DEPLOY_PATH }}
+  ARCHIVE_NAME: exam-preparation-frontend.tar.gz
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          # .env.development is not loaded for a production build, so this has to
+          # come from the environment. Falls back to the relative path the reverse
+          # proxy serves, otherwise the bundle throws at startup (shared/config/env.ts).
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL || '/api' }}
+
+      - name: Archive dist
+        run: tar -czf ${{ env.ARCHIVE_NAME }} -C dist .
+
+      - name: Upload dist artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/${{ env.ARCHIVE_NAME }}
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend
+
+      - name: Transfer dist to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SERVER_SSH_KEY }}
+          source: "frontend/${{ env.ARCHIVE_NAME }}"
+          target: /tmp
+          strip_components: 1
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SERVER_SSH_KEY }}
+          script: |
+            set -e
+
+            DEPLOY_PATH="${{ env.SERVER_FRONTEND_DEPLOY_PATH }}"
+            if [ -z "$DEPLOY_PATH" ]; then
+              echo "SERVER_FRONTEND_DEPLOY_PATH is not set" >&2
+              exit 1
+            fi
+
+            ARCHIVE="/tmp/${{ env.ARCHIVE_NAME }}"
+            RELEASE_DIR="${DEPLOY_PATH}.new"
+            PREVIOUS_DIR="${DEPLOY_PATH}.old"
+
+            echo "Unpacking release..."
+            rm -rf "$RELEASE_DIR" "$PREVIOUS_DIR"
+            mkdir -p "$RELEASE_DIR"
+            tar -xzf "$ARCHIVE" -C "$RELEASE_DIR"
+
+            # Swap directories instead of copying over the live one: this drops
+            # assets from the previous build (Vite hashes filenames, so stale
+            # ones would pile up forever) and keeps nginx from serving a
+            # half-written tree.
+            echo "Swapping in new release..."
+            if [ -d "$DEPLOY_PATH" ]; then
+              mv "$DEPLOY_PATH" "$PREVIOUS_DIR"
+            else
+              mkdir -p "$(dirname "$DEPLOY_PATH")"
+            fi
+            mv "$RELEASE_DIR" "$DEPLOY_PATH"
+
+            rm -rf "$PREVIOUS_DIR"
+            rm -f "$ARCHIVE"
+
+            echo "Deployment completed!"
+            ls -la "$DEPLOY_PATH"

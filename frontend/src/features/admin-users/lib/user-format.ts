@@ -18,6 +18,6 @@ export function formatDate(value: string): string {
 
 /** A user added by username alone has no name yet — the username is the title then. */
 export function userDisplayName(user: NamedUser): string {
-  const fullName = `${user.firstName} ${user.lastName}`.trim()
+  const fullName = `${user.firstName} ${user.lastName ? user.lastName : ''}`.trim()
   return fullName === '' ? user.username : fullName
 }

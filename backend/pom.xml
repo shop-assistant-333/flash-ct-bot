@@ -75,6 +75,8 @@
     </dependencies>
 
     <build>
+        <!-- Stable name so the Dockerfile and CI don't chase the version. -->
+        <finalName>exam-preparation-backend</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

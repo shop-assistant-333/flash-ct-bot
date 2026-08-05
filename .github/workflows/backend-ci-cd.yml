@@ -1,0 +1,124 @@
+name: Backend CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'backend/**'
+      - '.github/workflows/backend-ci-cd.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: backend-ci-cd-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  SERVER_HOST: ${{ secrets.SERVER_HOST }}
+  SERVER_USER: ${{ secrets.SERVER_USER }}
+  SERVER_SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
+  SERVER_DEPLOY_PATH: ${{ secrets.SERVER_DEPLOY_PATH }}
+  DOCKER_IMAGE_NAME: exam-preparation-backend
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Grant execute permission for mvnw
+        run: chmod +x mvnw
+
+      - name: Build with Maven
+        run: ./mvnw -B -ntp package -DskipTests
+
+      - name: Upload jar artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jar
+          path: backend/target/${{ env.DOCKER_IMAGE_NAME }}.jar
+          retention-days: 1
+          if-no-files-found: error
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download jar artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar
+          path: backend/target
+
+      - name: Build Docker image
+        run: docker build -t ${{ env.DOCKER_IMAGE_NAME }} .
+
+      - name: Save Docker image to tar
+        run: |
+          docker save -o ${{ env.DOCKER_IMAGE_NAME }}.tar ${{ env.DOCKER_IMAGE_NAME }}
+          ls -la *.tar
+
+      - name: Transfer Docker image to server
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SERVER_SSH_KEY }}
+          source: "backend/${{ env.DOCKER_IMAGE_NAME }}.tar"
+          target: ${{ env.SERVER_DEPLOY_PATH }}
+          strip_components: 1
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ env.SERVER_HOST }}
+          username: ${{ env.SERVER_USER }}
+          key: ${{ env.SERVER_SSH_KEY }}
+          script: |
+            cd ${{ env.SERVER_DEPLOY_PATH }}
+
+            # Read the port the app binds to from .env
+            SERVER_PORT="$(grep -E '^SERVER_PORT=' .env | head -n1 | cut -d= -f2- | sed 's/[^0-9]//g')"
+            if [ -z "$SERVER_PORT" ]; then
+              echo "SERVER_PORT not found or empty in .env" >&2
+              exit 1
+            fi
+            echo "Publishing port $SERVER_PORT"
+
+            echo "Stopping existing container..."
+            docker stop ${{ env.DOCKER_IMAGE_NAME }}-container || echo "Container already stopped"
+            docker rm ${{ env.DOCKER_IMAGE_NAME }}-container || echo "Container already deleted"
+            docker rmi ${{ env.DOCKER_IMAGE_NAME }} || echo "Image already deleted"
+
+            echo "Loading new Docker image..."
+            docker load -i ${{ env.DOCKER_IMAGE_NAME }}.tar
+
+            echo "Starting new container..."
+            docker run -d \
+              --name ${{ env.DOCKER_IMAGE_NAME }}-container \
+              -p "${SERVER_PORT}:${SERVER_PORT}" \
+              --env-file .env \
+              --restart unless-stopped \
+              --network shared-services \
+              ${{ env.DOCKER_IMAGE_NAME }}
+
+            echo "Deployment completed!"
+            docker ps | grep ${{ env.DOCKER_IMAGE_NAME }}
