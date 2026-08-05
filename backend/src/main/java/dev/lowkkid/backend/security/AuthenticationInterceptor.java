@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -21,6 +22,10 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        if (CorsUtils.isPreFlightRequest(request)) {
+            return true;
+        }
+
         String initData = request.getHeader(INIT_DATA_HEADER);
         if (initData == null || initData.isBlank()) {
             throw new UnauthorizedException("Missing " + INIT_DATA_HEADER + " header");
