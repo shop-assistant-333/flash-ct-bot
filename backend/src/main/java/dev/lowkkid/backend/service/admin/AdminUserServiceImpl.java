@@ -8,21 +8,26 @@ import dev.lowkkid.backend.entity.UserRole;
 import dev.lowkkid.backend.entity.UserSubjectProgress;
 import dev.lowkkid.backend.exception.ConflictException;
 import dev.lowkkid.backend.exception.NotFoundException;
+import dev.lowkkid.backend.model.StreakDto;
 import dev.lowkkid.backend.model.SubscriptionItem;
 import dev.lowkkid.backend.model.admin.AdminUserDto;
 import dev.lowkkid.backend.model.admin.AdminUserItem;
 import dev.lowkkid.backend.model.admin.SubscriptionRequest;
+import dev.lowkkid.backend.model.admin.UserActivityItem;
 import dev.lowkkid.backend.model.admin.UserProgressItem;
 import dev.lowkkid.backend.model.admin.UserRequest;
 import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.SubjectRepository;
 import dev.lowkkid.backend.repository.SubscriptionRepository;
+import dev.lowkkid.backend.repository.UserAnswerRepository;
+import dev.lowkkid.backend.repository.UserAnswerRepository.Counters;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
 import dev.lowkkid.backend.repository.UserAttemptRepository.SubjectAttemptCount;
 import dev.lowkkid.backend.repository.UserPracticeStatsRepository;
 import dev.lowkkid.backend.repository.UserRepository;
 import dev.lowkkid.backend.repository.UserSessionRepository;
 import dev.lowkkid.backend.repository.UserSubjectProgressRepository;
+import dev.lowkkid.backend.service.AttemptService;
 import dev.lowkkid.backend.service.SubscriptionAccess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -54,6 +59,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     private final SubscriptionRepository subscriptionRepository;
     private final LessonRepository lessonRepository;
     private final UserAttemptRepository attemptRepository;
+    private final UserAnswerRepository userAnswerRepository;
     private final UserSessionRepository sessionRepository;
     private final UserSubjectProgressRepository progressRepository;
     private final UserPracticeStatsRepository practiceStatsRepository;
@@ -191,7 +197,25 @@ public class AdminUserServiceImpl implements AdminUserService {
                 student.getLastName(),
                 student.getRole(),
                 subscriptions.stream().map(SubscriptionAccess::toItem).toList(),
-                progressOf(student.getId(), subscriptions));
+                progressOf(student.getId(), subscriptions),
+                activityOf(student.getId()));
+    }
+
+    /** Same numbers the student sees on their statistics tab, but summed over every subject. */
+    private UserActivityItem activityOf(Integer userId) {
+        Counters answers = userAnswerRepository.countAllSubjects(userId);
+        StreakDto streak = practiceStatsRepository.findById(userId)
+                .map(stats -> new StreakDto(
+                        stats.getCurrentStreak() == null ? 0 : stats.getCurrentStreak(),
+                        stats.getBestStreak() == null ? 0 : stats.getBestStreak()))
+                .orElseGet(() -> new StreakDto(0, 0));
+
+        return new UserActivityItem(
+                (int) answers.getAnswered(),
+                (int) answers.getCorrect(),
+                AttemptService.accuracyPercent(answers.getCorrect(), answers.getAnswered()),
+                sessionRepository.totalSecondsSpent(userId) / 60,
+                streak);
     }
 
     /**

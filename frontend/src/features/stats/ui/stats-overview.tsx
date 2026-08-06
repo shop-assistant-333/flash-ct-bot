@@ -8,10 +8,11 @@ import {
   TrendingUp,
 } from 'lucide-react'
 
+import { formatMinutes } from '@/shared/lib/format-duration'
 import { ProgressBar } from '@/shared/ui/progress-bar'
 
 import type { StatsDto } from '../api/stats-api'
-import { formatMinutes, pluralize } from '../lib/format'
+import { pluralize } from '../lib/format'
 import { StatTile } from './stat-tile'
 
 interface StatsOverviewProps {
@@ -34,7 +35,7 @@ export function StatsOverview({ stats }: StatsOverviewProps) {
     <div className="grid grid-cols-2 gap-3">
       <StatTile
         icon={ListChecks}
-        label="Решено"
+        label="Решено заданий"
         value={String(total.answered)}
         hint={
           <span className="text-xs text-subtle tabular-nums">
@@ -81,27 +82,19 @@ export function StatsOverview({ stats }: StatsOverviewProps) {
         }
       />
 
-      <StatTile
-        icon={Clock}
-        label="В приложении"
-        value={formatMinutes(stats.timeSpentMinutes)}
-        hint={<span className="text-xs text-subtle">по всем предметам</span>}
-      />
+      <StatTile icon={Clock} label="В приложении" value={formatMinutes(stats.timeSpentMinutes)} />
 
       <div className="col-span-2 flex items-center gap-3 rounded-card bg-streak-soft p-4">
         <Flame aria-hidden className="size-6 shrink-0 text-streak" />
         <div className="flex flex-col">
-          <span className="text-sm text-muted">Стрик в практике</span>
+          <span className="text-sm text-muted">Рекорд стрика в практике</span>
           <span className="text-2xl font-bold text-streak-soft-fg tabular-nums">
-            {streak.current}{' '}
+            {streak.best}{' '}
             <span className="text-sm font-normal text-muted">
-              {pluralize(streak.current, 'ответ', 'ответа', 'ответов')} подряд
+              {pluralize(streak.best, 'ответ', 'ответа', 'ответов')} подряд
             </span>
           </span>
         </div>
-        <span className="ml-auto shrink-0 text-xs text-muted tabular-nums">
-          рекорд {streak.best}
-        </span>
       </div>
     </div>
   )

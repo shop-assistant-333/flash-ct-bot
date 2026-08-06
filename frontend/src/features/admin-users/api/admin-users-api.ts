@@ -1,5 +1,11 @@
 import { http } from '@/shared/api'
-import type { LocalDateTime, PageResponse, SubscriptionItem, UserRole } from '@/shared/api'
+import type {
+  LocalDateTime,
+  PageResponse,
+  StreakDto,
+  SubscriptionItem,
+  UserRole,
+} from '@/shared/api'
 
 export interface AdminUserItem {
   id: number
@@ -20,8 +26,17 @@ export interface UserProgressItem {
   lessonsTotal: number
 }
 
+export interface UserActivityItem {
+  answered: number
+  correct: number
+  accuracyPercent: number
+  timeSpentMinutes: number
+  streak: StreakDto
+}
+
 export interface AdminUserDto extends AdminUserItem {
   progress: UserProgressItem[]
+  activity: UserActivityItem
 }
 
 export interface UserRequest {

@@ -166,7 +166,7 @@ public class AttemptService {
                 unlocked == null ? null : unlocked.getId());
     }
 
-    static int accuracyPercent(long correct, long total) {
+    public static int accuracyPercent(long correct, long total) {
         return total == 0 ? 0 : Math.round(correct * 100f / total);
     }
 

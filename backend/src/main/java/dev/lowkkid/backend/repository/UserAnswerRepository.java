@@ -30,6 +30,14 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             """)
     Counters countAll(@Param("userId") Integer userId, @Param("subjectId") Integer subjectId);
 
+    /** The same counters over every subject at once, for the admin card of a student. */
+    @Query("""
+            select count(a) as answered, count(case when a.correct = true then 1 end) as correct
+            from UserAnswer a
+            where a.attempt.user.id = :userId
+            """)
+    Counters countAllSubjects(@Param("userId") Integer userId);
+
     /** The same counters limited to a window, which is what the score prediction reasons over. */
     @Query("""
             select count(a) as answered, count(case when a.correct = true then 1 end) as correct

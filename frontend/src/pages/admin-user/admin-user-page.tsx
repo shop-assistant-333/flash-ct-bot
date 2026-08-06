@@ -6,6 +6,7 @@ import { useAdminSubjects } from '@/features/admin-subjects'
 import {
   DeleteUserButton,
   SubscriptionsSection,
+  UserActivityCard,
   UserForm,
   UserProgressList,
   useAdminUser,
@@ -106,6 +107,8 @@ export function AdminUserPage() {
         subscriptions={user.subscriptions}
         subjects={subjectsQuery.data ?? []}
       />
+
+      <UserActivityCard activity={user.activity} />
 
       <UserProgressList progress={user.progress} />
 

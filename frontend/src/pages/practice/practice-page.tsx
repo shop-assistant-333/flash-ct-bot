@@ -12,7 +12,7 @@ export function PracticePage() {
   if (subjectsQuery.isPending) {
     return (
       <section className="flex flex-col gap-6">
-        <PageHeader title="Практика" description="Случайные задания из всех уроков" />
+        <PageHeader title="Практика" description="База заданий: тренируйся без ограничений" />
         <Spinner />
       </section>
     )
@@ -38,7 +38,7 @@ export function PracticePage() {
     <section className="flex flex-col gap-6">
       <PageHeader
         title="Практика"
-        description="Случайные задания из всех уроков"
+        description="База заданий: тренируйся без ограничений"
         {...(selectedSubject ? { action: <PracticeStreak subjectId={selectedSubject.id} /> } : {})}
       />
 

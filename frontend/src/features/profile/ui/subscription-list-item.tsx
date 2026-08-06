@@ -12,7 +12,7 @@ export function SubscriptionListItem({ subscription }: SubscriptionListItemProps
     <li className="flex items-center justify-between gap-3 rounded-card bg-surface p-4 shadow-card">
       <div className="flex min-w-0 flex-col gap-0.5">
         <span className="truncate text-base font-medium text-fg">{subscription.subjectName}</span>
-        <span className="text-sm text-muted">до {formatDate(subscription.paidUntil)}</span>
+        <span className="text-sm text-muted">оплачено до {formatDate(subscription.paidUntil)}</span>
       </div>
       <SubscriptionBadge subscription={subscription} />
     </li>
