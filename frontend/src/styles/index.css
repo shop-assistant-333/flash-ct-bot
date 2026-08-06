@@ -193,6 +193,27 @@
   a {
     touch-action: manipulation;
   }
+
+  /*
+   * iOS раскладывает поля даты по своей внутренней ширине и игнорирует `w-full`:
+   * в мини-аппе на айфоне такое поле вылезает за правый край экрана и тянет за
+   * собой горизонтальный скролл. Снимаем нативную отрисовку и разрешаем
+   * внутреннему блоку значения сжиматься.
+   */
+  input[type='date'],
+  input[type='datetime-local'] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  input[type='date']::-webkit-date-and-time-value,
+  input[type='datetime-local']::-webkit-date-and-time-value {
+    width: 100%;
+    min-width: 0;
+    text-align: left;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
