@@ -32,17 +32,32 @@ export function LessonFields({ values, onChange, errors }: LessonFieldsProps) {
         onChange={(description) => onChange({ ...values, description })}
         {...errorProp(errors.description)}
       />
-      <TextField
-        label="Открыть доступ"
-        type="datetime-local"
-        value={values.opensAt === null ? '' : toDateTimeInput(values.opensAt)}
-        hint="Дата и время, когда урок откроется всем ученикам. Пусто — урок под замком"
-        // Очистка поля даёт пустую строку — это и есть «снять дату».
-        onChange={(input) =>
-          onChange({ ...values, opensAt: input === '' ? null : fromDateTimeInput(input) })
-        }
-        {...errorProp(errors.opensAt)}
-      />
+      <div className="flex flex-col gap-1">
+        <TextField
+          label="Открыть доступ"
+          type="datetime-local"
+          value={values.opensAt === null ? '' : toDateTimeInput(values.opensAt)}
+          hint="Дата и время, когда урок откроется всем ученикам. Пусто — урок под замком"
+          // Очистка поля даёт пустую строку — это и есть «снять дату».
+          onChange={(input) =>
+            onChange({ ...values, opensAt: input === '' ? null : fromDateTimeInput(input) })
+          }
+          {...errorProp(errors.opensAt)}
+        />
+        {/*
+         * Своя кнопка вместо «Сброс» в нативном пикере: на iOS он закрывает
+         * попап, не отдавая пустое значение полю, и дата остаётся на месте.
+         */}
+        {values.opensAt === null ? null : (
+          <button
+            type="button"
+            onClick={() => onChange({ ...values, opensAt: null })}
+            className="flex min-h-11 items-center self-start text-sm text-link"
+          >
+            Убрать дату
+          </button>
+        )}
+      </div>
     </>
   )
 }
