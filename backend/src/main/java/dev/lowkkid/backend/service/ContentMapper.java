@@ -27,6 +27,7 @@ public class ContentMapper {
                 lesson.getTitle(),
                 lesson.getDescription(),
                 lesson.getOrder(),
+                lesson.getOpensAt(),
                 status,
                 toQuestions(questions));
     }

@@ -1,0 +1,25 @@
+databaseChangeLog:
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+
+  # Homework follows the live lessons of the teacher instead of the pace of the student: the admin
+  # writes down when every lesson opens, and until that moment it carries a padlock. An empty date
+  # means the lesson has not been scheduled yet, so it stays closed.
+  - changeSet:
+      id: 2026-08-06-01-add-lesson-opens-at
+      author: lowkkid
+      changes:
+        - addColumn:
+            tableName: lessons
+            columns:
+              - column:
+                  name: opens_at
+                  type: timestamp
+
+  # Lessons no longer open one after another, so there is no position to keep for a student:
+  # how far they got is read off their attempts.
+  - changeSet:
+      id: 2026-08-06-02-drop-user-subject-progress
+      author: lowkkid
+      changes:
+        - dropTable:
+            tableName: user_subject_progress

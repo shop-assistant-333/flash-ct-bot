@@ -54,14 +54,16 @@ public class AttemptService {
     private final UserAttemptRepository attemptRepository;
     private final UserAnswerRepository userAnswerRepository;
     private final SubscriptionAccess subscriptionAccess;
-    private final ProgressService progressService;
     private final AnswerGrader answerGrader;
     private final ContentMapper contentMapper;
 
     /**
      * Starts the lesson, or resumes the existing attempt with every answer already given.
      *
-     * @throws ForbiddenException if the lesson is locked or the subject is not paid for
+     * <p>A lesson whose date the admin moved forward stays reachable for the students who had
+     * already started it, so that nobody loses work in progress.
+     *
+     * @throws ForbiddenException if the lesson has not opened yet or the subject is not paid for
      */
     @Transactional
     public AttemptDto startOrResume(CurrentUser user, Integer lessonId) {
@@ -70,18 +72,19 @@ public class AttemptService {
         Subject subject = lesson.getSubject();
         subscriptionAccess.requireActive(user.id(), subject.getId());
 
-        User student = userRepository.findById(user.id())
-                .orElseThrow(() -> NotFoundException.of("User", user.id()));
-        List<Lesson> ordered = lessonRepository.findBySubject_IdOrderByOrderAsc(subject.getId());
-        int unlockedThrough = progressService.unlockedThroughOrStart(student, subject, ordered);
-        if (progressService.indexOf(ordered, lessonId) > unlockedThrough) {
+        UserAttempt existing = attemptRepository
+                .findFirstByUser_IdAndLesson_IdOrderByStartedAtDesc(user.id(), lessonId)
+                .orElse(null);
+        if (existing == null && !LessonAccess.isOpen(lesson)) {
             throw ForbiddenException.lessonLocked(lessonId);
         }
 
-        UserAttempt attempt = attemptRepository
-                .findFirstByUser_IdAndLesson_IdOrderByStartedAtDesc(user.id(), lessonId)
-                .orElseGet(() -> open(student, lesson));
-        return toDto(attempt, lesson);
+        if (existing != null) {
+            return toDto(existing, lesson);
+        }
+        User student = userRepository.findById(user.id())
+                .orElseThrow(() -> NotFoundException.of("User", user.id()));
+        return toDto(open(student, lesson), lesson);
     }
 
     /** Current state of an attempt of this user. */
@@ -129,7 +132,7 @@ public class AttemptService {
         return answerGrader.toResult(graded, lastQuestion);
     }
 
-    /** Finishes the attempt, scores it and unlocks the next lesson of the subject. */
+    /** Finishes the attempt and scores it. */
     @Transactional
     public AttemptResultDto complete(CurrentUser user, Long attemptId) {
         UserAttempt attempt = ownedAttempt(user, attemptId);
@@ -152,18 +155,13 @@ public class AttemptService {
         attemptRepository.save(attempt);
 
         int correctCount = (int) answers.stream().filter(answer -> Boolean.TRUE.equals(answer.getCorrect())).count();
-        Subject subject = lesson.getSubject();
-        List<Lesson> ordered = lessonRepository.findBySubject_IdOrderByOrderAsc(subject.getId());
-        Lesson unlocked = progressService.unlockNext(attempt.getUser(), subject, ordered, lesson);
-
         return new AttemptResultDto(
                 attempt.getId(),
                 lesson.getId(),
                 correctCount,
                 questions.size(),
                 accuracyPercent(correctCount, questions.size()),
-                completedAt,
-                unlocked == null ? null : unlocked.getId());
+                completedAt);
     }
 
     public static int accuracyPercent(long correct, long total) {

@@ -5,8 +5,6 @@ import type { AttemptResultDto } from '../api/lessons-api'
 interface AttemptResultProps {
   result: AttemptResultDto
   lessonsHref: string
-  /** Address of the lesson this completion unlocked, if there is one. */
-  nextLessonHref: string | null
 }
 
 function comment(accuracyPercent: number): string {
@@ -17,7 +15,7 @@ function comment(accuracyPercent: number): string {
 }
 
 /** Summary right after the lesson is finished — style guide §6. */
-export function AttemptResult({ result, lessonsHref, nextLessonHref }: AttemptResultProps) {
+export function AttemptResult({ result, lessonsHref }: AttemptResultProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-2 rounded-card bg-surface p-4 text-center shadow-card">
@@ -28,17 +26,11 @@ export function AttemptResult({ result, lessonsHref, nextLessonHref }: AttemptRe
         <p className="text-sm text-muted">{comment(result.accuracyPercent)}</p>
       </div>
 
-      {nextLessonHref === null ? (
-        <p className="text-center text-sm text-muted">
-          Это был последний урок по предмету. Закрепить темы можно на вкладке «Практика».
-        </p>
-      ) : (
-        <LinkButton to={nextLessonHref}>Следующий урок</LinkButton>
-      )}
+      <p className="text-center text-sm text-muted">
+        Остальные уроки открываются по расписанию. Закрепить тему можно на вкладке «Практика».
+      </p>
 
-      <LinkButton to={lessonsHref} variant="secondary">
-        К списку уроков
-      </LinkButton>
+      <LinkButton to={lessonsHref}>К списку уроков</LinkButton>
     </div>
   )
 }

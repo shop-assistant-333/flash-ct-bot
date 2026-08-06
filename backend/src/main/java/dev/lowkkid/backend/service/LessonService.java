@@ -22,7 +22,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Homework tab: the list of lesson cards with their padlocks.
+ * Homework tab: the list of lesson cards with their padlocks, which come from the schedule the
+ * admin set up rather than from how far the student got.
  */
 @Service
 @RequiredArgsConstructor
@@ -33,7 +34,6 @@ public class LessonService {
     private final UserAttemptRepository attemptRepository;
     private final UserAnswerRepository userAnswerRepository;
     private final SubscriptionAccess subscriptionAccess;
-    private final ProgressService progressService;
 
     /**
      * Homework list of a subject, ordered by the admin defined order, each row carrying its lock
@@ -46,7 +46,6 @@ public class LessonService {
         subscriptionAccess.requireActive(user.id(), subjectId);
 
         List<Lesson> lessons = lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId);
-        int unlockedThrough = progressService.unlockedThrough(user.id(), subjectId, lessons);
 
         Map<Integer, Long> questionCounts = questionRepository.countByLessonOfSubject(subjectId).stream()
                 .collect(Collectors.toMap(LessonQuestionCount::getLessonId, LessonQuestionCount::getCount));
@@ -58,26 +57,29 @@ public class LessonService {
                 .collect(Collectors.toMap(LessonCounters::getLessonId, LessonCounters::getCorrect));
 
         List<LessonItem> items = new ArrayList<>(lessons.size());
-        for (int index = 0; index < lessons.size(); index++) {
-            Lesson lesson = lessons.get(index);
+        for (Lesson lesson : lessons) {
             UserAttempt attempt = attempts.get(lesson.getId());
             items.add(new LessonItem(
                     lesson.getId(),
                     lesson.getTitle(),
                     lesson.getDescription(),
                     lesson.getOrder(),
-                    statusOf(index, unlockedThrough, attempt),
+                    lesson.getOpensAt(),
+                    statusOf(lesson, attempt),
                     questionCounts.getOrDefault(lesson.getId(), 0L).intValue(),
                     attempt == null ? null : correctAnswers.getOrDefault(lesson.getId(), 0L).intValue()));
         }
         return items;
     }
 
-    /** Everything up to the current lesson is open; a started lesson also reports its own state. */
-    static LessonStatus statusOf(int lessonIndex, int unlockedThrough, UserAttempt attempt) {
+    /**
+     * A lesson opens on its date; a started one reports its own state instead, so moving the date
+     * of a lesson somebody is already solving does not take it away from them.
+     */
+    static LessonStatus statusOf(Lesson lesson, UserAttempt attempt) {
         if (attempt != null) {
             return attempt.getCompletedAt() != null ? LessonStatus.COMPLETED : LessonStatus.IN_PROGRESS;
         }
-        return lessonIndex <= unlockedThrough ? LessonStatus.AVAILABLE : LessonStatus.LOCKED;
+        return LessonAccess.isOpen(lesson) ? LessonStatus.AVAILABLE : LessonStatus.LOCKED;
     }
 }

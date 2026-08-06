@@ -34,7 +34,11 @@ export function UserProgressList({ progress }: UserProgressListProps) {
                 max={item.lessonsTotal}
                 label={`Прогресс по предмету «${item.subjectName}»`}
               />
-              <span className="text-xs text-muted">Сейчас: {item.currentLessonTitle}</span>
+              <span className="text-xs text-muted">
+                {item.lastCompletedLessonTitle === null
+                  ? 'Ещё не сдавал уроки по предмету'
+                  : `Последний сданный: ${item.lastCompletedLessonTitle}`}
+              </span>
             </li>
           ))}
         </ul>

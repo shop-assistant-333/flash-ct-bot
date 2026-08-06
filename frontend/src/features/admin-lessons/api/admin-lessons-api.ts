@@ -1,5 +1,5 @@
 import { http } from '@/shared/api'
-import type { AdminQuestionDto } from '@/shared/api'
+import type { AdminQuestionDto, LocalDateTime } from '@/shared/api'
 
 export interface AdminLessonItem {
   id: number
@@ -7,6 +7,8 @@ export interface AdminLessonItem {
   title: string
   description: string
   order: number
+  /** When the lesson opens for the students; null while it is not scheduled. */
+  opensAt: LocalDateTime | null
   questionCount: number
 }
 
@@ -16,6 +18,7 @@ export interface AdminLessonDto {
   title: string
   description: string
   order: number
+  opensAt: LocalDateTime | null
   questions: AdminQuestionDto[]
 }
 
@@ -25,12 +28,15 @@ export interface LessonRequest {
   description?: string
   /** Left out by the forms: without it the lesson goes to the end of the list. */
   order?: number
+  /** Always sent: null takes the date away and locks the lesson again. */
+  opensAt: LocalDateTime | null
 }
 
 /** The part of `LessonRequest` a form owns; `subjectId` comes from the route. */
 export interface LessonDraft {
   title: string
   description: string
+  opensAt: LocalDateTime | null
 }
 
 export interface ReorderRequest {

@@ -18,9 +18,9 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     @EntityGraph(attributePaths = "answerOptions")
     List<Question> findByLesson_IdOrderByOrderAsc(Integer lessonId);
 
-    /** Part of the practice deck that comes from the lessons already unlocked for the student. */
+    /** Part of the practice deck that comes from the homework of a subject. */
     @EntityGraph(attributePaths = "answerOptions")
-    List<Question> findByLesson_IdIn(Collection<Integer> lessonIds);
+    List<Question> findByLesson_Subject_Id(Integer subjectId);
 
     /** Questions attached straight to the subject: those live only in the practice tab. */
     @EntityGraph(attributePaths = "answerOptions")

@@ -18,7 +18,7 @@ interface TextFieldProps {
   hint?: string
   required?: boolean
   placeholder?: string
-  type?: 'text' | 'date'
+  type?: 'text' | 'date' | 'datetime-local'
 }
 
 /** Single-line form control of the admin panel — style guide §6. */

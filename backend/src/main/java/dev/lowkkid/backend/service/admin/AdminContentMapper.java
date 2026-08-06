@@ -26,6 +26,7 @@ public class AdminContentMapper {
                 lesson.getTitle(),
                 lesson.getDescription(),
                 lesson.getOrder(),
+                lesson.getOpensAt(),
                 questionCount);
     }
 
@@ -36,6 +37,7 @@ public class AdminContentMapper {
                 lesson.getTitle(),
                 lesson.getDescription(),
                 lesson.getOrder(),
+                lesson.getOpensAt(),
                 toQuestions(questions));
     }
 

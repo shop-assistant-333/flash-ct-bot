@@ -8,6 +8,7 @@ import { StateMessage } from '@/shared/ui/state-message'
 import type { AdminLessonItem } from '../api/admin-lessons-api'
 import { useAdminLessons } from '../hooks/use-admin-lessons'
 import { useReorderLessons } from '../hooks/use-reorder-lessons'
+import { LessonScheduleBadge } from './lesson-schedule-badge'
 
 interface AdminLessonsListProps {
   subjectId: number
@@ -15,7 +16,7 @@ interface AdminLessonsListProps {
   hrefOf: (lesson: AdminLessonItem) => string
 }
 
-/** Lessons of one subject in the order students will walk them. */
+/** Lessons of one subject: the order they are listed in and when each one opens. */
 export function AdminLessonsList({ subjectId, hrefOf }: AdminLessonsListProps) {
   const lessonsQuery = useAdminLessons(subjectId)
   const reorderLessons = useReorderLessons(subjectId)
@@ -60,6 +61,7 @@ export function AdminLessonsList({ subjectId, hrefOf }: AdminLessonsListProps) {
           <ListRow
             title={`${index + 1}. ${lesson.title}`}
             subtitle={`Вопросов: ${lesson.questionCount}`}
+            meta={<LessonScheduleBadge opensAt={lesson.opensAt} />}
             to={hrefOf(lesson)}
           />
         )}

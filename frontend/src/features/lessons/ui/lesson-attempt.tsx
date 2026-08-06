@@ -15,11 +15,10 @@ import { AttemptRunner } from './attempt-runner'
 interface LessonAttemptProps {
   lessonId: number
   lessonsHref: string
-  hrefOfLesson: (lessonId: number) => string
 }
 
 /** One lesson end to end: solving, the summary right after it, and the later review. */
-export function LessonAttempt({ lessonId, lessonsHref, hrefOfLesson }: LessonAttemptProps) {
+export function LessonAttempt({ lessonId, lessonsHref }: LessonAttemptProps) {
   const attemptQuery = useLessonAttempt(lessonId)
   // Survives the refetch that follows completion: the summary is a one-off screen
   // and its numbers do not exist anywhere in the attempt itself.
@@ -35,7 +34,7 @@ export function LessonAttempt({ lessonId, lessonsHref, hrefOfLesson }: LessonAtt
         <StateMessage
           icon={LockKeyhole}
           title="Урок ещё закрыт"
-          description="Сначала пройдите предыдущий урок"
+          description="Он откроется в дату, которую назначил преподаватель"
         />
       )
     }
@@ -77,13 +76,7 @@ export function LessonAttempt({ lessonId, lessonsHref, hrefOfLesson }: LessonAtt
       <PageHeader title={attempt.lesson.title} description={attempt.lesson.description} />
 
       {result ? (
-        <AttemptResult
-          result={result}
-          lessonsHref={lessonsHref}
-          nextLessonHref={
-            result.unlockedLessonId === null ? null : hrefOfLesson(result.unlockedLessonId)
-          }
-        />
+        <AttemptResult result={result} lessonsHref={lessonsHref} />
       ) : attempt.completedAt ? (
         <AttemptReview attempt={attempt} />
       ) : (

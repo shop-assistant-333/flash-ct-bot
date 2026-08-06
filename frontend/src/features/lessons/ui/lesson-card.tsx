@@ -1,6 +1,8 @@
 import { Check, ChevronRight, Lock } from 'lucide-react'
 import { Link } from 'react-router'
 
+import { formatDateTime } from '@/shared/lib/local-date-time'
+
 import type { LessonItem } from '../api/lessons-api'
 
 interface LessonCardProps {
@@ -33,7 +35,10 @@ function meta(lesson: LessonItem): string {
     case 'IN_PROGRESS':
       return `Начат · ${questions}`
     case 'LOCKED':
-      return 'Откроется после предыдущего урока'
+      // Без даты урок тоже под замком: преподаватель ещё не поставил его в расписание.
+      return lesson.opensAt === null
+        ? 'Откроется позже — дату ещё не назначили'
+        : `Откроется ${formatDateTime(lesson.opensAt)}`
     default:
       return questions
   }

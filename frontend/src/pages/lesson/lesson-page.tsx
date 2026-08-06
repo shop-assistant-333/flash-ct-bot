@@ -1,7 +1,7 @@
 import { ChevronLeft, SearchX } from 'lucide-react'
 import { Link, useParams, useSearchParams } from 'react-router'
 
-import { homeworkPath, lessonPath } from '@/app/routes'
+import { homeworkPath } from '@/app/routes'
 import { LessonAttempt } from '@/features/lessons'
 import { StateMessage } from '@/shared/ui/state-message'
 
@@ -26,11 +26,7 @@ export function LessonPage() {
       </Link>
 
       {Number.isInteger(id) && id > 0 ? (
-        <LessonAttempt
-          lessonId={id}
-          lessonsHref={lessonsHref}
-          hrefOfLesson={(nextLessonId: number) => lessonPath(nextLessonId, subject)}
-        />
+        <LessonAttempt lessonId={id} lessonsHref={lessonsHref} />
       ) : (
         <StateMessage
           icon={SearchX}

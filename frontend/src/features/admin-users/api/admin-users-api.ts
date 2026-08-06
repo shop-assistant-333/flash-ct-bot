@@ -20,8 +20,9 @@ export interface AdminUserItem {
 export interface UserProgressItem {
   subjectId: number
   subjectName: string
-  currentLessonId: number
-  currentLessonTitle: string
+  /** Last homework handed in; null while the student has not finished any. */
+  lastCompletedLessonId: number | null
+  lastCompletedLessonTitle: string | null
   lessonsCompleted: number
   lessonsTotal: number
 }

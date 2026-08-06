@@ -18,7 +18,7 @@ public final class ErrorCode {
 
     /** The subject is not paid for, or the paid period has ended. */
     public static final String SUBSCRIPTION_EXPIRED = "SUBSCRIPTION_EXPIRED";
-    /** The previous lesson of the subject has not been completed yet. */
+    /** The lesson has not opened yet, or has no opening date at all. */
     public static final String LESSON_LOCKED = "LESSON_LOCKED";
     /** The lesson has already been finished; homework is solved once. */
     public static final String ATTEMPT_ALREADY_COMPLETED = "ATTEMPT_ALREADY_COMPLETED";

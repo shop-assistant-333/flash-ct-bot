@@ -19,6 +19,7 @@ export function LessonForm({ lesson }: LessonFormProps) {
   const [draft, setDraft] = useState<LessonDraft>({
     title: lesson.title,
     description: lesson.description,
+    opensAt: lesson.opensAt,
   })
   const updateLesson = useUpdateLesson(lesson.id, lesson.subjectId)
 

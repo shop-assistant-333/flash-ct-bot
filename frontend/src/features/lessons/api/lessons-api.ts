@@ -1,5 +1,5 @@
 import { http } from '@/shared/api'
-import type { AnswerResultDto, QuestionDto, SubmitAnswerRequest } from '@/shared/api'
+import type { AnswerResultDto, LocalDateTime, QuestionDto, SubmitAnswerRequest } from '@/shared/api'
 
 export type LessonStatus = 'LOCKED' | 'AVAILABLE' | 'IN_PROGRESS' | 'COMPLETED'
 
@@ -8,6 +8,8 @@ export interface LessonItem {
   title: string
   description: string
   order: number
+  /** When the lesson opens; null while the teacher has not scheduled it. */
+  opensAt: LocalDateTime | null
   status: LessonStatus
   questionCount: number
   /** Null until the lesson is started. */
@@ -20,6 +22,7 @@ export interface LessonDto {
   title: string
   description: string
   order: number
+  opensAt: LocalDateTime | null
   status: LessonStatus
   questions: QuestionDto[]
 }
@@ -53,8 +56,6 @@ export interface AttemptResultDto {
   totalCount: number
   accuracyPercent: number
   completedAt: string
-  /** Null if the finished lesson was the last one of the subject. */
-  unlockedLessonId: number | null
 }
 
 export function fetchLessons(subjectId: number, signal: AbortSignal): Promise<LessonItem[]> {

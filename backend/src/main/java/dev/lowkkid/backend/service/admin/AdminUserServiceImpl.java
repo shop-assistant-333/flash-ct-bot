@@ -4,8 +4,8 @@ import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.Subject;
 import dev.lowkkid.backend.entity.Subscription;
 import dev.lowkkid.backend.entity.User;
+import dev.lowkkid.backend.entity.UserAttempt;
 import dev.lowkkid.backend.entity.UserRole;
-import dev.lowkkid.backend.entity.UserSubjectProgress;
 import dev.lowkkid.backend.exception.ConflictException;
 import dev.lowkkid.backend.exception.NotFoundException;
 import dev.lowkkid.backend.model.StreakDto;
@@ -26,7 +26,6 @@ import dev.lowkkid.backend.repository.UserAttemptRepository.SubjectAttemptCount;
 import dev.lowkkid.backend.repository.UserPracticeStatsRepository;
 import dev.lowkkid.backend.repository.UserRepository;
 import dev.lowkkid.backend.repository.UserSessionRepository;
-import dev.lowkkid.backend.repository.UserSubjectProgressRepository;
 import dev.lowkkid.backend.service.AttemptService;
 import dev.lowkkid.backend.service.SubscriptionAccess;
 import lombok.RequiredArgsConstructor;
@@ -61,7 +60,6 @@ public class AdminUserServiceImpl implements AdminUserService {
     private final UserAttemptRepository attemptRepository;
     private final UserAnswerRepository userAnswerRepository;
     private final UserSessionRepository sessionRepository;
-    private final UserSubjectProgressRepository progressRepository;
     private final UserPracticeStatsRepository practiceStatsRepository;
 
     @Override
@@ -111,7 +109,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         User student = user(userId);
 
         attemptRepository.deleteAll(attemptRepository.findByUser_Id(userId));
-        progressRepository.deleteByUser_Id(userId);
         subscriptionRepository.deleteByUser_Id(userId);
         sessionRepository.deleteByUser_Id(userId);
         practiceStatsRepository.deleteById(userId);
@@ -220,25 +217,26 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     /**
      * One row per paid subject, so the admin sees a subject the student has not opened yet as well
-     * as the ones in progress.
+     * as the ones in progress. The lesson shown is the one handed in last: with homework opening
+     * on a schedule, students are free to solve the open lessons in any order.
      */
     private List<UserProgressItem> progressOf(Integer userId, List<Subscription> subscriptions) {
-        Map<Integer, UserSubjectProgress> progress = progressRepository.findByUser_Id(userId).stream()
-                .collect(Collectors.toMap(row -> row.getSubject().getId(), row -> row));
+        Map<Integer, Lesson> lastCompleted = attemptRepository.findCompletedWithLesson(userId).stream()
+                .map(UserAttempt::getLesson)
+                .collect(Collectors.toMap(
+                        lesson -> lesson.getSubject().getId(), lesson -> lesson, (newest, older) -> newest));
         Map<Integer, Long> completed = attemptRepository.countCompletedBySubject(userId).stream()
                 .collect(Collectors.toMap(SubjectAttemptCount::getSubjectId, SubjectAttemptCount::getCount));
 
         List<UserProgressItem> items = new ArrayList<>(subscriptions.size());
         for (Subscription subscription : subscriptions) {
             Subject subject = subscription.getSubject();
-            Lesson current = progress.containsKey(subject.getId())
-                    ? progress.get(subject.getId()).getCurrentLesson()
-                    : null;
+            Lesson last = lastCompleted.get(subject.getId());
             items.add(new UserProgressItem(
                     subject.getId(),
                     subject.getName(),
-                    current == null ? null : current.getId(),
-                    current == null ? null : current.getTitle(),
+                    last == null ? null : last.getId(),
+                    last == null ? null : last.getTitle(),
                     completed.getOrDefault(subject.getId(), 0L).intValue(),
                     lessonRepository.countBySubject_Id(subject.getId())));
         }

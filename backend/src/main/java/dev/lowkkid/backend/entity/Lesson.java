@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +41,13 @@ public class Lesson {
     /** Position of the lesson inside its subject; unique per subject. */
     @Column(name = "\"order\"")
     private Integer order;
+
+    /**
+     * Moment the lesson opens for the students; {@code null} while the admin has not scheduled it,
+     * which keeps it locked.
+     */
+    @Column(name = "opens_at")
+    private LocalDateTime opensAt;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "subject_id", nullable = false)

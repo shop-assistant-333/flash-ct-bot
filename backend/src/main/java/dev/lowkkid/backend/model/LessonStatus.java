@@ -1,10 +1,11 @@
 package dev.lowkkid.backend.model;
 
 /**
- * Lock state of a lesson for a given student: lessons open one after another.
+ * Lock state of a lesson for a given student: lessons open on the date the admin scheduled them
+ * for, all at once for everybody who paid for the subject.
  */
 public enum LessonStatus {
-    /** Shown with a padlock, the previous lesson is not finished yet. */
+    /** Shown with a padlock: the date has not arrived yet, or was never set. */
     LOCKED,
     /** Open, not started. */
     AVAILABLE,

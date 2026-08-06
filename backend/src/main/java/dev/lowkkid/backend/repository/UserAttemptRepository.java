@@ -22,6 +22,17 @@ public interface UserAttemptRepository extends JpaRepository<UserAttempt, Long> 
 
     boolean existsByLesson_Id(Integer lessonId);
 
+    /** Finished attempts with their lesson, newest first, for the progress card of the admin. */
+    @Query("""
+            select a
+            from UserAttempt a
+            join fetch a.lesson lesson
+            join fetch lesson.subject
+            where a.user.id = :userId and a.completedAt is not null
+            order by a.completedAt desc
+            """)
+    List<UserAttempt> findCompletedWithLesson(@Param("userId") Integer userId);
+
     /** Lessons the student has finished, per subject, for the subject and progress cards. */
     @Query("""
             select a.lesson.subject.id as subjectId, count(a) as count

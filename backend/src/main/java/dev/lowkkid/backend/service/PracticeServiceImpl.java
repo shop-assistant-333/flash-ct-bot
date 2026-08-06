@@ -1,6 +1,5 @@
 package dev.lowkkid.backend.service;
 
-import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.Question;
 import dev.lowkkid.backend.entity.UserPracticeStats;
 import dev.lowkkid.backend.exception.BadRequestException;
@@ -9,7 +8,6 @@ import dev.lowkkid.backend.model.PracticeAnswerResultDto;
 import dev.lowkkid.backend.model.PracticeQuestionDto;
 import dev.lowkkid.backend.model.StreakDto;
 import dev.lowkkid.backend.model.SubmitAnswerRequest;
-import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.UserPracticeStatsRepository;
 import dev.lowkkid.backend.repository.UserRepository;
@@ -47,12 +45,10 @@ public class PracticeServiceImpl implements PracticeService {
     /** A deck nobody touched for this long belongs to a visit that is long over. */
     private static final Duration DECK_TTL = Duration.ofHours(2);
 
-    private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final UserRepository userRepository;
     private final UserPracticeStatsRepository practiceStatsRepository;
     private final SubscriptionAccess subscriptionAccess;
-    private final ProgressService progressService;
     private final SessionService sessionService;
     private final AnswerGrader answerGrader;
     private final ContentMapper contentMapper;
@@ -113,7 +109,7 @@ public class PracticeServiceImpl implements PracticeService {
 
         Deck deck = decks.get(key);
         if (deck == null || deck.sessionId() != sessionId) {
-            deck = new Deck(sessionId, shuffledQuestionIds(userId, subjectId));
+            deck = new Deck(sessionId, shuffledQuestionIds(subjectId));
             forgetStaleDecks();
             decks.put(key, deck);
         }
@@ -122,21 +118,16 @@ public class PracticeServiceImpl implements PracticeService {
     }
 
     /**
-     * Everything the student is allowed to practise on: the questions of the lessons already open
-     * to them plus the extra questions the admin put straight into the subject.
+     * Everything the student can practise on: the questions of every lesson of the subject plus
+     * the extra questions the admin put straight into the subject.
+     *
+     * <p>Practice deliberately ignores the homework schedule. It is an optional endless stream of
+     * questions rather than a course, so a question of a lesson that has not opened yet is fair
+     * game here.
      */
-    private List<Integer> shuffledQuestionIds(Integer userId, Integer subjectId) {
-        List<Lesson> ordered = lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId);
-        int unlockedThrough = progressService.unlockedThrough(userId, subjectId, ordered);
-
+    private List<Integer> shuffledQuestionIds(Integer subjectId) {
         List<Integer> ids = new ArrayList<>();
-        if (unlockedThrough >= 0) {
-            List<Integer> unlockedLessonIds = ordered.subList(0, Math.min(unlockedThrough + 1, ordered.size()))
-                    .stream()
-                    .map(Lesson::getId)
-                    .toList();
-            questionRepository.findByLesson_IdIn(unlockedLessonIds).forEach(question -> ids.add(question.getId()));
-        }
+        questionRepository.findByLesson_Subject_Id(subjectId).forEach(question -> ids.add(question.getId()));
         questionRepository.findBySubject_IdOrderByIdAsc(subjectId).forEach(question -> ids.add(question.getId()));
 
         if (ids.isEmpty()) {

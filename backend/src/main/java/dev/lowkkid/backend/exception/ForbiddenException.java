@@ -19,6 +19,6 @@ public class ForbiddenException extends ApiException {
 
     public static ForbiddenException lessonLocked(Integer lessonId) {
         return new ForbiddenException(ErrorCode.LESSON_LOCKED,
-                "Lesson " + lessonId + " is not unlocked yet");
+                "Lesson " + lessonId + " has not opened yet");
     }
 }

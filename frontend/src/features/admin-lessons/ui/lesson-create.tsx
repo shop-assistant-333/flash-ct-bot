@@ -9,7 +9,7 @@ import type { LessonDraft } from '../api/admin-lessons-api'
 import { useCreateLesson } from '../hooks/use-create-lesson'
 import { LessonFields } from './lesson-fields'
 
-const EMPTY_DRAFT: LessonDraft = { title: '', description: '' }
+const EMPTY_DRAFT: LessonDraft = { title: '', description: '', opensAt: null }
 
 interface LessonCreateProps {
   subjectId: number

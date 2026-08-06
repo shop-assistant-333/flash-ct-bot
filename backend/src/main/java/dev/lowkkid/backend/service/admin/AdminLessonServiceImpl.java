@@ -13,7 +13,6 @@ import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.QuestionRepository.LessonQuestionCount;
 import dev.lowkkid.backend.repository.SubjectRepository;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
-import dev.lowkkid.backend.repository.UserSubjectProgressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,11 +23,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Lessons of a subject and the order the students unlock them in.
+ * Lessons of a subject: the order they are listed in and the date every one of them opens on.
  *
- * <p>The order is not a free number: it is unique per subject in the database and it is what the
- * padlocks are computed from. Every write here therefore ends with the whole subject renumbered
- * to a clean {@code 1..n}, so a gap or a duplicate can never appear in the first place.
+ * <p>The order is not a free number: it is unique per subject in the database. Every write here
+ * therefore ends with the whole subject renumbered to a clean {@code 1..n}, so a gap or a
+ * duplicate can never appear in the first place. What the students may open is a separate matter
+ * and comes from {@code opensAt} alone.
  */
 @Service
 @RequiredArgsConstructor
@@ -38,7 +38,6 @@ public class AdminLessonServiceImpl implements AdminLessonService {
     private final QuestionRepository questionRepository;
     private final SubjectRepository subjectRepository;
     private final UserAttemptRepository attemptRepository;
-    private final UserSubjectProgressRepository progressRepository;
     private final AdminContentMapper contentMapper;
 
     @Override
@@ -63,6 +62,7 @@ public class AdminLessonServiceImpl implements AdminLessonService {
         lesson.setSubject(subject);
         lesson.setTitle(request.title().trim());
         lesson.setDescription(request.description());
+        lesson.setOpensAt(request.opensAt());
         lesson.setOrder(null);
         lessonRepository.save(lesson);
 
@@ -79,6 +79,7 @@ public class AdminLessonServiceImpl implements AdminLessonService {
 
         lesson.setTitle(request.title().trim());
         lesson.setDescription(request.description());
+        lesson.setOpensAt(request.opensAt());
         if (!previousSubjectId.equals(request.subjectId())) {
             lesson.setSubject(subject(request.subjectId()));
         }
@@ -97,7 +98,7 @@ public class AdminLessonServiceImpl implements AdminLessonService {
 
     /**
      * @throws ConflictException if a student has already opened the lesson; dropping it would
-     *                           erase the attempts and the progress pointing at it
+     *                           erase their attempts along with it
      */
     @Override
     @Transactional
@@ -105,9 +106,6 @@ public class AdminLessonServiceImpl implements AdminLessonService {
         Lesson lesson = lesson(lessonId);
         if (attemptRepository.existsByLesson_Id(lessonId)) {
             throw new ConflictException("Lesson " + lessonId + " has already been solved by students");
-        }
-        if (progressRepository.existsByCurrentLesson_Id(lessonId)) {
-            throw new ConflictException("Lesson " + lessonId + " is where some students currently are");
         }
 
         Integer subjectId = lesson.getSubject().getId();

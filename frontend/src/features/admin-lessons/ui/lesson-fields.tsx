@@ -1,4 +1,5 @@
 import { errorProp } from '@/shared/lib/form-errors'
+import { fromDateTimeInput, toDateTimeInput } from '@/shared/lib/local-date-time'
 import { TextField } from '@/shared/ui/text-field'
 import { TextareaField } from '@/shared/ui/textarea-field'
 
@@ -11,7 +12,7 @@ interface LessonFieldsProps {
   errors: Record<string, string>
 }
 
-/** The two fields of a lesson — shared by the create sheet and the edit form. */
+/** The fields of a lesson — shared by the create sheet and the edit form. */
 export function LessonFields({ values, onChange, errors }: LessonFieldsProps) {
   return (
     <>
@@ -30,6 +31,17 @@ export function LessonFields({ values, onChange, errors }: LessonFieldsProps) {
         hint="Короткое пояснение, что студент разберёт в этом уроке"
         onChange={(description) => onChange({ ...values, description })}
         {...errorProp(errors.description)}
+      />
+      <TextField
+        label="Открыть доступ"
+        type="datetime-local"
+        value={values.opensAt === null ? '' : toDateTimeInput(values.opensAt)}
+        hint="Дата и время, когда урок откроется всем ученикам. Пусто — урок под замком"
+        // Очистка поля даёт пустую строку — это и есть «снять дату».
+        onChange={(input) =>
+          onChange({ ...values, opensAt: input === '' ? null : fromDateTimeInput(input) })
+        }
+        {...errorProp(errors.opensAt)}
       />
     </>
   )
