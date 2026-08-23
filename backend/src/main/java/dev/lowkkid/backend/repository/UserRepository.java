@@ -1,6 +1,7 @@
 package dev.lowkkid.backend.repository;
 
 import dev.lowkkid.backend.entity.User;
+import dev.lowkkid.backend.entity.UserRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -44,12 +45,16 @@ public interface UserRepository extends JpaRepository<User, Integer> {
      * filtered by {@code paidUntil} on purpose — a student whose payment ran out has to stay
      * visible, otherwise the teacher cannot tell where the person went.
      *
+     * <p>{@code role} is bound as a parameter rather than written as an enum literal: an inline
+     * one is rendered as a cast to the java class name ({@code 'USER'::UserRole}), which is not
+     * what the postgres type is called.
+     *
      * @param pattern lower cased {@code %like%} pattern, or {@code null} for no search
      */
     @Query("""
             select distinct u from User u
             join Subscription s on s.user = u
-            where u.role = dev.lowkkid.backend.entity.UserRole.USER
+            where u.role = :role
               and s.subject.id in :subjectIds
               and (:pattern is null
                    or lower(coalesce(u.username, '')) like :pattern
@@ -57,7 +62,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
                    or lower(coalesce(u.lastName, '')) like :pattern
                    or lower(coalesce(u.tgId, '')) like :pattern)
             """)
-    Page<User> searchStudentsOfSubjects(@Param("subjectIds") Collection<Integer> subjectIds,
+    Page<User> searchStudentsOfSubjects(@Param("role") UserRole role,
+                                        @Param("subjectIds") Collection<Integer> subjectIds,
                                         @Param("pattern") String pattern,
                                         Pageable pageable);
 

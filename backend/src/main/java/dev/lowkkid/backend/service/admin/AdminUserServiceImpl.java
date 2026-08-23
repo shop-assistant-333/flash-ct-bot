@@ -95,7 +95,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         if (user.taughtSubjectIds().isEmpty()) {
             return Page.empty(pageable);
         }
-        return userRepository.searchStudentsOfSubjects(user.taughtSubjectIds(), pattern, pageable);
+        return userRepository.searchStudentsOfSubjects(
+                UserRole.USER, user.taughtSubjectIds(), pattern, pageable);
     }
 
     private List<SubscriptionItem> visible(CurrentUser user, List<SubscriptionItem> subscriptions) {
