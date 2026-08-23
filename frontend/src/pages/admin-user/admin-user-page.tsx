@@ -6,6 +6,7 @@ import { useAdminSubjects } from '@/features/admin-subjects'
 import {
   DeleteUserButton,
   SubscriptionsSection,
+  TeacherSubjectsSection,
   UserActivityCard,
   UserForm,
   UserProgressList,
@@ -13,6 +14,7 @@ import {
   userDisplayName,
   useUpdateUser,
 } from '@/features/admin-users'
+import { useProfile } from '@/features/profile'
 import { isApiError } from '@/shared/api'
 import { PageHeader } from '@/shared/ui/page-header'
 import { Spinner } from '@/shared/ui/spinner'
@@ -35,8 +37,12 @@ export function AdminUserPage() {
 
   const userId = Number(params.userId)
   const userQuery = useAdminUser(userId)
+  // A teacher opens this screen read-only: they watch their students, they do
+  // not edit people. The backend enforces the same, this only stops it looking
+  // possible.
+  const isAdmin = useProfile().data?.role === 'ADMIN'
   // Two features meet on this screen, so the subject list is fetched here and
-  // handed to the subscriptions block as props (CLAUDE.md §1).
+  // handed to the subscriptions and teacher blocks as props (CLAUDE.md §1).
   const subjectsQuery = useAdminSubjects()
   const updateUser = useUpdateUser(userId)
 
@@ -85,6 +91,17 @@ export function AdminUserPage() {
 
   const user = userQuery.data
 
+  if (!isAdmin) {
+    return (
+      <section className="flex flex-col gap-6">
+        {BACK_TO_USERS}
+        <PageHeader title={userDisplayName(user)} description={`@${user.username}`} />
+        <UserActivityCard activity={user.activity} subjectScoped />
+        <UserProgressList progress={user.progress} />
+      </section>
+    )
+  }
+
   return (
     <section className="flex flex-col gap-6">
       {BACK_TO_USERS}
@@ -102,11 +119,19 @@ export function AdminUserPage() {
         {updateUser.isSuccess ? <p className="text-sm text-success">Изменения сохранены</p> : null}
       </div>
 
-      <SubscriptionsSection
-        userId={user.id}
-        subscriptions={user.subscriptions}
-        subjects={subjectsQuery.data ?? []}
-      />
+      {user.role === 'TEACHER' ? (
+        <TeacherSubjectsSection
+          userId={user.id}
+          taughtSubjects={user.taughtSubjects}
+          subjects={subjectsQuery.data ?? []}
+        />
+      ) : (
+        <SubscriptionsSection
+          userId={user.id}
+          subscriptions={user.subscriptions}
+          subjects={subjectsQuery.data ?? []}
+        />
+      )}
 
       <UserActivityCard activity={user.activity} />
 

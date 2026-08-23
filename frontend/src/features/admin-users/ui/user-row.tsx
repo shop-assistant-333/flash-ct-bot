@@ -9,14 +9,22 @@ interface UserRowProps {
   href: string
 }
 
+const ROLE_BADGE =
+  'inline-flex items-center rounded-control bg-primary-soft px-2 py-0.5 text-xs font-medium text-primary-soft-fg'
+
+const ROLE_LABEL = { ADMIN: 'Администратор', TEACHER: 'Учитель', USER: null } as const
+
 function UserMeta({ user }: { user: AdminUserItem }) {
+  const roleLabel = ROLE_LABEL[user.role]
+
   return (
     <>
-      {user.role === 'ADMIN' ? (
-        <span className="inline-flex items-center rounded-control bg-primary-soft px-2 py-0.5 text-xs font-medium text-primary-soft-fg">
-          Администратор
+      {roleLabel === null ? null : <span className={ROLE_BADGE}>{roleLabel}</span>}
+      {user.taughtSubjects.map((subject) => (
+        <span key={subject.subjectId} className="text-xs text-muted">
+          {subject.subjectName}
         </span>
-      ) : null}
+      ))}
       {user.subscriptions.map((subscription) => (
         <SubscriptionBadge key={subscription.subjectId} subscription={subscription} />
       ))}

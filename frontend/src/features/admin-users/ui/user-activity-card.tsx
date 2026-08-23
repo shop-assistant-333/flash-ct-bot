@@ -6,10 +6,16 @@ import type { UserActivityItem } from '../api/admin-users-api'
 
 interface UserActivityCardProps {
   activity: UserActivityItem
+  /**
+   * True on the teacher's card: answers are counted over their subjects only,
+   * while time and streak stay over the whole app — the backend cannot split
+   * those by subject (backend/API.md, "Админские модели").
+   */
+  subjectScoped?: boolean
 }
 
 /** Read-only, like the progress block: these numbers are earned, not edited. */
-export function UserActivityCard({ activity }: UserActivityCardProps) {
+export function UserActivityCard({ activity, subjectScoped = false }: UserActivityCardProps) {
   return (
     <section className="flex flex-col gap-2">
       <h2 className="text-sm font-medium text-muted">Активность</h2>
@@ -31,7 +37,9 @@ export function UserActivityCard({ activity }: UserActivityCardProps) {
           <span className="text-xl font-semibold text-fg tabular-nums">
             {formatMinutes(activity.timeSpentMinutes)}
           </span>
-          <span className="text-xs text-subtle">за всё время</span>
+          <span className="text-xs text-subtle">
+            {subjectScoped ? 'по всем предметам' : 'за всё время'}
+          </span>
         </li>
 
         <li className="flex flex-col gap-1 rounded-card bg-surface p-3 shadow-card">

@@ -4,6 +4,7 @@ import { Link, useSearchParams } from 'react-router'
 
 import { ADMIN_ROUTES, adminUserPath } from '@/app/routes'
 import { UsersList, UsersSearch, type AdminUserItem } from '@/features/admin-users'
+import { useProfile } from '@/features/profile'
 import { PageHeader } from '@/shared/ui/page-header'
 
 const ADD_LINK =
@@ -11,6 +12,9 @@ const ADD_LINK =
 
 export function AdminUsersPage() {
   const [searchParams, setSearchParams] = useSearchParams()
+  // The role is read here and handed down: features know nothing of each other,
+  // and nothing of who is looking at them (CLAUDE.md §1).
+  const isAdmin = useProfile().data?.role === 'ADMIN'
 
   const search = searchParams.get('search') ?? ''
   const requestedPage = Number(searchParams.get('page'))
@@ -47,13 +51,17 @@ export function AdminUsersPage() {
   return (
     <section className="flex flex-col gap-6">
       <PageHeader
-        title="Пользователи"
-        description="Поиск, доступ к предметам и прогресс"
+        title={isAdmin ? 'Пользователи' : 'Ученики'}
+        description={
+          isAdmin ? 'Поиск, доступ к предметам и прогресс' : 'Прогресс учеников по вашему предмету'
+        }
         action={
-          <Link to={ADMIN_ROUTES.userNew} className={ADD_LINK}>
-            <UserPlus aria-hidden className="size-4" />
-            Добавить
-          </Link>
+          isAdmin ? (
+            <Link to={ADMIN_ROUTES.userNew} className={ADD_LINK}>
+              <UserPlus aria-hidden className="size-4" />
+              Добавить
+            </Link>
+          ) : null
         }
       />
 

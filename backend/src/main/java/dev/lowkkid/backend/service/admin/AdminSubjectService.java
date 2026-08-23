@@ -2,12 +2,14 @@ package dev.lowkkid.backend.service.admin;
 
 import dev.lowkkid.backend.model.admin.SubjectDto;
 import dev.lowkkid.backend.model.admin.SubjectRequest;
+import dev.lowkkid.backend.security.CurrentUser;
 
 import java.util.List;
 
 public interface AdminSubjectService {
 
-    List<SubjectDto> findAll();
+    /** Every subject for an admin; only the ones they teach for a teacher. */
+    List<SubjectDto> findAll(CurrentUser user);
 
     SubjectDto create(SubjectRequest request);
 

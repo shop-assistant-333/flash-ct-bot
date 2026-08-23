@@ -7,6 +7,12 @@ import type {
   UserRole,
 } from '@/shared/api'
 
+/** A subject a teacher may edit — not a subscription: no payment, no deadline. */
+export interface TaughtSubjectItem {
+  subjectId: number
+  subjectName: string
+}
+
 export interface AdminUserItem {
   id: number
   tgId: string
@@ -15,6 +21,8 @@ export interface AdminUserItem {
   lastName: string
   role: UserRole
   subscriptions: SubscriptionItem[]
+  /** Non-empty for `role === 'TEACHER'` only. */
+  taughtSubjects: TaughtSubjectItem[]
 }
 
 export interface UserProgressItem {
@@ -98,4 +106,16 @@ export function saveSubscription(
 
 export function revokeSubscription(userId: number, subjectId: number): Promise<void> {
   return http.delete<void>(`/admin/users/${userId}/subscriptions/${subjectId}`)
+}
+
+/** Hands a subject to a teacher: the right to edit its content, not access to it. */
+export function assignTeacherSubject(
+  userId: number,
+  subjectId: number,
+): Promise<TaughtSubjectItem> {
+  return http.put<TaughtSubjectItem>(`/admin/users/${userId}/subjects/${subjectId}`)
+}
+
+export function unassignTeacherSubject(userId: number, subjectId: number): Promise<void> {
+  return http.delete<void>(`/admin/users/${userId}/subjects/${subjectId}`)
 }

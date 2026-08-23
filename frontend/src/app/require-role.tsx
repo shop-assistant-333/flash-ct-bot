@@ -8,23 +8,26 @@ import { Spinner } from '@/shared/ui/spinner'
 import { StateMessage } from '@/shared/ui/state-message'
 
 interface RequireRoleProps {
-  role: UserRole
+  roles: UserRole[]
 }
 
 const HOME_OF: Record<UserRole, string> = {
   USER: ROUTES.homework,
   ADMIN: ADMIN_ROUTES.users,
+  TEACHER: ADMIN_ROUTES.users,
 }
 
 /**
  * Pathless layout route in front of a whole branch of the app: the student one
  * and the admin one are disjoint, so the wrong role is sent to the root of its
- * own branch instead of seeing an empty screen.
+ * own branch instead of seeing an empty screen. A branch can belong to more
+ * than one role — the admin one is shared by ADMIN and TEACHER, who differ
+ * inside it rather than by URL.
  *
  * It sits *above* the layout on purpose — neither navigation nor session
  * tracking mounts until the role is known.
  */
-export function RequireRole({ role }: RequireRoleProps) {
+export function RequireRole({ roles }: RequireRoleProps) {
   const profileQuery = useProfile()
 
   if (profileQuery.isPending) {
@@ -48,7 +51,7 @@ export function RequireRole({ role }: RequireRoleProps) {
     )
   }
 
-  if (profileQuery.data.role !== role) {
+  if (!roles.includes(profileQuery.data.role)) {
     return <Navigate to={HOME_OF[profileQuery.data.role]} replace />
   }
 

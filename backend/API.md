@@ -14,9 +14,12 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 (при первом запуске — регистрирует) и кладёт его в контекст запроса. Отдельного логина,
 токенов и refresh нет.
 
-Роль возвращается в `GET /api/profile` → `role` (`USER` | `ADMIN`). Фронтенд по ней решает,
-рисовать ли четыре студенческие вкладки или админ-панель. Ветка `/api/admin/**` дополнительно
-проверяется на сервере и отдаёт 403 всем, кроме админа.
+Роль возвращается в `GET /api/profile` → `role` (`USER` | `ADMIN` | `TEACHER`). Фронтенд по ней
+решает, рисовать ли четыре студенческие вкладки или админ-панель. Ветка `/api/admin/**`
+дополнительно проверяется на сервере и отдаёт 403 всем, кроме `ADMIN` и `TEACHER`.
+
+`TEACHER` — учитель: ведёт содержание выданных ему предметов и смотрит статистику своих учеников.
+Внутри `/api/admin/**` его права уже́ этих: см. матрицу в разделе «Админ-панель».
 
 ## Ошибки
 
@@ -38,7 +41,7 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `UNAUTHORIZED` | 401 | нет заголовка, битая или просроченная подпись |
 | `FORBIDDEN` | 403 | роли не хватает |
 | `SUBSCRIPTION_EXPIRED` | 403 | предмет не оплачен или срок вышел |
-| `LESSON_LOCKED` | 403 | предыдущий урок не пройден |
+| `LESSON_LOCKED` | 403 | урок ещё не открылся по расписанию |
 | `NOT_FOUND` | 404 | нет такой сущности |
 | `VALIDATION_FAILED` | 400 | не прошла валидация тела запроса |
 | `BAD_REQUEST` | 400 | нет обязательного параметра, неверный тип |
@@ -82,7 +85,13 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 
 Сценарий: `GET /api/subjects` даёт переключатель предметов (у студента может быть один или два).
 `GET /api/lessons` — список плашек урока со статусом: `LOCKED` (замочек), `AVAILABLE`,
-`IN_PROGRESS`, `COMPLETED`.
+`IN_PROGRESS`, `COMPLETED`. Возвращаются все уроки предмета, закрытые в том числе.
+
+Доступ к уроку задаёт админ датой `opensAt`: до неё урок под замком, после — открыт сразу всем,
+кто оплатил предмет. Уроки не открываются друг за другом, поэтому открытых одновременно может
+быть сколько угодно и проходить их можно в любом порядке. Пустой `opensAt` означает, что урок ещё
+не поставили в расписание, и он тоже под замком — плашка при этом видна, но без даты. Уже начатый
+урок остаётся доступным, даже если админ потом сдвинул дату вперёд.
 
 `POST /api/lessons/{id}/attempt` открывает урок. Вызов идемпотентный: он либо создаёт попытку,
 либо возвращает уже существующую целиком — с вопросами, всеми ранее данными ответами и
@@ -102,8 +111,7 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 Заполняется ровно одно поле по типу вопроса: `selectedOptionIds` для `SINGLE_ANSWER` (один id) и
 `MULTI_ANSWER`, `answerText` для `INPUT`. Текстовый ответ сравнивается без учёта регистра.
 
-`POST .../complete` закрывает попытку, считает результат и открывает следующий урок
-(`unlockedLessonId`).
+`POST .../complete` закрывает попытку и считает результат.
 
 ---
 
@@ -115,8 +123,10 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `POST` | `/api/practice/answer?subjectId={id}` | `PracticeAnswerResultDto` |
 | `GET` | `/api/practice/streak` | `StreakDto` |
 
-Бесконечный поток вопросов одного предмета. Колода собирается один раз на сессию из вопросов уже
-открытых студенту уроков плюс отдельных вопросов, добавленных только в практику, и перемешивается.
+Бесконечный поток вопросов одного предмета. Колода собирается один раз на сессию из вопросов всех
+уроков предмета плюс отдельных вопросов, добавленных только в практику, и перемешивается.
+Расписание уроков практику не ограничивает: вопрос из ещё не открытого урока здесь встретиться
+может.
 Курсор живёт внутри сессии: ушёл на другую вкладку и вернулся — тот же вопрос. Кончилась колода —
 идёт по кругу в том же порядке. Новая сессия — новая колода с новым порядком.
 
@@ -138,6 +148,11 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 (`app.stats.prediction-window`), чтобы недавний прогресс перевешивал ранние ошибки.
 `score = null` — данных пока мало.
 
+`GET /api/stats/prediction` никогда не блокируется на модели и отвечает мгновенно: если свежего
+значения ещё нет, оно досчитывается в фоне, а вызов сразу возвращает то, что есть — старое
+значение или заглушку с `pending: true`. Подробности контракта и как с ним работать на фронте —
+[AI_SCORE_PREDICTION.md](AI_SCORE_PREDICTION.md).
+
 Учитываются только ответы из ДЗ.
 
 ---
@@ -152,7 +167,31 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 
 ## Админ-панель
 
-Всё под `/api/admin/**`, только для `role = ADMIN`.
+Всё под `/api/admin/**`, для `role = ADMIN` и `role = TEACHER`. Роль ученика получает 403 на всю
+ветку целиком.
+
+### Матрица прав
+
+| эндпоинт | ADMIN | TEACHER |
+|---|---|---|
+| `GET /api/admin/users` | все | только ученики (`role = USER`) с подпиской на его предметы |
+| `GET /api/admin/users/{id}` | полная карточка | урезанная; чужой ученик → 404 |
+| `POST/PUT/DELETE /api/admin/users/**` | ✓ | 403 |
+| `PUT/DELETE /api/admin/users/{id}/subscriptions/**` | ✓ | 403 |
+| `PUT/DELETE /api/admin/users/{id}/subjects/{subjectId}` | ✓ | 403 |
+| `GET /api/admin/subjects` | все | только его предметы |
+| `POST/PUT/DELETE /api/admin/subjects` | ✓ | 403 |
+| `GET/PUT /api/admin/subjects/{id}/lessons`, `.../lessons/order` | ✓ | если предмет его |
+| `GET /api/admin/subjects/{id}/practice-questions` | ✓ | если предмет его |
+| `GET/POST/PUT/DELETE /api/admin/lessons/**` | ✓ | если урок в его предмете |
+| `GET/POST/PUT/DELETE /api/admin/questions/**` | ✓ | если вопрос в его предмете |
+
+Чужой ресурс отдаёт **404 `NOT_FOUND`**, а не 403: перебором id учитель не должен узнать, какие
+предметы, уроки и вопросы вообще есть в приложении. 403 `FORBIDDEN` остаётся за операциями,
+закрытыми для роли в принципе — правка пользователей, создание, переименование и удаление предмета.
+
+Тело `PUT` тоже проверяется, а не только путь: перенести свой урок в чужой предмет
+(`LessonRequest.subjectId`) или свой вопрос в чужой урок (`QuestionRequest.lessonId`) нельзя.
 
 ### Пользователи и оплата
 
@@ -165,8 +204,20 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `DELETE` | `/api/admin/users/{userId}` | 204 |
 | `PUT` | `/api/admin/users/{userId}/subscriptions/{subjectId}` | `SubscriptionItem` |
 | `DELETE` | `/api/admin/users/{userId}/subscriptions/{subjectId}` | 204 |
+| `PUT` | `/api/admin/users/{userId}/subjects/{subjectId}` | `TaughtSubjectItem` |
+| `DELETE` | `/api/admin/users/{userId}/subjects/{subjectId}` | 204 |
 
 `search` ищет по username, имени и telegram id.
+
+`PUT/DELETE .../subjects/{subjectId}` выдаёт и забирает предмет **учителю** — это его право
+редактировать содержание, а не подписка. Пользователь без роли `TEACHER` → 409 `CONFLICT`,
+повторная выдача того же предмета проходит молча. Смена роли учителя на любую другую очищает его
+предметы, удаление учителя — тоже.
+
+Учитель видит `GET /api/admin/users` только со своими учениками: `role = USER` и подписка на один
+из его предметов, **без учёта `paidUntil`** — ученик с истёкшим доступом должен остаться на виду.
+В его карточке (`GET /api/admin/users/{userId}`) `subscriptions` и `taughtSubjects` пустые,
+`progress` — только его предметы, `activity` посчитана по ним же. Ученик не его предмета — 404.
 
 Оплата проходит вне приложения, поэтому даты заводятся руками: `PUT .../subscriptions/{subjectId}`
 с телом `{"paidUntil": "2026-12-31T23:59:59"}` — это и «выдать доступ», и «продлить».
@@ -198,7 +249,11 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `PUT` | `/api/admin/lessons/{lessonId}/questions/order` | `AdminQuestionDto[]` |
 
 Порядок уроков внутри предмета и вопросов внутри урока задаёт админ. Оба `.../order` принимают
-`{"ids": [3, 1, 2]}` — полный список id в нужном порядке.
+`{"ids": [3, 1, 2]}` — полный список id в нужном порядке. К доступу порядок уроков отношения не
+имеет, его задаёт только `opensAt`.
+
+`opensAt` в `LessonRequest` пишется как передан: отсутствующее или `null` поле стирает дату и
+возвращает урок под замок. Дата в прошлом — обычный способ открыть урок прямо сейчас.
 
 ### Вопросы
 
@@ -231,6 +286,9 @@ type LessonStatus = 'LOCKED' | 'AVAILABLE' | 'IN_PROGRESS' | 'COMPLETED';
 type UserRole = 'USER' | 'ADMIN';
 
 // Даты — ISO local date-time без зоны: "2026-12-31T23:59:59".
+// Зоны нет нигде: и сервер, и админка работают во времени школы (Europe/Minsk,
+// задано через TZ в контейнере). Даты открытия уроков вводятся и сравниваются
+// именно в нём, поэтому переводить их в UTC на фронте нельзя.
 type LocalDateTime = string;
 
 interface SessionDto { sessionId: number; startedAt: LocalDateTime; profile: ProfileDto; }
@@ -254,6 +312,7 @@ interface SubjectItem {
 
 interface LessonItem {
   id: number; title: string; description: string; order: number;
+  opensAt: LocalDateTime | null;    // null — урок не в расписании, под замком
   status: LessonStatus;
   questionCount: number;
   correctAnswers: number | null;    // null, пока урок не начат
@@ -261,7 +320,8 @@ interface LessonItem {
 
 interface LessonDto {
   id: number; subjectId: number; title: string; description: string;
-  order: number; status: LessonStatus; questions: QuestionDto[];
+  order: number; opensAt: LocalDateTime | null;
+  status: LessonStatus; questions: QuestionDto[];
 }
 
 interface QuestionDto {
@@ -304,7 +364,6 @@ interface AttemptResultDto {
   attemptId: number; lessonId: number;
   correctCount: number; totalCount: number; accuracyPercent: number;
   completedAt: LocalDateTime;
-  unlockedLessonId: number | null;   // null, если урок был последним
 }
 
 interface StreakDto { current: number; best: number; }
@@ -335,9 +394,10 @@ interface LessonStatsItem {
 
 interface PredictionDto {
   subjectId: number;
-  score: number | null;              // null, пока данных мало
+  score: number | null;              // null, пока данных мало или ещё нет ни одной оценки
   comment: string;
-  computedAt: LocalDateTime;
+  computedAt: LocalDateTime | null;  // null, пока ни разу не считалось
+  pending: boolean;                  // true — считается в фоне, стоит опросить эндпоинт ещё раз
 }
 
 interface ApiError {
@@ -358,13 +418,32 @@ interface AdminUserItem {
   id: number; tgId: string; username: string;
   firstName: string; lastName: string;
   role: UserRole; subscriptions: SubscriptionItem[];
+  taughtSubjects: TaughtSubjectItem[];  // непусто только у role = TEACHER
 }
 
-interface AdminUserDto extends AdminUserItem { progress: UserProgressItem[]; }
+interface AdminUserDto extends AdminUserItem {
+  progress: UserProgressItem[];
+  activity: UserActivityItem;
+}
+
+// Предмет, который ведёт учитель. Это не подписка: ни оплаты, ни срока здесь нет.
+interface TaughtSubjectItem { subjectId: number; subjectName: string; }
+
+interface UserActivityItem {
+  answered: number; correct: number;   // домашка, практика не в счёт
+  accuracyPercent: number;
+  timeSpentMinutes: number;            // по всем сессиям
+  streak: StreakDto;
+}
+
+// Админу answered/correct/accuracyPercent считаются по всем предметам, учителю — по его.
+// timeSpentMinutes и streak у учителя остаются общими по приложению: ни сессии, ни стрик
+// практики в схеме к предмету не привязаны, разбить их по предметам нечем.
 
 interface UserProgressItem {
   subjectId: number; subjectName: string;
-  currentLessonId: number; currentLessonTitle: string;
+  // последний сданный урок, null — предмет ещё не открывали
+  lastCompletedLessonId: number | null; lastCompletedLessonTitle: string | null;
   lessonsCompleted: number; lessonsTotal: number;
 }
 
@@ -383,18 +462,19 @@ interface SubjectRequest { name: string; }
 
 interface AdminLessonItem {
   id: number; subjectId: number; title: string; description: string;
-  order: number; questionCount: number;
+  order: number; opensAt: LocalDateTime | null; questionCount: number;
 }
 
 interface AdminLessonDto {
   id: number; subjectId: number; title: string; description: string;
-  order: number; questions: AdminQuestionDto[];
+  order: number; opensAt: LocalDateTime | null; questions: AdminQuestionDto[];
 }
 
 interface LessonRequest {
   subjectId: number; title: string;
   description?: string;
   order?: number;                    // без него — в конец списка
+  opensAt?: LocalDateTime;           // без него — урок под замком
 }
 
 interface AdminQuestionDto {

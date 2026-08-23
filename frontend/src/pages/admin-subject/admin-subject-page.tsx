@@ -8,6 +8,7 @@ import {
   adminSubjectPracticeQuestionsPath,
 } from '@/app/routes'
 import { RenameSubjectModal, SubjectDetails, useAdminSubjects } from '@/features/admin-subjects'
+import { useProfile } from '@/features/profile'
 import { PageHeader } from '@/shared/ui/page-header'
 import { Spinner } from '@/shared/ui/spinner'
 import { StateMessage } from '@/shared/ui/state-message'
@@ -17,6 +18,9 @@ export function AdminSubjectPage() {
   const navigate = useNavigate()
   const [isRenaming, setIsRenaming] = useState(false)
   const subjectsQuery = useAdminSubjects()
+  // Renaming and dropping a subject stay with the owner; a teacher edits what is
+  // inside it.
+  const isAdmin = useProfile().data?.role === 'ADMIN'
 
   if (subjectsQuery.isPending) {
     return (
@@ -66,16 +70,18 @@ export function AdminSubjectPage() {
     <section className="flex flex-col gap-6">
       <PageHeader
         title={subject.name}
-        description="Название, уроки и вопросы практики"
+        description={isAdmin ? 'Название, уроки и вопросы практики' : 'Уроки и вопросы практики'}
         action={
-          <button
-            type="button"
-            aria-label="Переименовать предмет"
-            onClick={() => setIsRenaming(true)}
-            className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-fg transition-colors duration-150 active:bg-surface-sunken"
-          >
-            <Pencil aria-hidden className="size-5" />
-          </button>
+          isAdmin ? (
+            <button
+              type="button"
+              aria-label="Переименовать предмет"
+              onClick={() => setIsRenaming(true)}
+              className="flex size-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-fg transition-colors duration-150 active:bg-surface-sunken"
+            >
+              <Pencil aria-hidden className="size-5" />
+            </button>
+          ) : null
         }
       />
 
@@ -83,6 +89,7 @@ export function AdminSubjectPage() {
         subject={subject}
         lessonsHref={adminSubjectLessonsPath(subject.id)}
         practiceQuestionsHref={adminSubjectPracticeQuestionsPath(subject.id)}
+        canDelete={isAdmin}
         onDeleted={() => void navigate(ADMIN_ROUTES.subjects, { replace: true })}
       />
 

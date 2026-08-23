@@ -9,6 +9,8 @@ import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.SubjectRepository;
 import dev.lowkkid.backend.repository.SubscriptionRepository;
+import dev.lowkkid.backend.repository.UserRepository;
+import dev.lowkkid.backend.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -28,11 +30,15 @@ public class AdminSubjectServiceImpl implements AdminSubjectService {
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final SubscriptionRepository subscriptionRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
-    public List<SubjectDto> findAll() {
-        return subjectRepository.findAll(Sort.by("id")).stream().map(this::toDto).toList();
+    public List<SubjectDto> findAll(CurrentUser user) {
+        return subjectRepository.findAll(Sort.by("id")).stream()
+                .filter(subject -> user.manages(subject.getId()))
+                .map(this::toDto)
+                .toList();
     }
 
     @Override
@@ -54,8 +60,8 @@ public class AdminSubjectServiceImpl implements AdminSubjectService {
     }
 
     /**
-     * @throws ConflictException if lessons, practice questions or paid access still point at the
-     *                           subject; those have to be removed first, deliberately
+     * @throws ConflictException if lessons, practice questions, paid access or a teacher still
+     *                           point at the subject; those have to be removed first, deliberately
      */
     @Override
     @Transactional
@@ -73,6 +79,11 @@ public class AdminSubjectServiceImpl implements AdminSubjectService {
         }
         if (subscriptionRepository.existsBySubject_Id(subjectId)) {
             throw new ConflictException("Subject " + subjectId + " is still granted to students");
+        }
+        long teachers = userRepository.countTeachersOfSubject(subjectId);
+        if (teachers > 0) {
+            throw new ConflictException("Subject " + subjectId + " is still assigned to "
+                    + teachers + " teachers");
         }
         subjectRepository.delete(subject);
     }

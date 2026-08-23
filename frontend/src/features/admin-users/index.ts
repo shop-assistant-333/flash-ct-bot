@@ -3,10 +3,16 @@ export { useCreateUser } from './hooks/use-create-user'
 export { useUpdateUser } from './hooks/use-update-user'
 export { DeleteUserButton } from './ui/delete-user-button'
 export { SubscriptionsSection } from './ui/subscriptions-section'
+export { TeacherSubjectsSection } from './ui/teacher-subjects-section'
 export { UserActivityCard } from './ui/user-activity-card'
 export { UserForm } from './ui/user-form'
 export { UserProgressList } from './ui/user-progress-list'
 export { UsersList } from './ui/users-list'
 export { UsersSearch } from './ui/users-search'
 export { userDisplayName } from './lib/user-format'
-export type { AdminUserDto, AdminUserItem, UserRequest } from './api/admin-users-api'
+export type {
+  AdminUserDto,
+  AdminUserItem,
+  TaughtSubjectItem,
+  UserRequest,
+} from './api/admin-users-api'

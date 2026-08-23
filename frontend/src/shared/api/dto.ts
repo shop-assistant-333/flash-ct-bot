@@ -6,7 +6,7 @@
 /** ISO local date-time without a zone: "2026-12-31T23:59:59". */
 export type LocalDateTime = string
 
-export type UserRole = 'USER' | 'ADMIN'
+export type UserRole = 'USER' | 'ADMIN' | 'TEACHER'
 
 export interface SubscriptionItem {
   subjectId: number

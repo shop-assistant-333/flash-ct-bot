@@ -21,8 +21,18 @@ interface UserFormProps {
 
 const ROLE_OPTIONS = [
   { value: 'USER', label: 'Ученик' },
+  { value: 'TEACHER', label: 'Учитель' },
   { value: 'ADMIN', label: 'Администратор' },
-]
+] as const
+
+const ROLES: readonly UserRole[] = ROLE_OPTIONS.map((option) => option.value)
+
+/** `<select>` hands back a bare string, so the role is narrowed against the options. */
+function toRole(value: string): UserRole {
+  return ROLES.find((role) => role === value) ?? 'USER'
+}
+
+const TEACHER_HINT = 'Предмет учителю выдаётся ниже, в блоке «Преподаёт»'
 
 const TG_ID_HINT = 'Можно не заполнять: id подставится сам, когда ученик впервые откроет мини-апп'
 
@@ -93,8 +103,9 @@ export function UserForm({ user, submitLabel, onSubmit, saving = false, error }:
       <SelectField
         label="Роль"
         value={role}
-        options={ROLE_OPTIONS}
-        onChange={(value) => setRole(value === 'ADMIN' ? 'ADMIN' : 'USER')}
+        options={[...ROLE_OPTIONS]}
+        onChange={(value) => setRole(toRole(value))}
+        {...(role === 'TEACHER' ? { hint: TEACHER_HINT } : {})}
         {...errorProp(fields.role)}
       />
 

@@ -13,6 +13,7 @@ import dev.lowkkid.backend.model.SubscriptionItem;
 import dev.lowkkid.backend.model.admin.AdminUserDto;
 import dev.lowkkid.backend.model.admin.AdminUserItem;
 import dev.lowkkid.backend.model.admin.SubscriptionRequest;
+import dev.lowkkid.backend.model.admin.TaughtSubjectItem;
 import dev.lowkkid.backend.model.admin.UserActivityItem;
 import dev.lowkkid.backend.model.admin.UserProgressItem;
 import dev.lowkkid.backend.model.admin.UserRequest;
@@ -26,6 +27,7 @@ import dev.lowkkid.backend.repository.UserAttemptRepository.SubjectAttemptCount;
 import dev.lowkkid.backend.repository.UserPracticeStatsRepository;
 import dev.lowkkid.backend.repository.UserRepository;
 import dev.lowkkid.backend.repository.UserSessionRepository;
+import dev.lowkkid.backend.security.CurrentUser;
 import dev.lowkkid.backend.service.AttemptService;
 import dev.lowkkid.backend.service.SubscriptionAccess;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -48,6 +51,11 @@ import java.util.stream.Collectors;
  * hand here and nothing about them is computed. A student can also be created before ever opening
  * the mini app, knowing only the username: the telegram id stays empty and gets filled in on the
  * first launch.
+ *
+ * <p>A teacher reads the same two screens through a narrower window: only the students of their
+ * own subjects, and of those students only what happened in those subjects. Whether the caller is
+ * allowed to write anything here at all was already settled by
+ * {@link dev.lowkkid.backend.security.SubjectAccessGuard} in the controller.
  */
 @Service
 @RequiredArgsConstructor
@@ -64,20 +72,46 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<AdminUserItem> search(String search, Pageable pageable) {
-        Page<User> page = StringUtils.hasText(search)
-                ? userRepository.search("%" + search.trim().toLowerCase() + "%", pageable)
-                : userRepository.findAll(pageable);
+    public Page<AdminUserItem> search(CurrentUser user, String search, Pageable pageable) {
+        String pattern = StringUtils.hasText(search) ? "%" + search.trim().toLowerCase() + "%" : null;
+        Page<User> page = user.isTeacher()
+                ? teacherPage(user, pattern, pageable)
+                : adminPage(pattern, pageable);
 
         Map<Integer, List<SubscriptionItem>> subscriptions = subscriptionsOf(
                 page.getContent().stream().map(User::getId).toList());
-        return page.map(student -> toItem(student, subscriptions.getOrDefault(student.getId(), List.of())));
+        return page.map(student -> toItem(
+                student,
+                // A teacher must not learn the names of subjects that are not theirs, not even
+                // through the badges of a row.
+                visible(user, subscriptions.getOrDefault(student.getId(), List.of()))));
+    }
+
+    private Page<User> adminPage(String pattern, Pageable pageable) {
+        return pattern == null ? userRepository.findAll(pageable) : userRepository.search(pattern, pageable);
+    }
+
+    private Page<User> teacherPage(CurrentUser user, String pattern, Pageable pageable) {
+        if (user.taughtSubjectIds().isEmpty()) {
+            return Page.empty(pageable);
+        }
+        return userRepository.searchStudentsOfSubjects(user.taughtSubjectIds(), pattern, pageable);
+    }
+
+    private List<SubscriptionItem> visible(CurrentUser user, List<SubscriptionItem> subscriptions) {
+        if (!user.isTeacher()) {
+            return subscriptions;
+        }
+        return subscriptions.stream()
+                .filter(subscription -> user.manages(subscription.subjectId()))
+                .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public AdminUserDto get(Integer userId) {
-        return toDto(user(userId));
+    public AdminUserDto get(CurrentUser user, Integer userId) {
+        User student = user(userId);
+        return user.isTeacher() ? toTeacherDto(user, student) : toDto(student);
     }
 
     @Override
@@ -109,6 +143,10 @@ public class AdminUserServiceImpl implements AdminUserService {
         User student = user(userId);
 
         attemptRepository.deleteAll(attemptRepository.findByUser_Id(userId));
+        // The join table has a foreign key on users, so a teacher cannot be dropped while it holds
+        // their subjects.
+        student.getTaughtSubjects().clear();
+        userRepository.saveAndFlush(student);
         subscriptionRepository.deleteByUser_Id(userId);
         sessionRepository.deleteByUser_Id(userId);
         practiceStatsRepository.deleteById(userId);
@@ -143,12 +181,52 @@ public class AdminUserServiceImpl implements AdminUserService {
         subscriptionRepository.delete(subscription);
     }
 
+    /** Idempotent: assigning a subject a teacher already has changes nothing. */
+    @Override
+    @Transactional
+    public TaughtSubjectItem assignSubject(Integer userId, Integer subjectId) {
+        User teacher = requireTeacher(userId);
+        Subject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> NotFoundException.of("Subject", subjectId));
+
+        teacher.getTaughtSubjects().add(subject);
+        userRepository.save(teacher);
+        return new TaughtSubjectItem(subject.getId(), subject.getName());
+    }
+
+    @Override
+    @Transactional
+    public void unassignSubject(Integer userId, Integer subjectId) {
+        User teacher = requireTeacher(userId);
+        boolean removed = teacher.getTaughtSubjects()
+                .removeIf(subject -> subject.getId().equals(subjectId));
+        if (!removed) {
+            throw NotFoundException.of("Subject " + subjectId + " of teacher", userId);
+        }
+        userRepository.save(teacher);
+    }
+
+    private User requireTeacher(Integer userId) {
+        User teacher = user(userId);
+        if (teacher.getRole() != UserRole.TEACHER) {
+            throw new ConflictException("User " + userId + " is not a teacher");
+        }
+        return teacher;
+    }
+
     private void apply(User student, UserRequest request) {
         student.setUsername(request.username().trim());
         student.setTgId(StringUtils.hasText(request.tgId()) ? request.tgId().trim() : null);
         student.setFirstName(request.firstName());
         student.setLastName(request.lastName());
-        student.setRole(request.role() == null ? UserRole.USER : request.role());
+
+        UserRole role = request.role() == null ? UserRole.USER : request.role();
+        // Taking the teacher role away has to take the subjects with it, or the rights would
+        // quietly stay behind.
+        if (role != UserRole.TEACHER) {
+            student.getTaughtSubjects().clear();
+        }
+        student.setRole(role);
     }
 
     /** The username is how a hand made record is matched to a student on their first launch. */
@@ -179,7 +257,8 @@ public class AdminUserServiceImpl implements AdminUserService {
                 student.getFirstName(),
                 student.getLastName(),
                 student.getRole(),
-                subscriptions);
+                subscriptions,
+                taughtSubjectsOf(student));
     }
 
     private AdminUserDto toDto(User student) {
@@ -194,13 +273,64 @@ public class AdminUserServiceImpl implements AdminUserService {
                 student.getLastName(),
                 student.getRole(),
                 subscriptions.stream().map(SubscriptionAccess::toItem).toList(),
+                taughtSubjectsOf(student),
                 progressOf(student.getId(), subscriptions),
                 activityOf(student.getId()));
     }
 
+    /**
+     * The card as a teacher sees it: their own subjects and nothing else. Access to another
+     * teacher's student is a 404 rather than a 403 — walking the ids must not tell them who else
+     * is in the app.
+     */
+    private AdminUserDto toTeacherDto(CurrentUser teacher, User student) {
+        List<Subscription> subscriptions = subscriptionRepository.findByUser_Id(student.getId()).stream()
+                .filter(subscription -> teacher.manages(subscription.getSubject().getId()))
+                .sorted(Comparator.comparing(subscription -> subscription.getSubject().getId()))
+                .toList();
+        if (student.getRole() != UserRole.USER || subscriptions.isEmpty()) {
+            throw NotFoundException.of("User", student.getId());
+        }
+
+        return new AdminUserDto(
+                student.getId(),
+                student.getTgId(),
+                student.getUsername(),
+                student.getFirstName(),
+                student.getLastName(),
+                student.getRole(),
+                // Paid access is the owner's business, so a teacher is told nothing about it.
+                List.of(),
+                List.of(),
+                progressOf(student.getId(), subscriptions),
+                activityOf(student.getId(), teacher.taughtSubjectIds()));
+    }
+
+    private List<TaughtSubjectItem> taughtSubjectsOf(User student) {
+        if (student.getRole() != UserRole.TEACHER) {
+            return List.of();
+        }
+        return student.getTaughtSubjects().stream()
+                .sorted(Comparator.comparing(Subject::getId))
+                .map(subject -> new TaughtSubjectItem(subject.getId(), subject.getName()))
+                .toList();
+    }
+
     /** Same numbers the student sees on their statistics tab, but summed over every subject. */
     private UserActivityItem activityOf(Integer userId) {
-        Counters answers = userAnswerRepository.countAllSubjects(userId);
+        return activityOf(userId, userAnswerRepository.countAllSubjects(userId));
+    }
+
+    /**
+     * The same, narrowed to the subjects of one teacher. Time in the app and the practice streak
+     * cannot follow: neither sessions nor practice statistics know about subjects in the schema,
+     * so those two stay over the whole app — see {@code backend/API.md}.
+     */
+    private UserActivityItem activityOf(Integer userId, Set<Integer> subjectIds) {
+        return activityOf(userId, userAnswerRepository.countAllOfSubjects(userId, subjectIds));
+    }
+
+    private UserActivityItem activityOf(Integer userId, Counters answers) {
         StreakDto streak = practiceStatsRepository.findById(userId)
                 .map(stats -> new StreakDto(
                         stats.getCurrentStreak() == null ? 0 : stats.getCurrentStreak(),

@@ -70,7 +70,18 @@ public class TelegramAuthService implements AuthService {
         verifyFreshness(fields);
 
         User student = resolve(telegramUser(fields));
-        return new CurrentUser(student.getId(), student.getTgId(), student.getUsername(), student.getRole());
+        return new CurrentUser(student.getId(), student.getTgId(), student.getUsername(),
+                student.getRole(), taughtSubjectIdsOf(student));
+    }
+
+    /**
+     * Only a teacher is bound to subjects, and every request of every student would otherwise pay
+     * for the extra select.
+     */
+    private Set<Integer> taughtSubjectIdsOf(User student) {
+        return student.getRole() == UserRole.TEACHER
+                ? userRepository.findTaughtSubjectIds(student.getId())
+                : Set.of();
     }
 
     /** initData is a query string; the signed values are the decoded ones. */

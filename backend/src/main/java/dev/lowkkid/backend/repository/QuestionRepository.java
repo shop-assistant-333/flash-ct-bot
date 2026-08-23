@@ -28,6 +28,18 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     int countBySubject_Id(Integer subjectId);
 
+    /**
+     * Subject that owns the question, whichever way it is attached — straight to a subject, or to
+     * a lesson of one. The join has to be a left one: a practice question has no lesson.
+     */
+    @Query("""
+            select coalesce(q.subject.id, l.subject.id)
+            from Question q
+            left join q.lesson l
+            where q.id = :questionId
+            """)
+    Optional<Integer> findSubjectId(@Param("questionId") Integer questionId);
+
     /** Question counts of every lesson of a subject, instead of counting one lesson at a time. */
     @Query("""
             select q.lesson.id as lessonId, count(q) as count

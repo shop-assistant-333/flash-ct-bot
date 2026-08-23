@@ -13,6 +13,8 @@ interface SubjectDetailsProps {
   /** Screens of other features: the page hands over their addresses. */
   lessonsHref: string
   practiceQuestionsHref: string
+  /** A teacher edits the content of a subject but never drops the subject itself. */
+  canDelete: boolean
   onDeleted: () => void
 }
 
@@ -35,6 +37,7 @@ export function SubjectDetails({
   subject,
   lessonsHref,
   practiceQuestionsHref,
+  canDelete,
   onDeleted,
 }: SubjectDetailsProps) {
   const [isConfirmingDelete, setIsConfirmingDelete] = useState(false)
@@ -61,14 +64,16 @@ export function SubjectDetails({
         />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <Button variant="secondary" onClick={() => setIsConfirmingDelete(true)}>
-          Удалить предмет
-        </Button>
-        {deleteMutation.isError ? (
-          <p className="text-sm text-danger">Не удалось удалить предмет. Попробуйте ещё раз</p>
-        ) : null}
-      </div>
+      {canDelete ? (
+        <div className="flex flex-col gap-2">
+          <Button variant="secondary" onClick={() => setIsConfirmingDelete(true)}>
+            Удалить предмет
+          </Button>
+          {deleteMutation.isError ? (
+            <p className="text-sm text-danger">Не удалось удалить предмет. Попробуйте ещё раз</p>
+          ) : null}
+        </div>
+      ) : null}
 
       <ConfirmDialog
         open={isConfirmingDelete}

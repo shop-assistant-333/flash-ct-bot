@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router'
 
 import { AdminLayout } from '@/app/admin-layout'
+import { RequireAdmin } from '@/app/require-admin'
 import { RequireRole } from '@/app/require-role'
 import { RootLayout } from '@/app/root-layout'
 import { ADMIN_ROUTES, ROUTES } from '@/app/routes'
@@ -11,12 +12,15 @@ import { ErrorScreen } from '@/shared/ui/error-screen'
  * tabs, an admin sees the admin panel and nothing else. The catch-all stays in
  * the student branch, so an unknown URL still lands an admin on their own root.
  *
+ * A teacher lives in the admin branch, with the screens closed to them nested
+ * under `RequireAdmin` instead of a branch of their own.
+ *
  * Pages are code-split: only the chunk for the visited route is downloaded.
  * `lazy` returns the route module, so add `loader`/`action` there when needed.
  */
 export const router = createBrowserRouter([
   {
-    element: <RequireRole role="USER" />,
+    element: <RequireRole roles={['USER']} />,
     errorElement: <ErrorScreen />,
     children: [
       {
@@ -69,7 +73,7 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    element: <RequireRole role="ADMIN" />,
+    element: <RequireRole roles={['ADMIN', 'TEACHER']} />,
     errorElement: <ErrorScreen />,
     children: [
       {
@@ -83,12 +87,17 @@ export const router = createBrowserRouter([
             },
           },
           {
-            path: ADMIN_ROUTES.userNew,
-            lazy: async () => {
-              const { AdminUserNewPage } =
-                await import('@/pages/admin-user-new/admin-user-new-page')
-              return { Component: AdminUserNewPage }
-            },
+            element: <RequireAdmin />,
+            children: [
+              {
+                path: ADMIN_ROUTES.userNew,
+                lazy: async () => {
+                  const { AdminUserNewPage } =
+                    await import('@/pages/admin-user-new/admin-user-new-page')
+                  return { Component: AdminUserNewPage }
+                },
+              },
+            ],
           },
           {
             path: ADMIN_ROUTES.user,

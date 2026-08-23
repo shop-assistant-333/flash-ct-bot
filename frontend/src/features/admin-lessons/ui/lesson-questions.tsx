@@ -29,6 +29,10 @@ export function LessonQuestions({
     <section className="flex flex-col gap-3">
       <h2 className="text-sm font-medium text-muted">Вопросы</h2>
 
+      <LinkButton to={newQuestionHref} variant="secondary">
+        Добавить вопрос
+      </LinkButton>
+
       {questions.length === 0 ? (
         <StateMessage
           icon={ListChecks}
@@ -56,10 +60,6 @@ export function LessonQuestions({
           />
         </>
       )}
-
-      <LinkButton to={newQuestionHref} variant="secondary">
-        Добавить вопрос
-      </LinkButton>
     </section>
   )
 }

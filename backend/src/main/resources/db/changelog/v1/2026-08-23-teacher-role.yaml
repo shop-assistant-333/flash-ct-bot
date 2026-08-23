@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+
+  # Postgres refuses to use an enum value in the same transaction that added it, and liquibase
+  # wraps a changeSet in one — hence runInTransaction: false and a changeSet of its own.
+  # Dropping a value out of an enum is impossible, so the rollback is deliberately empty.
+  - changeSet:
+      id: 2026-08-23-01-add-teacher-role
+      author: lowkkid
+      runInTransaction: false
+      changes:
+        - sql:
+            sql: ALTER TYPE user_role ADD VALUE IF NOT EXISTS 'TEACHER'
+      rollback:
+        - empty
+
+  # Which subjects a teacher may edit. Many to many from the start: the UI hands out one subject
+  # today, and a second one must not cost a migration.
+  - changeSet:
+      id: 2026-08-23-02-create-table-teacher-subjects
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: teacher_subjects
+            columns:
+              - column:
+                  name: user_id
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject_id
+                  type: integer
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: teacher_subjects
+            columnNames: user_id, subject_id
+            constraintName: teacher_subjects_pkey
+        - addForeignKeyConstraint:
+            baseTableName: teacher_subjects
+            baseColumnNames: user_id
+            constraintName: teacher_subjects_user_id_fkey
+            referencedTableName: users
+            referencedColumnNames: id
+        - addForeignKeyConstraint:
+            baseTableName: teacher_subjects
+            baseColumnNames: subject_id
+            constraintName: teacher_subjects_subject_id_fkey
+            referencedTableName: subjects
+            referencedColumnNames: id

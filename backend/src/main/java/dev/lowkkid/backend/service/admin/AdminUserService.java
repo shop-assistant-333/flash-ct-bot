@@ -4,16 +4,26 @@ import dev.lowkkid.backend.model.SubscriptionItem;
 import dev.lowkkid.backend.model.admin.AdminUserDto;
 import dev.lowkkid.backend.model.admin.AdminUserItem;
 import dev.lowkkid.backend.model.admin.SubscriptionRequest;
+import dev.lowkkid.backend.model.admin.TaughtSubjectItem;
 import dev.lowkkid.backend.model.admin.UserRequest;
+import dev.lowkkid.backend.security.CurrentUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AdminUserService {
 
-    /** @param search matched against username, first name and telegram id; ignored when blank */
-    Page<AdminUserItem> search(String search, Pageable pageable);
+    /**
+     * Everybody for an admin; for a teacher, only the students granted one of their subjects.
+     *
+     * @param search matched against username, first name and telegram id; ignored when blank
+     */
+    Page<AdminUserItem> search(CurrentUser user, String search, Pageable pageable);
 
-    AdminUserDto get(Integer userId);
+    /**
+     * @throws dev.lowkkid.backend.exception.NotFoundException if a teacher asks for somebody who
+     *                                                         is not a student of theirs
+     */
+    AdminUserDto get(CurrentUser user, Integer userId);
 
     AdminUserDto create(UserRequest request);
 
@@ -25,4 +35,13 @@ public interface AdminUserService {
     SubscriptionItem upsertSubscription(Integer userId, Integer subjectId, SubscriptionRequest request);
 
     void deleteSubscription(Integer userId, Integer subjectId);
+
+    /**
+     * Puts a subject under a teacher; repeating it changes nothing.
+     *
+     * @throws dev.lowkkid.backend.exception.ConflictException if the user is not a teacher
+     */
+    TaughtSubjectItem assignSubject(Integer userId, Integer subjectId);
+
+    void unassignSubject(Integer userId, Integer subjectId);
 }
