@@ -20,7 +20,8 @@ public interface UserAttemptRepository extends JpaRepository<UserAttempt, Long> 
 
     List<UserAttempt> findByUser_Id(Integer userId);
 
-    boolean existsByLesson_Id(Integer lessonId);
+    /** Every run of one lesson: the lesson takes them with it when it is deleted. */
+    List<UserAttempt> findByLesson_Id(Integer lessonId);
 
     /** Finished attempts with their lesson, newest first, for the progress card of the admin. */
     @Query("""

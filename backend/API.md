@@ -48,6 +48,10 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `ATTEMPT_ALREADY_COMPLETED` | 409 | урок уже сдан |
 | `QUESTION_ALREADY_ANSWERED` | 409 | на вопрос уже отвечали в этой попытке |
 | `ATTEMPT_INCOMPLETE` | 409 | завершение при неотвеченных вопросах |
+| `SUBJECT_HAS_LESSONS` | 409 | удаление предмета, в котором остались уроки |
+| `SUBJECT_HAS_PRACTICE_QUESTIONS` | 409 | удаление предмета, в котором остались вопросы практики |
+| `SUBJECT_HAS_SUBSCRIPTIONS` | 409 | удаление предмета, выданного студентам |
+| `SUBJECT_HAS_TEACHERS` | 409 | удаление предмета, закреплённого за учителями |
 | `PRACTICE_DECK_EMPTY` | 404 | по предмету нет доступных вопросов для практики |
 | `PREDICTION_UNAVAILABLE` | 503 | ИИ-прогноз не удалось получить |
 | `INTERNAL_ERROR` | 500 | всё остальное |
@@ -237,6 +241,10 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `PUT` | `/api/admin/subjects/{subjectId}/lessons/order` | `AdminLessonItem[]` |
 | `GET` | `/api/admin/subjects/{subjectId}/practice-questions` | `AdminQuestionDto[]` |
 
+Предмет удаляется только пустым. Пока в нём есть уроки, вопросы практики, выданный студентам
+доступ или закреплённый учитель, `DELETE` отвечает 409 с соответствующим кодом
+(`SUBJECT_HAS_LESSONS` и остальные из таблицы ошибок) — содержимое удаляют вручную, по одному.
+
 ### Уроки
 
 | метод | путь | ответ |
@@ -247,6 +255,9 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `DELETE` | `/api/admin/lessons/{lessonId}` | 204 |
 | `GET` | `/api/admin/lessons/{lessonId}/questions` | `AdminQuestionDto[]` |
 | `PUT` | `/api/admin/lessons/{lessonId}/questions/order` | `AdminQuestionDto[]` |
+
+`DELETE` урока удаляет его в любом случае, даже если студенты его уже прошли: вместе с уроком
+пропадают его вопросы, попытки студентов и их ответы.
 
 Порядок уроков внутри предмета и вопросов внутри урока задаёт админ. Оба `.../order` принимают
 `{"ids": [3, 1, 2]}` — полный список id в нужном порядке. К доступу порядок уроков отношения не

@@ -19,6 +19,12 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
 
     boolean existsByQuestion_Id(Integer questionId);
 
+    /**
+     * Answers to the questions of one lesson. A question can be moved between lessons, so such an
+     * answer may sit in an attempt of another lesson — deleting a lesson has to find it anyway.
+     */
+    List<UserAnswer> findByQuestion_Lesson_Id(Integer lessonId);
+
     long countByAttempt_Id(Long attemptId);
 
     /** Counters over every homework answer of the student in one subject. */

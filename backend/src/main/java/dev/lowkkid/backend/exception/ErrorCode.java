@@ -26,6 +26,15 @@ public final class ErrorCode {
     public static final String QUESTION_ALREADY_ANSWERED = "QUESTION_ALREADY_ANSWERED";
     /** Completion requested while some questions are still unanswered. */
     public static final String ATTEMPT_INCOMPLETE = "ATTEMPT_INCOMPLETE";
+    /** The subject still holds lessons; they are deleted first, one by one. */
+    public static final String SUBJECT_HAS_LESSONS = "SUBJECT_HAS_LESSONS";
+    /** The subject still holds practice questions of its own. */
+    public static final String SUBJECT_HAS_PRACTICE_QUESTIONS = "SUBJECT_HAS_PRACTICE_QUESTIONS";
+    /** The subject is still paid for by students. */
+    public static final String SUBJECT_HAS_SUBSCRIPTIONS = "SUBJECT_HAS_SUBSCRIPTIONS";
+    /** The subject is still assigned to teachers. */
+    public static final String SUBJECT_HAS_TEACHERS = "SUBJECT_HAS_TEACHERS";
+
     /** No questions available for the requested practice subject. */
     public static final String PRACTICE_DECK_EMPTY = "PRACTICE_DECK_EMPTY";
     /** The AI score prediction could not be produced right now. */

@@ -3,7 +3,6 @@ package dev.lowkkid.backend.service.admin;
 import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.Subject;
 import dev.lowkkid.backend.exception.BadRequestException;
-import dev.lowkkid.backend.exception.ConflictException;
 import dev.lowkkid.backend.exception.NotFoundException;
 import dev.lowkkid.backend.model.admin.AdminLessonDto;
 import dev.lowkkid.backend.model.admin.AdminLessonItem;
@@ -12,6 +11,7 @@ import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.QuestionRepository.LessonQuestionCount;
 import dev.lowkkid.backend.repository.SubjectRepository;
+import dev.lowkkid.backend.repository.UserAnswerRepository;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,6 +38,7 @@ public class AdminLessonServiceImpl implements AdminLessonService {
     private final QuestionRepository questionRepository;
     private final SubjectRepository subjectRepository;
     private final UserAttemptRepository attemptRepository;
+    private final UserAnswerRepository answerRepository;
     private final AdminContentMapper contentMapper;
 
     @Override
@@ -97,16 +98,21 @@ public class AdminLessonServiceImpl implements AdminLessonService {
     }
 
     /**
-     * @throws ConflictException if a student has already opened the lesson; dropping it would
-     *                           erase their attempts along with it
+     * Deletes the lesson whether or not students have solved it: their attempts and answers go
+     * with it. The foreign keys carry no cascade in the database, so the history is removed by
+     * hand, deepest rows first, before the lesson takes its own questions down.
      */
     @Override
     @Transactional
     public void delete(Integer lessonId) {
         Lesson lesson = lesson(lessonId);
-        if (attemptRepository.existsByLesson_Id(lessonId)) {
-            throw new ConflictException("Lesson " + lessonId + " has already been solved by students");
-        }
+
+        // Answers to a question that was moved into this lesson sit in an attempt of another
+        // lesson, so they are not reached by deleting the attempts below.
+        answerRepository.deleteAll(answerRepository.findByQuestion_Lesson_Id(lessonId));
+        answerRepository.flush();
+        attemptRepository.deleteAll(attemptRepository.findByLesson_Id(lessonId));
+        attemptRepository.flush();
 
         Integer subjectId = lesson.getSubject().getId();
         lessonRepository.delete(lesson);

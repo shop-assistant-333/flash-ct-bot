@@ -6,6 +6,7 @@ import { ListRow } from '@/shared/ui/list-row'
 
 import type { SubjectDto } from '../api/admin-subjects-api'
 import { useDeleteSubject } from '../hooks/use-delete-subject'
+import { formatDeleteSubjectError } from '../lib/delete-subject-error'
 import { formatLessonsCount, formatPracticeQuestionsCount } from '../lib/format-counts'
 
 interface SubjectDetailsProps {
@@ -70,7 +71,7 @@ export function SubjectDetails({
             Удалить предмет
           </Button>
           {deleteMutation.isError ? (
-            <p className="text-sm text-danger">Не удалось удалить предмет. Попробуйте ещё раз</p>
+            <p className="text-sm text-danger">{formatDeleteSubjectError(deleteMutation.error)}</p>
           ) : null}
         </div>
       ) : null}
@@ -78,7 +79,7 @@ export function SubjectDetails({
       <ConfirmDialog
         open={isConfirmingDelete}
         title="Удалить предмет?"
-        description={`Вместе с «${subject.name}» пропадут все его уроки и вопросы, включая практику. Отменить это будет нельзя.`}
+        description={`«${subject.name}» пропадёт из списка. Удалить можно только пустой предмет: уроки и вопросы практики удаляются отдельно, до него. Отменить это будет нельзя.`}
         confirmLabel="Удалить"
         loading={deleteMutation.isPending}
         onConfirm={() =>

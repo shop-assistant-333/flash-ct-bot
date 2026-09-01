@@ -2,6 +2,7 @@ package dev.lowkkid.backend.service.admin;
 
 import dev.lowkkid.backend.entity.Subject;
 import dev.lowkkid.backend.exception.ConflictException;
+import dev.lowkkid.backend.exception.ErrorCode;
 import dev.lowkkid.backend.exception.NotFoundException;
 import dev.lowkkid.backend.model.admin.SubjectDto;
 import dev.lowkkid.backend.model.admin.SubjectRequest;
@@ -70,20 +71,22 @@ public class AdminSubjectServiceImpl implements AdminSubjectService {
 
         int lessons = lessonRepository.countBySubject_Id(subjectId);
         if (lessons > 0) {
-            throw new ConflictException("Subject " + subjectId + " still has " + lessons + " lessons");
+            throw new ConflictException(ErrorCode.SUBJECT_HAS_LESSONS,
+                    "Subject " + subjectId + " still has " + lessons + " lessons");
         }
         int practiceQuestions = questionRepository.countBySubject_Id(subjectId);
         if (practiceQuestions > 0) {
-            throw new ConflictException("Subject " + subjectId + " still has " + practiceQuestions
-                    + " practice questions");
+            throw new ConflictException(ErrorCode.SUBJECT_HAS_PRACTICE_QUESTIONS,
+                    "Subject " + subjectId + " still has " + practiceQuestions + " practice questions");
         }
         if (subscriptionRepository.existsBySubject_Id(subjectId)) {
-            throw new ConflictException("Subject " + subjectId + " is still granted to students");
+            throw new ConflictException(ErrorCode.SUBJECT_HAS_SUBSCRIPTIONS,
+                    "Subject " + subjectId + " is still granted to students");
         }
         long teachers = userRepository.countTeachersOfSubject(subjectId);
         if (teachers > 0) {
-            throw new ConflictException("Subject " + subjectId + " is still assigned to "
-                    + teachers + " teachers");
+            throw new ConflictException(ErrorCode.SUBJECT_HAS_TEACHERS,
+                    "Subject " + subjectId + " is still assigned to " + teachers + " teachers");
         }
         subjectRepository.delete(subject);
     }
