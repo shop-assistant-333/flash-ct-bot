@@ -34,9 +34,10 @@ import java.util.stream.Collectors;
  * material that shows up in practice only and never in the programme of lessons. The database
  * enforces that it is one or the other, and so does this service, with a readable message.
  *
- * <p>Editing is allowed after students have answered — a typo has to be fixable — but anything
- * that would rewrite what a student already did is refused instead: deleting an answered question,
- * or dropping an option somebody picked.
+ * <p>Editing is allowed after students have answered — a typo has to be fixable. Deleting the
+ * question goes further and removes the answers to it, the same way a deleted lesson takes the
+ * history of its questions down. Dropping a single option somebody picked is still refused: there
+ * the answer survives, and it would be left pointing at nothing.
  */
 @Service
 @RequiredArgsConstructor
@@ -109,16 +110,18 @@ public class AdminQuestionServiceImpl implements AdminQuestionService {
     }
 
     /**
-     * @throws ConflictException if a student has already answered it; the answer would lose the
-     *                           question it belongs to
+     * Deletes the question whether or not students have answered it: their answers go with it,
+     * and so do the options those answers picked.
      */
     @Override
     @Transactional
     public void delete(Integer questionId) {
         Question question = question(questionId);
-        if (userAnswerRepository.existsByQuestion_Id(questionId)) {
-            throw new ConflictException("Question " + questionId + " has already been answered by students");
-        }
+
+        // An answer points at both the question and the options chosen in it, and deleting the
+        // question cascades to those options — so the history has to go first.
+        userAnswerRepository.deleteAll(userAnswerRepository.findByQuestion_Id(questionId));
+        userAnswerRepository.flush();
 
         Lesson lesson = question.getLesson();
         questionRepository.delete(question);

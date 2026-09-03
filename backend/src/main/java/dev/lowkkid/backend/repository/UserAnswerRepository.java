@@ -17,7 +17,8 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
 
     boolean existsByAttempt_IdAndQuestion_Id(Long attemptId, Integer questionId);
 
-    boolean existsByQuestion_Id(Integer questionId);
+    /** Answers to one question, which a deleted question takes down with it. */
+    List<UserAnswer> findByQuestion_Id(Integer questionId);
 
     /**
      * Answers to the questions of one lesson. A question can be moved between lessons, so such an

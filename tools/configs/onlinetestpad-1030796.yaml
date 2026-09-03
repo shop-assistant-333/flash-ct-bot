@@ -1,0 +1,19 @@
+# Чередование гласных А – О в корне (164 вопроса, тип INPUT).
+# Порядок вопросов на сайте случайный, поэтому limit берёт случайные N из теста.
+# Повторный запуск дописывает в тот же JSON, пропуская уже собранные вопросы.
+url: https://onlinetestpad.com/ru/test/1030796-cheredovanie-glasnykh-a-%E2%80%93-o-v-korne-napishite-slovo-vstavte-glasnye-a-ili-o
+adapter: onlinetestpad
+
+limit: 100
+
+# Ровно одно из двух: lessonId — вопрос внутри урока, subjectId — вопрос в практике.
+lessonId: 1
+
+# Учитывается только для вопросов урока; в практике order пишется как NULL.
+startOrder: 1
+
+# Поля, которые тест просит заполнить до старта (ключ — атрибут name у input).
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-1030796.json

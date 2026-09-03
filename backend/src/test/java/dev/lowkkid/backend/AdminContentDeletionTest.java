@@ -18,6 +18,7 @@ import dev.lowkkid.backend.repository.UserAnswerRepository;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
 import dev.lowkkid.backend.repository.UserRepository;
 import dev.lowkkid.backend.service.admin.AdminLessonService;
+import dev.lowkkid.backend.service.admin.AdminQuestionService;
 import dev.lowkkid.backend.service.admin.AdminSubjectService;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
@@ -32,8 +33,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * The two rules of removing content: a lesson goes away whatever the students have done with it,
- * a subject only once it is empty — and then it says what is still inside.
+ * The rules of removing content: a lesson and a single question both go away whatever the students
+ * have done with them, taking that history with them; a subject only once it is empty — and then it
+ * says what is still inside.
  */
 @SpringBootTest
 @Transactional
@@ -46,6 +48,7 @@ class AdminContentDeletionTest {
     @Autowired UserAttemptRepository attemptRepository;
     @Autowired UserAnswerRepository answerRepository;
     @Autowired AdminLessonService adminLessonService;
+    @Autowired AdminQuestionService adminQuestionService;
     @Autowired AdminSubjectService adminSubjectService;
     @Autowired EntityManager entityManager;
 
@@ -129,6 +132,91 @@ class AdminContentDeletionTest {
         return ((Number) entityManager
                 .createNativeQuery("select count(*) from user_answer_options where user_answer_id = :id")
                 .setParameter("id", answerId)
+                .getSingleResult()).longValue();
+    }
+
+    @Test
+    void deletesAnAnsweredQuestionWithTheAnswersToIt() {
+        Subject subject = new Subject();
+        subject.setName("Предмет " + System.nanoTime());
+        subject = subjectRepository.saveAndFlush(subject);
+
+        Lesson lesson = new Lesson();
+        lesson.setTitle("Урок");
+        lesson.setOrder(1);
+        lesson.setSubject(subject);
+        lesson = lessonRepository.saveAndFlush(lesson);
+
+        Question question = new Question();
+        question.setTitle("Вопрос");
+        question.setType(QuestionType.SINGLE_ANSWER);
+        question.setOrder(1);
+        question.setLesson(lesson);
+        AnswerOption option = new AnswerOption();
+        option.setText("Верно");
+        option.setCorrect(true);
+        option.setQuestion(question);
+        question.getAnswerOptions().add(option);
+        question = questionRepository.saveAndFlush(question);
+
+        Question survivor = new Question();
+        survivor.setTitle("Второй вопрос");
+        survivor.setType(QuestionType.INPUT);
+        survivor.setOrder(2);
+        survivor.setLesson(lesson);
+        survivor.setCorrectAnswer("да");
+        survivor = questionRepository.saveAndFlush(survivor);
+
+        User student = new User();
+        student.setUsername("s_" + System.nanoTime());
+        student.setRole(UserRole.USER);
+        student = userRepository.saveAndFlush(student);
+
+        UserAttempt attempt = new UserAttempt();
+        attempt.setUser(student);
+        attempt.setLesson(lesson);
+        attempt.setStartedAt(LocalDateTime.now());
+        attempt = attemptRepository.saveAndFlush(attempt);
+
+        UserAnswer answer = new UserAnswer();
+        answer.setAttempt(attempt);
+        answer.setQuestion(question);
+        answer.setCorrect(true);
+        answer.setAnsweredAt(LocalDateTime.now());
+        answer.getSelectedOptions().add(question.getAnswerOptions().getFirst());
+        answerRepository.saveAndFlush(answer);
+
+        Integer questionId = question.getId();
+        Integer survivorId = survivor.getId();
+        Long attemptId = attempt.getId();
+        Long answerId = answer.getId();
+        Integer optionId = question.getAnswerOptions().getFirst().getId();
+
+        entityManager.flush();
+        entityManager.clear();
+
+        adminQuestionService.delete(questionId);
+        entityManager.flush();
+        entityManager.clear();
+
+        assertThat(questionRepository.findById(questionId)).isEmpty();
+        assertThat(answerRepository.findById(answerId)).isEmpty();
+        assertThat(joinRowsOf(answerId)).isZero();
+        assertThat(answerOptionRows(optionId)).isZero();
+
+        // The attempt belongs to the lesson, which is still there, so it stays behind.
+        assertThat(attemptRepository.findById(attemptId)).isPresent();
+
+        // And the questions left in the lesson keep a clean 1..n.
+        List<Question> left = questionRepository.findByLesson_IdOrderByOrderAsc(lesson.getId());
+        assertThat(left).extracting(Question::getId).containsExactly(survivorId);
+        assertThat(left).extracting(Question::getOrder).containsExactly(1);
+    }
+
+    private long answerOptionRows(Integer optionId) {
+        return ((Number) entityManager
+                .createNativeQuery("select count(*) from answer_options where id = :id")
+                .setParameter("id", optionId)
                 .getSingleResult()).longValue();
     }
 
