@@ -8,6 +8,7 @@ import dev.lowkkid.tools.qparser.net.FormSession;
 import dev.lowkkid.tools.qparser.util.Text;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
@@ -26,6 +27,11 @@ import java.util.Set;
  * test is finished. This adapter reads the per-question reveal when it is there and falls back
  * to the review page for whatever is still missing, so it does not need to be told which kind
  * of test it is looking at.
+ *
+ * <p>Two shapes of question end up as the same {@code SINGLE_ANSWER} row: the ordinary "question
+ * text, then a list of options" one, and the interactive dictation, where the question is a word
+ * with a gap and the options live inside the gap. The second one is written down with the gap
+ * spelled "...", which is how the app already shows such questions.
  */
 public final class OnlineTestPadAdapter implements SiteAdapter {
 
@@ -229,7 +235,7 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
         HarvestedQuestion question = new HarvestedQuestion();
         question.setSourceId(sourceId(block));
         question.setType(widget.type);
-        question.setTitle(Text.plain(block.selectFirst(".qtext")));
+        question.setTitle(title(block));
         question.setExplanation(Text.plain(block.selectFirst(".otp-item-q-comment .v")));
         if (widget.type != QuestionType.INPUT) {
             for (Element option : widget.options) {
@@ -241,6 +247,27 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
                     + "database cannot store — the text alone may not make sense.");
         }
         return question;
+    }
+
+    /**
+     * The question as text. An interactive dictation has no {@code .qtext}: its question is the
+     * word being dictated, and the options sit inside the gap, so the gap is replaced by the
+     * ellipsis the app's other questions already use.
+     */
+    private static String title(Element block) {
+        Element qtext = block.selectFirst(".qtext");
+        if (qtext != null) {
+            return Text.plain(qtext);
+        }
+        Element dictation = block.selectFirst(".fillinblank-contrainer");
+        if (dictation == null) {
+            return null;
+        }
+        Element withGaps = dictation.clone();
+        for (Element gap : withGaps.select(".otp-inter-dict")) {
+            gap.replaceWith(new TextNode("..."));
+        }
+        return Text.plain(withGaps);
     }
 
     /** Reads the correct answer out of a reveal or review rendering of a question. */
@@ -269,7 +296,7 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
         }
         if (!anyCorrect) {
             // Some renderings spell the right answers out instead of marking the options.
-            Elements spelled = reveal.select(".rightanswers .correctans");
+            Elements spelled = reveal.select(".rightanswers .correctans, .rightans");
             for (HarvestedOption option : options) {
                 for (Element element : spelled) {
                     if (option.getText() != null
@@ -277,6 +304,16 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
                         option.setCorrect(true);
                         anyCorrect = true;
                     }
+                }
+            }
+        }
+        if (!anyCorrect && isVerdictCorrect(reveal)) {
+            // Nothing to correct, because the answer we sent was the right one — and the reveal
+            // still carries it, ticked.
+            for (int i = 0; i < revealWidget.options.size() && i < options.size(); i++) {
+                if (revealWidget.options.get(i).hasAttr("checked")) {
+                    options.get(i).setCorrect(true);
+                    anyCorrect = true;
                 }
             }
         }
@@ -297,8 +334,14 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
 
     private static String optionText(Element optionInput) {
         Element label = optionInput.closest("label");
-        Element text = label == null ? null : label.selectFirst("span");
-        return text == null ? null : Text.oneLine(text);
+        if (label != null) {
+            Element text = label.selectFirst("span");
+            return text == null ? null : Text.oneLine(text);
+        }
+        // A dictation puts the label beside the input rather than around it.
+        String id = optionInput.id();
+        Element sibling = id.isBlank() ? null : optionInput.root().selectFirst("label[for=" + id + "]");
+        return sibling == null ? null : Text.oneLine(sibling);
     }
 
     private static String preview(String title) {
@@ -351,6 +394,10 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
     private static Widget widget(Element block) {
         Elements radios = block.select("input[type=radio][name^=t_ansgr_]");
         if (!radios.isEmpty()) {
+            if (groupCount(radios) > 1) {
+                return new Widget(null, "several gaps to fill, but a question stores one answer",
+                        null, pickFirstOfEachGroup(radios));
+            }
             return new Widget(QuestionType.SINGLE_ANSWER, null, radios, pickFirst(radios));
         }
         Elements checkboxes = block.select("input[type=checkbox][id^=t_ans_]");
@@ -375,6 +422,15 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
                 Map.of());
     }
 
+    /** How many separate things the question asks — one radio group is one answer. */
+    private static int groupCount(Elements radios) {
+        Set<String> groups = new LinkedHashSet<>();
+        for (Element radio : radios) {
+            groups.add(radio.attr("name"));
+        }
+        return groups.size();
+    }
+
     /** Ticks the first option, which is enough to count as answered. */
     private static Map<String, String> pickFirst(Elements inputs) {
         Element first = inputs.first();
@@ -382,6 +438,14 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
         // A checkbox without a value posts "on" in a browser; sending an empty string instead
         // leaves the question unanswered and the test stops advancing.
         return Map.of(first.attr("name"), value.isBlank() ? "on" : value);
+    }
+
+    private static Map<String, String> pickFirstOfEachGroup(Elements radios) {
+        Map<String, String> answer = new LinkedHashMap<>();
+        for (Element radio : radios) {
+            answer.putIfAbsent(radio.attr("name"), radio.attr("value"));
+        }
+        return answer;
     }
 
     private static Map<String, String> fillAll(Elements texts) {

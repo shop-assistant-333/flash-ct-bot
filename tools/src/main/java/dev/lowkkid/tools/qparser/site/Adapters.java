@@ -5,7 +5,8 @@ import java.util.stream.Collectors;
 
 public final class Adapters {
 
-    private static final List<SiteAdapter> ALL = List.of(new OnlineTestPadAdapter());
+    private static final List<SiteAdapter> ALL =
+            List.of(new OnlineTestPadAdapter(), new SaharinaAdapter());
 
     private Adapters() {
     }
