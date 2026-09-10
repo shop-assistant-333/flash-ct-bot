@@ -1,0 +1,271 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/2183457-pravopisanie-soglasnykh-v-korne-slova",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-08T08:27:23.884623206Z",
+  "lessonId": 3,
+  "subjectId": null,
+  "startOrder": 1,
+  "questions": [
+    {
+      "sourceId": "43641328",
+      "type": "MULTI_ANSWER",
+      "title": "Верными являются утверждения:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "В словах, образованных от слов, оканчивающихся на две одинаковые согласные, двойные согласные обычно сохраняются",
+          "correct": true
+        },
+        {
+          "text": "Написания слов с непроизносимыми согласными в корне выясняются по орфографическому словарю и запоминаются",
+          "correct": false
+        },
+        {
+          "text": "Для проверки написания сомнительной звонкой или глухой согласной в корне слова необходимо изменить слово так, чтобы эта согласная оказалась перед любой другой согласной",
+          "correct": false
+        },
+        {
+          "text": "Двойные согласные пишутся в сложносокращённых словах, если одна часть оканчивается, а другая начинается одной и той же буквой",
+          "correct": true
+        },
+        {
+          "text": "Если приставка заканчивается, а корень начинается одинаковой буквой, то двойные согласные не пишутся",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "43641486",
+      "type": "MULTI_ANSWER",
+      "title": "Пишется Т на месте пропуска в словах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "перегоро...ка",
+          "correct": false
+        },
+        {
+          "text": "сверс...ник",
+          "correct": true
+        },
+        {
+          "text": "почтам...ский",
+          "correct": true
+        },
+        {
+          "text": "баске...бол",
+          "correct": true
+        },
+        {
+          "text": "интриган...ство",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "43641548",
+      "type": "MULTI_ANSWER",
+      "title": "Пишется Д на месте пропуска в словах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ху...ший",
+          "correct": true
+        },
+        {
+          "text": "моло...ьба",
+          "correct": false
+        },
+        {
+          "text": "рен...ген",
+          "correct": false
+        },
+        {
+          "text": "пи...жак",
+          "correct": true
+        },
+        {
+          "text": "лан...шафт",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "43641634",
+      "type": "MULTI_ANSWER",
+      "title": "Буква С пропущена в словах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "бе...следно (исчез)",
+          "correct": true
+        },
+        {
+          "text": "дрес...ировка",
+          "correct": true
+        },
+        {
+          "text": "перевя...ка",
+          "correct": false
+        },
+        {
+          "text": "в...дремнуть",
+          "correct": false
+        },
+        {
+          "text": "адрес...ат",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "43641702",
+      "type": "MULTI_ANSWER",
+      "title": "Непроизносимые согласные есть на месте всех пропусков в рядах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "час...ное предпринимательство; ислан...ский обычай",
+          "correct": true
+        },
+        {
+          "text": "неподвлас...ные эмоции; неожиданная опас...ность",
+          "correct": false
+        },
+        {
+          "text": "захолус...ный городок; доблес...ный труд",
+          "correct": true
+        },
+        {
+          "text": "белый извес...няк; пос...лать сообщение",
+          "correct": false
+        },
+        {
+          "text": "крупный ма...штаб; дорогие я...ства",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "43641863",
+      "type": "MULTI_ANSWER",
+      "title": "Двойные согласные есть в примерах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "гру(п,пп)ка ребят",
+          "correct": true
+        },
+        {
+          "text": "вражеская конт(р,рр)азведка",
+          "correct": true
+        },
+        {
+          "text": "большая те(р,рр)аса",
+          "correct": true
+        },
+        {
+          "text": "компроми(с,сс)ное решение",
+          "correct": true
+        },
+        {
+          "text": "ко(р,рр)пункт газеты",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "43641984",
+      "type": "MULTI_ANSWER",
+      "title": "Двойные согласные есть во всех словах в рядах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пара(л,лл)ельный, приви(л,лл)егия",
+          "correct": false
+        },
+        {
+          "text": "ко(р,рр)ектность, ко(р,рр)идор",
+          "correct": false
+        },
+        {
+          "text": "це(л,лл)офан, га(л,лл)ерея",
+          "correct": false
+        },
+        {
+          "text": "депре(с,сс)ия, и(м,мм)играция",
+          "correct": true
+        },
+        {
+          "text": "пе(с,сс)имист, экспре(с,сс)ивный",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "43643599",
+      "type": "MULTI_ANSWER",
+      "title": "Ошибка допущена в одном из слов в рядах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "десант, оперетка",
+          "correct": false
+        },
+        {
+          "text": "кросовки, троллейбус",
+          "correct": true
+        },
+        {
+          "text": "ресурсы, артилерия",
+          "correct": true
+        },
+        {
+          "text": "колоссальный, искусный",
+          "correct": false
+        },
+        {
+          "text": "расса, коллектив",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "43644059",
+      "type": "MULTI_ANSWER",
+      "title": "Правильно написаны все слова в рядах:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "програмка, иллюстрация",
+          "correct": false
+        },
+        {
+          "text": "биссектриса, количество",
+          "correct": true
+        },
+        {
+          "text": "безмолствовать, чествовать",
+          "correct": false
+        },
+        {
+          "text": "кассета, кораловый",
+          "correct": false
+        },
+        {
+          "text": "предчувствие, дерматин",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

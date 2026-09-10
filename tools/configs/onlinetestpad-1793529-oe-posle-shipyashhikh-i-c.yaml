@@ -1,0 +1,19 @@
+# Урок 3: правописание согласных в корне, гласных после шипящих и Ц.
+url: https://onlinetestpad.com/ru/test/1793529-pravopisanie-o-i-e-e-posle-shipyashhikh-i-c-v-suffiksakh-i-okonchaniyakh-im
+adapter: onlinetestpad
+
+# limit не задан — пройти тест целиком.
+
+lessonId: 3
+startOrder: 20
+
+# Тест требует форму регистрации: t_rp_1529810 — «Фамилия, имя», t_rp_1529811 — «Класс».
+prefill:
+  t_rp_1529810: Иван Иванов
+  t_rp_1529811: 10
+
+delayMs: 400
+out: onlinetestpad-1793529-oe-posle-shipyashhikh-i-c.json
+
+# Один и тот же текст вопроса повторяется с разными вариантами — дедуп по тексту выключен.
+dedupeByTitle: false

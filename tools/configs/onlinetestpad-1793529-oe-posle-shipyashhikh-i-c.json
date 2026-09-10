@@ -1,0 +1,220 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/1793529-pravopisanie-o-i-e-e-posle-shipyashhikh-i-c-v-suffiksakh-i-okonchaniyakh-im",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-08T08:24:26.588124892Z",
+  "lessonId": 3,
+  "subjectId": null,
+  "startOrder": 20,
+  "questions": [
+    {
+      "sourceId": "34913149",
+      "type": "SINGLE_ANSWER",
+      "title": "Какое из слов написано с ошибкой?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "скотчем",
+          "correct": false
+        },
+        {
+          "text": "кирпичом",
+          "correct": false
+        },
+        {
+          "text": "плечём",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "34913399",
+      "type": "SINGLE_ANSWER",
+      "title": "Какое слово не относится к орфограмме «Буквы О и Ё после шипящих и Ц в окончании имён существительных»?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "саранч...й",
+          "correct": false
+        },
+        {
+          "text": "стаж...р",
+          "correct": true
+        },
+        {
+          "text": "карандаш...м",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913471",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска нужно писать букву «е»?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "деревц...м",
+          "correct": true
+        },
+        {
+          "text": "борц...м",
+          "correct": false
+        },
+        {
+          "text": "свеч...й",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913426",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду все слова написаны верно?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "плющом, мужем",
+          "correct": true
+        },
+        {
+          "text": "ключём, плечом",
+          "correct": false
+        },
+        {
+          "text": "врачём, палачём",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913196",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду во всех словах нужно писать букву «о»?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "девиц...й, плеч...м",
+          "correct": false
+        },
+        {
+          "text": "парч...й, свеч...й",
+          "correct": true
+        },
+        {
+          "text": "платьиц...м, лиц...м",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913097",
+      "type": "SINGLE_ANSWER",
+      "title": "Какая буква пишется в окончаниях существительных после шипящих и «ц» без ударения?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "о",
+          "correct": false
+        },
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "ё",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913030",
+      "type": "SINGLE_ANSWER",
+      "title": "Какая буква пишется в окончаниях существительных после шипящих и «ц» под ударением?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ё",
+          "correct": false
+        },
+        {
+          "text": "о",
+          "correct": true
+        },
+        {
+          "text": "е",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913158",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска нужно писать букву «е»?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "вираж...м",
+          "correct": false
+        },
+        {
+          "text": "ключ...м",
+          "correct": false
+        },
+        {
+          "text": "девиц...й",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "34913250",
+      "type": "SINGLE_ANSWER",
+      "title": "Какое слово является лишним?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "саж...й",
+          "correct": false
+        },
+        {
+          "text": "кольц...м",
+          "correct": true
+        },
+        {
+          "text": "туч...й",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34913456",
+      "type": "SINGLE_ANSWER",
+      "title": "Какие буквы относятся к шипящим?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ш, щ, ч, ц",
+          "correct": false
+        },
+        {
+          "text": "ж, ш, щ, ч",
+          "correct": true
+        },
+        {
+          "text": "х, ч, ц, ш, щ",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

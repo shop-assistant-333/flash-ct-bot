@@ -1,0 +1,225 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/5350-pravopisanie-bukv-yi-posle-c",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-08T08:24:39.868886091Z",
+  "lessonId": 3,
+  "subjectId": null,
+  "startOrder": 30,
+  "questions": [
+    {
+      "sourceId": "178631",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком из слов пишется буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ц...ркуль",
+          "correct": true
+        },
+        {
+          "text": "ц...ган",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "178632",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком из слов пишется буква Ы?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "Хвост куниц...",
+          "correct": true
+        },
+        {
+          "text": "ц...ркач",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "178633",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком из слов пишется И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "Волчиц...на нора",
+          "correct": false
+        },
+        {
+          "text": "сломать спиц... на велосипеде",
+          "correct": false
+        },
+        {
+          "text": "ц...трусовые",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "178634",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком из слов пишется буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "Интересная лекц...я",
+          "correct": true
+        },
+        {
+          "text": "ц...ган",
+          "correct": false
+        },
+        {
+          "text": "ц...кнул на кричащих в толпе",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "178635",
+      "type": "SINGLE_ANSWER",
+      "title": "Какое из слов является исключением из данного правила и в нем пишется Ы?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "Ц...гарка",
+          "correct": false
+        },
+        {
+          "text": "душистая акац...я",
+          "correct": false
+        },
+        {
+          "text": "на ц...почках",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "178636",
+      "type": "SINGLE_ANSWER",
+      "title": "Найдите слово, в котором буква Ы будет находиться в суффиксе",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "смуглолиц...й",
+          "correct": false
+        },
+        {
+          "text": "птиц...",
+          "correct": false
+        },
+        {
+          "text": "сестриц...н",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "178637",
+      "type": "SINGLE_ANSWER",
+      "title": "Найдите слово, в котором Ы будет писаться в корне.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ц...линдр",
+          "correct": false
+        },
+        {
+          "text": "ц...пленок",
+          "correct": true
+        },
+        {
+          "text": "ц...нга",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "178638",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове будет писаться И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ц...фровая печать",
+          "correct": true
+        },
+        {
+          "text": "ц...ганский табор",
+          "correct": false
+        },
+        {
+          "text": "ц...плячий визг",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "178639",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове будет писаться Ы?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "громко стрекотали ц...кады",
+          "correct": false
+        },
+        {
+          "text": "кульминац...я произведения",
+          "correct": false
+        },
+        {
+          "text": "смуглый ц...ганенок",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "178640",
+      "type": "SINGLE_ANSWER",
+      "title": "Определите группу, где все слова пишутся с И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "Бледнолиц...й, акц...я протеста, пловц...",
+          "correct": false
+        },
+        {
+          "text": "Ц...трусовые, ц...ркуль, черный ц...линдр",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "178641",
+      "type": "SINGLE_ANSWER",
+      "title": "Найдите группу, где во всех словах буква И находится в корне",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "Секц...я, ц...рк, ц...ган",
+          "correct": false
+        },
+        {
+          "text": "ц...корий, ц...стерна, ц...трус",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

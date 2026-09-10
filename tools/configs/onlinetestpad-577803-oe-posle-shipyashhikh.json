@@ -1,0 +1,300 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/577803-pravopisanie-oe-posle-shipyashhikh",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-08T08:23:51.076393122Z",
+  "lessonId": 3,
+  "subjectId": null,
+  "startOrder": 10,
+  "questions": [
+    {
+      "sourceId": "10444857",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах пропущена одна и та же буква",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "сожж...нный, дж...кер",
+          "correct": false
+        },
+        {
+          "text": "медвеж...нок, ж...лтый",
+          "correct": false
+        },
+        {
+          "text": "ч...рный, ш...пот",
+          "correct": true
+        },
+        {
+          "text": "ч...ткая, ш...рох",
+          "correct": false
+        },
+        {
+          "text": "камыш...вая, суш...ные",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10444998",
+      "type": "SINGLE_ANSWER",
+      "title": "В какой строке во всех словах пишется Ё",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "девч...нка, маж...р, смеш...н, щ...лочь",
+          "correct": false
+        },
+        {
+          "text": "круч...ный, волч...нок, ж...лудь, туш...ный",
+          "correct": false
+        },
+        {
+          "text": "береж...шь, щ...голь, поч...тный, ретуш...р",
+          "correct": true
+        },
+        {
+          "text": "пш...нка, теч...т, ож...г 1 степени, ч...рствый",
+          "correct": false
+        },
+        {
+          "text": "ноч...вка, лиш...нный, ш...рох, сгущ...нка",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10445077",
+      "type": "SINGLE_ANSWER",
+      "title": "В какой строке во всех словах пишется О",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "сильный ож...г, руч...нка, душ...нка, меш...чек",
+          "correct": true
+        },
+        {
+          "text": "совершен подж...г, ш...рох, теч...т, ш...лковый",
+          "correct": false
+        },
+        {
+          "text": "щ...лкать, гладкош...рстный, ч...рствый",
+          "correct": false
+        },
+        {
+          "text": "ч...рточка, ш...у, кумач...вый, щ...лка",
+          "correct": false
+        },
+        {
+          "text": "копч...ный, дж...нка, молодож...н, сч...т",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10444923",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах пропущена одна и та же буква",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "щ...лкать, ш...рох",
+          "correct": false
+        },
+        {
+          "text": "пощ...чина, ч...каться",
+          "correct": false
+        },
+        {
+          "text": "парч...вый, врач...м",
+          "correct": true
+        },
+        {
+          "text": "грач...м, ш...пот",
+          "correct": false
+        },
+        {
+          "text": "крыж...вник, ж...рдочка",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10444901",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах пропущена одна и та же буква",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "деш...вый, крюч...к",
+          "correct": false
+        },
+        {
+          "text": "мыш...нок, реш...тка",
+          "correct": false
+        },
+        {
+          "text": "пч...лка, ж...лоб",
+          "correct": true
+        },
+        {
+          "text": "щ...ткой, маж...р",
+          "correct": false
+        },
+        {
+          "text": "пересеч...шь, ш...рты",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10445018",
+      "type": "SINGLE_ANSWER",
+      "title": "В какой строке во всех словах пишется О",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "трещ...тка, анч...ус, чеч...тка, суш...ный",
+          "correct": false
+        },
+        {
+          "text": "плеч...м, печ...ный, парч...вый, деш...вая",
+          "correct": false
+        },
+        {
+          "text": "изж...га, малыш...м, шапч...нка, листож...р",
+          "correct": true
+        },
+        {
+          "text": "тренаж...р, грош...вый, стереж...т, ж...кей",
+          "correct": false
+        },
+        {
+          "text": "камыш...вый, ж...нглер, уч...ба, дж...уль",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10444788",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах пропущена одна и та же буква",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "капюш...н, розовощ...кий",
+          "correct": false
+        },
+        {
+          "text": "ж...сткий, ш...в",
+          "correct": false
+        },
+        {
+          "text": "прож...рливый, распаш...нка",
+          "correct": true
+        },
+        {
+          "text": "печ...т, ключ...м",
+          "correct": false
+        },
+        {
+          "text": "ж...лудь, врач...м",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10444870",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах пропущена одна и та же буква",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "измельч...нный, порош...к",
+          "correct": false
+        },
+        {
+          "text": "шапч...нка, старич...к",
+          "correct": true
+        },
+        {
+          "text": "еж...вые, жж...ный",
+          "correct": false
+        },
+        {
+          "text": "ш...лк, обж...ра",
+          "correct": false
+        },
+        {
+          "text": "реш...тка, скач...к",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10444956",
+      "type": "SINGLE_ANSWER",
+      "title": "В какой строке во всех словах пишется О",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "окруж...нный, сокращ...ный, гараж...м",
+          "correct": false
+        },
+        {
+          "text": "вооруж...нный, напереч...т, ж...сткий, свеч...й",
+          "correct": false
+        },
+        {
+          "text": "напряж...нно, отягч...нный, пастуш...к, меч...м",
+          "correct": false
+        },
+        {
+          "text": "ш...фёр, лапш...й, ш...в, гребеш...к",
+          "correct": true
+        },
+        {
+          "text": "ещ..., ч...ткий, сожж...нный, размеж...вка",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "10445108",
+      "type": "SINGLE_ANSWER",
+      "title": "В какой строке во всех словах пишется Ё",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "изж...га, зажж...нными, сильный ож...г, Ж...ра",
+          "correct": false
+        },
+        {
+          "text": "польщ...н, смущ...нно, прож...рливости, пиж...ном",
+          "correct": false
+        },
+        {
+          "text": "просвещ...нный, каблуч...к, разгоряч...нный, проч...л",
+          "correct": false
+        },
+        {
+          "text": "поч...тно, освещ...нного, прищ...лкивая, отч...тливо",
+          "correct": true
+        },
+        {
+          "text": "камыш...вый, горяч..., врач...м, расч...т",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

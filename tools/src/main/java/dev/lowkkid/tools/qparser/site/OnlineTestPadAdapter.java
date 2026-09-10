@@ -323,50 +323,87 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
 
     // --- answer widgets ------------------------------------------------------------------
 
-    /** What the question expects as an answer, and how to send a deliberately wrong one. */
+    /**
+     * What the question expects as an answer, and how to send a deliberately wrong one. Even a
+     * question we cannot store needs an answer: the test refuses to move on without one, and
+     * everything behind it would be lost with it.
+     */
     private static final class Widget {
 
         private final QuestionType type;
         private final String reason;
         private final Elements options;
-        private final String textFieldName;
+        private final Map<String, String> probe;
 
-        private Widget(QuestionType type, String reason, Elements options, String textFieldName) {
+        private Widget(QuestionType type, String reason, Elements options,
+                       Map<String, String> probe) {
             this.type = type;
             this.reason = reason;
             this.options = options == null ? new Elements() : options;
-            this.textFieldName = textFieldName;
+            this.probe = probe;
         }
 
         Map<String, String> probeAnswer() {
-            Map<String, String> answer = new LinkedHashMap<>();
-            if (type == QuestionType.INPUT) {
-                answer.put(textFieldName, WRONG_ON_PURPOSE);
-            } else if (!options.isEmpty()) {
-                Element first = options.first();
-                answer.put(first.attr("name"), first.attr("value"));
-            }
-            return answer;
+            return probe;
         }
     }
 
     private static Widget widget(Element block) {
         Elements radios = block.select("input[type=radio][name^=t_ansgr_]");
         if (!radios.isEmpty()) {
-            return new Widget(QuestionType.SINGLE_ANSWER, null, radios, null);
+            return new Widget(QuestionType.SINGLE_ANSWER, null, radios, pickFirst(radios));
         }
         Elements checkboxes = block.select("input[type=checkbox][id^=t_ans_]");
         if (!checkboxes.isEmpty()) {
-            return new Widget(QuestionType.MULTI_ANSWER, null, checkboxes, null);
+            return new Widget(QuestionType.MULTI_ANSWER, null, checkboxes, pickFirst(checkboxes));
         }
         Elements texts = block.select("input[type=text][name^=t_ans_]");
         if (texts.size() == 1) {
-            return new Widget(QuestionType.INPUT, null, null, texts.first().attr("name"));
+            return new Widget(QuestionType.INPUT, null, null,
+                    Map.of(texts.first().attr("name"), WRONG_ON_PURPOSE));
         }
         if (texts.size() > 1) {
             return new Widget(null, "several input fields, but a question stores one answer",
-                    null, null);
+                    null, fillAll(texts));
         }
-        return new Widget(null, "answer format not supported by the database schema", null, null);
+        Elements selects = block.select("select[name^=t_ans_]");
+        if (!selects.isEmpty()) {
+            return new Widget(null, "matching or ordering, which the database cannot store",
+                    null, pickAny(selects));
+        }
+        return new Widget(null, "answer format not supported by the database schema", null,
+                Map.of());
+    }
+
+    /** Ticks the first option, which is enough to count as answered. */
+    private static Map<String, String> pickFirst(Elements inputs) {
+        Element first = inputs.first();
+        String value = first.attr("value");
+        // A checkbox without a value posts "on" in a browser; sending an empty string instead
+        // leaves the question unanswered and the test stops advancing.
+        return Map.of(first.attr("name"), value.isBlank() ? "on" : value);
+    }
+
+    private static Map<String, String> fillAll(Elements texts) {
+        Map<String, String> answer = new LinkedHashMap<>();
+        for (Element text : texts) {
+            answer.put(text.attr("name"), WRONG_ON_PURPOSE);
+        }
+        return answer;
+    }
+
+    /** Any real choice per dropdown; "0" is the empty placeholder the site reads as unanswered. */
+    private static Map<String, String> pickAny(Elements selects) {
+        Map<String, String> answer = new LinkedHashMap<>();
+        for (Element select : selects) {
+            for (Element option : select.select("option")) {
+                String value = option.attr("value");
+                if (!value.isBlank() && !value.equals("0")) {
+                    answer.put(select.attr("name"), value);
+                    break;
+                }
+            }
+        }
+        return answer;
     }
 }
