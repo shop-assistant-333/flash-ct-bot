@@ -1,0 +1,12 @@
+# Урок 5: правописание Ь и Ъ, Ь после шипящих.
+# Тест Захарьиной: все 10 вопросов на одной странице, одна отправка формы — и разбор.
+url: https://saharina.ru/tests/test.php?name=test34.xml
+adapter: saharina
+
+lessonId: 5
+startOrder: 60
+
+delayMs: 400
+out: saharina-test34-k-sk.json
+
+dedupeByTitle: false

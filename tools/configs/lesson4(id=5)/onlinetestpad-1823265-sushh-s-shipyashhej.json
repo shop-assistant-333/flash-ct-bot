@@ -1,0 +1,158 @@
+{
+  "source" : "https://onlinetestpad.com/ru/test/1823265-pravopisanie-imen-sushhestvitelnykh-s-shipyashhej-na-konce",
+  "adapter" : "onlinetestpad",
+  "harvestedAt" : "2026-09-10T08:09:18.720498557Z",
+  "lessonId" : 5,
+  "subjectId" : null,
+  "startOrder" : 40,
+  "questions" : [ {
+    "sourceId" : "35524604",
+    "type" : "MULTI_ANSWER",
+    "title" : "В каких словах не нужен ь (мягкий знак)?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "плачь",
+      "correct" : true
+    }, {
+      "text" : "ночь",
+      "correct" : false
+    }, {
+      "text" : "мелочь",
+      "correct" : false
+    }, {
+      "text" : "лучь",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "35526370",
+    "type" : "MULTI_ANSWER",
+    "title" : "Найди существительные мужского рода (в словах пропущен ь)",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "помощ",
+      "correct" : false
+    }, {
+      "text" : "лещ",
+      "correct" : true
+    }, {
+      "text" : "вещ",
+      "correct" : false
+    }, {
+      "text" : "борщ",
+      "correct" : true
+    }, {
+      "text" : "товарищ",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "35524430",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Найдите слово, в котором допущена ошибка",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "багаж",
+      "correct" : false
+    }, {
+      "text" : "нож",
+      "correct" : false
+    }, {
+      "text" : "рож",
+      "correct" : true
+    }, {
+      "text" : "этаж",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "35524339",
+    "type" : "SINGLE_ANSWER",
+    "title" : "У существительных какого рода на конце слова после шипящих пишется мягкий знак?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "мужского рода",
+      "correct" : false
+    }, {
+      "text" : "женского рода",
+      "correct" : true
+    }, {
+      "text" : "среднего рода",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "35527047",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Найди лишнее слово",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ёрш",
+      "correct" : false
+    }, {
+      "text" : "глуш",
+      "correct" : true
+    }, {
+      "text" : "карандаш",
+      "correct" : false
+    }, {
+      "text" : "шалаш",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "35524551",
+    "type" : "MULTI_ANSWER",
+    "title" : "В каких словах пропущен мягкий знак?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "мыш",
+      "correct" : true
+    }, {
+      "text" : "тиш",
+      "correct" : true
+    }, {
+      "text" : "камыш",
+      "correct" : false
+    }, {
+      "text" : "ландыш",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "35524819",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Найди предложение, в котором все слова написаны без ошибок.",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "Кругом стояла тиш.",
+      "correct" : false
+    }, {
+      "text" : "Утром блеснул луч солнца.",
+      "correct" : true
+    }, {
+      "text" : "Мне попался лещь.",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "35526122",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове после ч пишется ь?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "луч",
+      "correct" : false
+    }, {
+      "text" : "мяч",
+      "correct" : false
+    }, {
+      "text" : "врач",
+      "correct" : false
+    }, {
+      "text" : "полноч",
+      "correct" : true
+    } ]
+  } ]
+}

@@ -1,0 +1,211 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/27875-pravopisanie-i",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-10T08:08:31.267935455Z",
+  "lessonId": 5,
+  "subjectId": null,
+  "startOrder": 1,
+  "questions": [
+    {
+      "sourceId": "1485829",
+      "type": "MULTI_ANSWER",
+      "title": "Вставьте буквы. Укажите слова, где надо ставить Ъ.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "об...емный",
+          "correct": true
+        },
+        {
+          "text": "фел...етон",
+          "correct": false
+        },
+        {
+          "text": "в...езжать",
+          "correct": true
+        },
+        {
+          "text": "из...ять",
+          "correct": true
+        },
+        {
+          "text": "с...ябедничать",
+          "correct": true
+        },
+        {
+          "text": "пан...японский",
+          "correct": true
+        },
+        {
+          "text": "п...едестал",
+          "correct": false
+        },
+        {
+          "text": "от...экзаменовать",
+          "correct": false
+        },
+        {
+          "text": "грузопод...емник",
+          "correct": true
+        },
+        {
+          "text": "ин...екция",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "1485766",
+      "type": "MULTI_ANSWER",
+      "title": "Вставьте, где необходимо, пропущенный Ъ.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "кинос...емка",
+          "correct": true
+        },
+        {
+          "text": "об...ективность",
+          "correct": true
+        },
+        {
+          "text": "павил...он",
+          "correct": false
+        },
+        {
+          "text": "под...ехать",
+          "correct": true
+        },
+        {
+          "text": "четырех...ярусный",
+          "correct": true
+        },
+        {
+          "text": "пас...янс",
+          "correct": false
+        },
+        {
+          "text": "суб...ективный",
+          "correct": true
+        },
+        {
+          "text": "кон...юнктура",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "1485818",
+      "type": "SINGLE_ANSWER",
+      "title": "Образуйте новые слова, используя указанные приставки. Укажите слово, в котором не надо ставить Ъ.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ездить (приставка С-)",
+          "correct": false
+        },
+        {
+          "text": "агитировать (приставка С-)",
+          "correct": true
+        },
+        {
+          "text": "ядерный (приставка БЕЗ-)",
+          "correct": false
+        },
+        {
+          "text": "ехидничать (приставка С-)",
+          "correct": false
+        },
+        {
+          "text": "явить (приставка ПРЕД-)",
+          "correct": false
+        },
+        {
+          "text": "явление (приставка ОБ-)",
+          "correct": false
+        },
+        {
+          "text": "единение (приставка ОБ-)",
+          "correct": false
+        },
+        {
+          "text": "юбилейный (приставка ПРЕД-)",
+          "correct": false
+        },
+        {
+          "text": "ярусный (первая часть ДВУХ-)",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "1485815",
+      "type": "MULTI_ANSWER",
+      "title": "Вставьте, где необходимо, пропущенный Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "транс...европейский",
+          "correct": false
+        },
+        {
+          "text": "ад...ютант",
+          "correct": false
+        },
+        {
+          "text": "меж...областной",
+          "correct": false
+        },
+        {
+          "text": "раз...увериться",
+          "correct": false
+        },
+        {
+          "text": "под...ячий",
+          "correct": true
+        },
+        {
+          "text": "п...едестал",
+          "correct": true
+        },
+        {
+          "text": "двух...этажный",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "1485819",
+      "type": "MULTI_ANSWER",
+      "title": "Образуй слова с указанными вставками (приставками) и укажи слова, где не надо ставить Ъ.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "язычный (первая часть ТРЕХ-)",
+          "correct": false
+        },
+        {
+          "text": "европейский (приставка ТРАНС-)",
+          "correct": false
+        },
+        {
+          "text": "естественный (приставка СВЕРХ-)",
+          "correct": false
+        },
+        {
+          "text": "отраслевой (приставка МЕЖ-)",
+          "correct": true
+        },
+        {
+          "text": "экономить (приставка С-)",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

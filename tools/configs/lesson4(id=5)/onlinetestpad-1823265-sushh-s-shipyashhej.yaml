@@ -1,0 +1,14 @@
+# Урок 5: правописание Ь и Ъ, Ь после шипящих.
+url: https://onlinetestpad.com/ru/test/1823265-pravopisanie-imen-sushhestvitelnykh-s-shipyashhej-na-konce
+
+# limit не задан — пройти тест целиком (8 вопросов).
+
+lessonId: 5
+startOrder: 40
+
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-1823265-sushh-s-shipyashhej.json
+
+dedupeByTitle: false

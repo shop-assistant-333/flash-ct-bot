@@ -1,0 +1,260 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/1779403--posle-shipyashhikh-v-raznykh-chastyakh-rechi",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-10T08:09:06.233477350Z",
+  "lessonId": 5,
+  "subjectId": null,
+  "startOrder": 20,
+  "questions": [
+    {
+      "sourceId": "34623786",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска не пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "красивая брош...",
+          "correct": false
+        },
+        {
+          "text": "ветер свеж...",
+          "correct": true
+        },
+        {
+          "text": "упасть навзнич...",
+          "correct": false
+        },
+        {
+          "text": "попасть в глуш...",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34624105",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска не пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "намаж... хлеб маслом",
+          "correct": false
+        },
+        {
+          "text": "явная фальш...",
+          "correct": false
+        },
+        {
+          "text": "мягкий калач...",
+          "correct": true
+        },
+        {
+          "text": "съеш...те ещё кусочек",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34623989",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "сжеч... мусор",
+          "correct": true
+        },
+        {
+          "text": "большой тираж...",
+          "correct": false
+        },
+        {
+          "text": "из тёмных чащ...",
+          "correct": false
+        },
+        {
+          "text": "спелый овощ...",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34623766",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "надеть плащ...",
+          "correct": false
+        },
+        {
+          "text": "суп горяч...",
+          "correct": false
+        },
+        {
+          "text": "мне невтерпёж...",
+          "correct": false
+        },
+        {
+          "text": "увлеч...ся спортом",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "34623894",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска не пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "костюм хорош...",
+          "correct": true
+        },
+        {
+          "text": "настич... врага",
+          "correct": false
+        },
+        {
+          "text": "ударить наотмаш...",
+          "correct": false
+        },
+        {
+          "text": "чёрная туш...",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34623687",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором после шипящего следует писать Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пустош...",
+          "correct": true
+        },
+        {
+          "text": "грач...",
+          "correct": false
+        },
+        {
+          "text": "играть туш...",
+          "correct": false
+        },
+        {
+          "text": "замуж...",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34623709",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска не пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "гнусная лож...",
+          "correct": false
+        },
+        {
+          "text": "береч...ся от простуды",
+          "correct": false
+        },
+        {
+          "text": "прилеч... отдохнуть",
+          "correct": false
+        },
+        {
+          "text": "лес дремуч...",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "34623860",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "много груш...",
+          "correct": false
+        },
+        {
+          "text": "нет телепередач...",
+          "correct": false
+        },
+        {
+          "text": "пять дач...",
+          "correct": false
+        },
+        {
+          "text": "озимая рож...",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "34623928",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска не пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "уйти проч...",
+          "correct": false
+        },
+        {
+          "text": "мальчик тощ...",
+          "correct": true
+        },
+        {
+          "text": "развести щёлоч...",
+          "correct": false
+        },
+        {
+          "text": "стелеш...ся",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "34624038",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите слово, в котором на месте пропуска пишется Ь.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "с плеч... долой",
+          "correct": false
+        },
+        {
+          "text": "ветер могуч...",
+          "correct": false
+        },
+        {
+          "text": "разреж...те хлеб",
+          "correct": true
+        },
+        {
+          "text": "выйти замуж...",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

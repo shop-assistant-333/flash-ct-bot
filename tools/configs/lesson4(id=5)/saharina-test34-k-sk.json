@@ -1,0 +1,260 @@
+{
+  "source": "https://saharina.ru/tests/test.php?name=test34.xml",
+  "adapter": "saharina",
+  "harvestedAt": "2026-09-10T08:09:20.872376045Z",
+  "lessonId": 5,
+  "subjectId": null,
+  "startOrder": 60,
+  "questions": [
+    {
+      "sourceId": "test34.xml#1",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном пишется суффикс – СК-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "мерз...ий",
+          "correct": false
+        },
+        {
+          "text": "киргиз...ий",
+          "correct": true
+        },
+        {
+          "text": "рыбац...ий",
+          "correct": false
+        },
+        {
+          "text": "вяз...ий",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#2",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном пишется суффикс -СК-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "француз...ий",
+          "correct": true
+        },
+        {
+          "text": "низ...ий",
+          "correct": false
+        },
+        {
+          "text": "брос...ий",
+          "correct": false
+        },
+        {
+          "text": "батрац...ий",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#3",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном пишется суффикс –СК-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ткац...ий",
+          "correct": false
+        },
+        {
+          "text": "казац...ий",
+          "correct": false
+        },
+        {
+          "text": "громозд...ий",
+          "correct": false
+        },
+        {
+          "text": "турист...ий",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#4",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном пишется суффикс –СК-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "кандидат...ий",
+          "correct": true
+        },
+        {
+          "text": "дерз...ий",
+          "correct": false
+        },
+        {
+          "text": "горняц...ий",
+          "correct": false
+        },
+        {
+          "text": "мужиц...ий",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#5",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном пишется суффикс –К-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "кавказ...ий",
+          "correct": false
+        },
+        {
+          "text": "казах...ий",
+          "correct": false
+        },
+        {
+          "text": "близ...ий",
+          "correct": true
+        },
+        {
+          "text": "чеш...ий",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#6",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове перед суффиксом пропущен Ь?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "знахар...ский",
+          "correct": false
+        },
+        {
+          "text": "егер...ский",
+          "correct": false
+        },
+        {
+          "text": "рязан...ский",
+          "correct": false
+        },
+        {
+          "text": "ноябр...ский",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#7",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном перед суффиксом пропущен Ь?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "сибир...ский",
+          "correct": false
+        },
+        {
+          "text": "октябр...ский",
+          "correct": true
+        },
+        {
+          "text": "звер...ский",
+          "correct": false
+        },
+        {
+          "text": "богатыр...ский",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#8",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком прилагательном перед суффиксом не пишется буква Ц?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "доне...кий",
+          "correct": false
+        },
+        {
+          "text": "стреле...кий",
+          "correct": false
+        },
+        {
+          "text": "гиган...ский",
+          "correct": true
+        },
+        {
+          "text": "молоде...кий",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#9",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пропущена буква Ц?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "университе...ский",
+          "correct": false
+        },
+        {
+          "text": "институ...ский",
+          "correct": false
+        },
+        {
+          "text": "делега...ский",
+          "correct": false
+        },
+        {
+          "text": "моря...кий",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test34.xml#10",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска надо писать одну букву С?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "тунгу...кий",
+          "correct": false
+        },
+        {
+          "text": "инду...кий",
+          "correct": false
+        },
+        {
+          "text": "черке...кий",
+          "correct": false
+        },
+        {
+          "text": "тря...кий",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Урок 5: правописание Ь и Ъ, Ь после шипящих.
+# Ссылка была на ua.onlinetestpad.com, но тот домен закрыт Cloudflare-челленджем;
+# тот же тест на основном домене открывается без него.
+url: https://onlinetestpad.com/ru/test/27875-pravopisanie-i
+
+# limit не задан — пройти тест целиком (6 вопросов), последний убирается вручную.
+
+lessonId: 5
+startOrder: 1
+
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-27875-myagkij-i-tverdyj-znak.json
+
+dedupeByTitle: false

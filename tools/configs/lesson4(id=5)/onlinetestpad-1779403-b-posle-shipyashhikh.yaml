@@ -1,0 +1,17 @@
+# Урок 5: правописание Ь и Ъ, Ь после шипящих.
+url: https://onlinetestpad.com/ru/test/1779403--posle-shipyashhikh-v-raznykh-chastyakh-rechi
+
+# limit не задан — пройти тест целиком (10 вопросов).
+
+lessonId: 5
+startOrder: 20
+
+# Тест требует форму регистрации: t_rp_1517379 — «Фамилия, имя», t_rp_1517380 — «Класс».
+prefill:
+  t_rp_1517379: Иван Иванов
+  t_rp_1517380: 10
+
+delayMs: 400
+out: onlinetestpad-1779403-b-posle-shipyashhikh.json
+
+dedupeByTitle: false
