@@ -1,0 +1,199 @@
+{
+  "source" : "https://onlinetestpad.com/ru/test/722498-pravopisanie-pristavok-pre-pri",
+  "adapter" : "onlinetestpad",
+  "harvestedAt" : "2026-09-10T07:45:18.231783280Z",
+  "lessonId" : 4,
+  "subjectId" : null,
+  "startOrder" : 1,
+  "questions" : [ {
+    "sourceId" : "12753623",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Какое слово не соответствует значению?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "«приближение» - приехать",
+      "correct" : false
+    }, {
+      "text" : "«пространственная близость» - прибрежный",
+      "correct" : false
+    }, {
+      "text" : "«закончить полностью» - прихлопнуть",
+      "correct" : false
+    }, {
+      "text" : "«неполнота действия» - привязать",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "12752770",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Какое из слов соответствует следующему значению - доведение действия до предела:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "прибивать",
+      "correct" : false
+    }, {
+      "text" : "привыкнуть",
+      "correct" : true
+    }, {
+      "text" : "преуспевать",
+      "correct" : false
+    }, {
+      "text" : "прислушаться",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12752132",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Выберите вариант, в котором допущена орфографическая ошибка.",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ПРЕбывать в Москве",
+      "correct" : false
+    }, {
+      "text" : "ПРЕступать закон",
+      "correct" : false
+    }, {
+      "text" : "ПРЕдел в церкви",
+      "correct" : true
+    }, {
+      "text" : "ПРЕвратный смысл",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12752372",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Выберите вариант, в котором допущена орфографическая ошибка.",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ПРИемник традиций",
+      "correct" : true
+    }, {
+      "text" : "ПРИступать к делу",
+      "correct" : false
+    }, {
+      "text" : "ПРИзирать сироту",
+      "correct" : false
+    }, {
+      "text" : "ПРИтворить дверь",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12751910",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пишется приставка при-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "камень пр...ткновения",
+      "correct" : false
+    }, {
+      "text" : "непр...хотливый",
+      "correct" : true
+    }, {
+      "text" : "пр...следовать",
+      "correct" : false
+    }, {
+      "text" : "пр...поднести",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12751796",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пишется приставка пре-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "пр...вилегия",
+      "correct" : false
+    }, {
+      "text" : "пр...митив",
+      "correct" : false
+    }, {
+      "text" : "пр...словутый",
+      "correct" : true
+    }, {
+      "text" : "пр...норовиться",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12754112",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Выберите вариант, в котором допущена орфографическая ошибка.",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "пристегнуть ремень",
+      "correct" : false
+    }, {
+      "text" : "пребрежный город",
+      "correct" : true
+    }, {
+      "text" : "сложные препятствия",
+      "correct" : false
+    }, {
+      "text" : "превкусное мороженое",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12752928",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пишется приставка при-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "Пр...зирать врага",
+      "correct" : false
+    }, {
+      "text" : "Непр...ложная истина",
+      "correct" : false
+    }, {
+      "text" : "Пр...творить в жизнь",
+      "correct" : false
+    }, {
+      "text" : "Пр...терпеться к боли",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "12753120",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пишется приставка пре-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "пр...валировать",
+      "correct" : true
+    }, {
+      "text" : "пр...оритет",
+      "correct" : false
+    }, {
+      "text" : "пр...ватный",
+      "correct" : false
+    }, {
+      "text" : "пр...дать смысл словам",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "12753307",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пишется приставка при-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "непр...ходящее значение",
+      "correct" : false
+    }, {
+      "text" : "пр...смыкающиеся",
+      "correct" : false
+    }, {
+      "text" : "пр...красный",
+      "correct" : false
+    }, {
+      "text" : "пр...вередливый",
+      "correct" : true
+    } ]
+  } ]
+}

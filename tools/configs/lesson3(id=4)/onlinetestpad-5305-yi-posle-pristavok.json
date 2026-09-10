@@ -1,0 +1,204 @@
+{
+  "source" : "https://onlinetestpad.com/ru/test/5305-glasnye-y-i-i-posle-pristavok",
+  "adapter" : "onlinetestpad",
+  "harvestedAt" : "2026-09-10T07:49:02.028771732Z",
+  "lessonId" : 4,
+  "subjectId" : null,
+  "startOrder" : 20,
+  "questions" : [ {
+    "sourceId" : "177917",
+    "type" : "SINGLE_ANSWER",
+    "title" : "пред...дущий",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177918",
+    "type" : "SINGLE_ANSWER",
+    "title" : "контр...гра",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : true
+    }, {
+      "text" : "ы",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "177919",
+    "type" : "SINGLE_ANSWER",
+    "title" : "без...нициативный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177920",
+    "type" : "SINGLE_ANSWER",
+    "title" : "из...мать",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177921",
+    "type" : "SINGLE_ANSWER",
+    "title" : "под...тожить",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177922",
+    "type" : "SINGLE_ANSWER",
+    "title" : "без...скусственный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177923",
+    "type" : "SINGLE_ANSWER",
+    "title" : "меж...рригационный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : true
+    }, {
+      "text" : "ы",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "177924",
+    "type" : "SINGLE_ANSWER",
+    "title" : "без...дейный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177925",
+    "type" : "SINGLE_ANSWER",
+    "title" : "вз...мать",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : true
+    }, {
+      "text" : "ы",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "177926",
+    "type" : "SINGLE_ANSWER",
+    "title" : "без...нтересный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177927",
+    "type" : "SINGLE_ANSWER",
+    "title" : "с...мпровизировать",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177928",
+    "type" : "SINGLE_ANSWER",
+    "title" : "над...ндивидуальный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177929",
+    "type" : "SINGLE_ANSWER",
+    "title" : "пред...стория",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "ы",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "177930",
+    "type" : "SINGLE_ANSWER",
+    "title" : "сверх...зысканный",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : true
+    }, {
+      "text" : "ы",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "177931",
+    "type" : "SINGLE_ANSWER",
+    "title" : "суб...нспектор",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : true
+    }, {
+      "text" : "ы",
+      "correct" : false
+    } ]
+  } ]
+}

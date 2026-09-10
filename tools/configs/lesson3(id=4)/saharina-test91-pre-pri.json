@@ -1,0 +1,260 @@
+{
+  "source": "https://saharina.ru/tests/test.php?name=test91.xml",
+  "adapter": "saharina",
+  "harvestedAt": "2026-09-10T07:45:04.960787860Z",
+  "lessonId": 4,
+  "subjectId": null,
+  "startOrder": 40,
+  "questions": [
+    {
+      "sourceId": "test91.xml#1",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРЕ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...рекание",
+          "correct": true
+        },
+        {
+          "text": "радиопр...ёмник",
+          "correct": false
+        },
+        {
+          "text": "пр...седание",
+          "correct": false
+        },
+        {
+          "text": "пр...бывать в город",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#2",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРИ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...творить мечту в жизнь",
+          "correct": false
+        },
+        {
+          "text": "пр...бывать на работе",
+          "correct": false
+        },
+        {
+          "text": "пр...творить дверь",
+          "correct": true
+        },
+        {
+          "text": "пр...дание старины",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#3",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРИ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...грустный",
+          "correct": false
+        },
+        {
+          "text": "пр...ободрился",
+          "correct": true
+        },
+        {
+          "text": "пр...спокойный",
+          "correct": false
+        },
+        {
+          "text": "знаки пр...пинания",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#4",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРИ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...увеличенный",
+          "correct": false
+        },
+        {
+          "text": "пр...чудливый",
+          "correct": true
+        },
+        {
+          "text": "пр...мерзкая ситуация",
+          "correct": false
+        },
+        {
+          "text": "пр...мудрый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#5",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРЕ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...надлежать",
+          "correct": false
+        },
+        {
+          "text": "пр...пугнуть",
+          "correct": false
+        },
+        {
+          "text": "непр...ступное укрепление",
+          "correct": false
+        },
+        {
+          "text": "пр...ступный замысел",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#6",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРЕ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...тронуться",
+          "correct": false
+        },
+        {
+          "text": "пр...зидент",
+          "correct": true
+        },
+        {
+          "text": "пр...годиться",
+          "correct": false
+        },
+        {
+          "text": "пр...целиться",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#7",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРЕ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...видение замка",
+          "correct": false
+        },
+        {
+          "text": "пр...коснуться",
+          "correct": false
+        },
+        {
+          "text": "пр...глубокий",
+          "correct": true
+        },
+        {
+          "text": "пр...балтийский",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#8",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРЕ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...ворожить",
+          "correct": false
+        },
+        {
+          "text": "пр...тронуться",
+          "correct": false
+        },
+        {
+          "text": "пр...ближённый",
+          "correct": false
+        },
+        {
+          "text": "пр...толстый",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#9",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРЕ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...украсить",
+          "correct": false
+        },
+        {
+          "text": "пр...рвать",
+          "correct": true
+        },
+        {
+          "text": "пр...крикнуть",
+          "correct": false
+        },
+        {
+          "text": "пр...задуматься",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test91.xml#10",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пишется ПРИ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "пр...земляться",
+          "correct": true
+        },
+        {
+          "text": "пр...ломить",
+          "correct": false
+        },
+        {
+          "text": "пр...проводить",
+          "correct": false
+        },
+        {
+          "text": "пр...добрый",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+# Урок 4: правописание приставок (ПРЕ- / ПРИ-, Ы/И после приставок).
+url: https://onlinetestpad.com/ru/test/722498-pravopisanie-pristavok-pre-pri
+
+# limit не задан — пройти тест целиком (10 вопросов).
+
+lessonId: 4
+startOrder: 1
+
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-722498-pristavki-pre-pri.json
+
+# Один и тот же текст вопроса повторяется с разными вариантами — дедуп по тексту выключен.
+dedupeByTitle: false

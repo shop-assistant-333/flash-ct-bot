@@ -1,0 +1,15 @@
+# Урок 4: правописание приставок (ПРЕ- / ПРИ-, Ы/И после приставок).
+url: https://onlinetestpad.com/ru/test/5305-glasnye-y-i-i-posle-pristavok
+
+# limit не задан — пройти тест целиком (15 вопросов).
+
+lessonId: 4
+startOrder: 20
+
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-5305-yi-posle-pristavok.json
+
+# Один и тот же текст вопроса повторяется с разными вариантами — дедуп по тексту выключен.
+dedupeByTitle: false
