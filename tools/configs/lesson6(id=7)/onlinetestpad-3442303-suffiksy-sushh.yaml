@@ -1,0 +1,13 @@
+# Урок 6: правописание суффиксов имён существительных.
+url: https://onlinetestpad.com/ru/test/3442303-zadanie-11-pravopisanie-suffiksov-imen-sushhestvitelnykh
+
+lessonId: 7
+startOrder: 1
+
+prefill:
+  t_rp_3039305: Иван Иванов
+
+delayMs: 400
+out: onlinetestpad-3442303-suffiksy-sushh.json
+
+dedupeByTitle: false

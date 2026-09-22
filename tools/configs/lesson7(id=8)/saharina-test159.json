@@ -1,0 +1,260 @@
+{
+  "source": "https://saharina.ru/tests/test.php?name=test159.xml",
+  "adapter": "saharina",
+  "harvestedAt": "2026-09-22T09:32:25.717312442Z",
+  "lessonId": 8,
+  "subjectId": null,
+  "startOrder": 21,
+  "questions": [
+    {
+      "sourceId": "test159.xml#1",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пропущена буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "гречн..вый",
+          "correct": false
+        },
+        {
+          "text": "ливн..вый",
+          "correct": false
+        },
+        {
+          "text": "никел..вый",
+          "correct": false
+        },
+        {
+          "text": "назойл..вый",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#2",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове пропущена буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "черешн..вый",
+          "correct": false
+        },
+        {
+          "text": "тюлен..вый",
+          "correct": false
+        },
+        {
+          "text": "юрод..вый",
+          "correct": true
+        },
+        {
+          "text": "тюл..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#3",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ЕВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ключ..вой",
+          "correct": true
+        },
+        {
+          "text": "опрометч..вый",
+          "correct": false
+        },
+        {
+          "text": "забывч..вый",
+          "correct": false
+        },
+        {
+          "text": "влюбч..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#4",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ЕВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "недогадл..вый",
+          "correct": false
+        },
+        {
+          "text": "щавел..вый",
+          "correct": true
+        },
+        {
+          "text": "участл..вый",
+          "correct": false
+        },
+        {
+          "text": "удачл..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#5",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ЕВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "прожорл..вый",
+          "correct": false
+        },
+        {
+          "text": "рассчётл..вый",
+          "correct": false
+        },
+        {
+          "text": "приветл..вый",
+          "correct": false
+        },
+        {
+          "text": "вермишел..вый",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#6",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс -ЛИВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "тен..вой",
+          "correct": false
+        },
+        {
+          "text": "отрасл..вой",
+          "correct": false
+        },
+        {
+          "text": "гел..вый",
+          "correct": false
+        },
+        {
+          "text": "талантл..вый",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#7",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите вариант ответа, в котором пропущена буква Е?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "нул..вой",
+          "correct": true
+        },
+        {
+          "text": "увёртл..вый",
+          "correct": false
+        },
+        {
+          "text": "совестл..вый",
+          "correct": false
+        },
+        {
+          "text": "привередл..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#8",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите вариант ответа, в котором пропущена буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "стро..вой",
+          "correct": false
+        },
+        {
+          "text": "угодл..вый",
+          "correct": true
+        },
+        {
+          "text": "алюмини..вый",
+          "correct": false
+        },
+        {
+          "text": "вещ..вой",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#9",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите вариант ответа, в котором в обоих словах пропущена буква Е?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "несговорч..вый, бель..вой",
+          "correct": false
+        },
+        {
+          "text": "купеч..ский, кокетл..вый",
+          "correct": false
+        },
+        {
+          "text": "сирен..вый, застенч..вый",
+          "correct": false
+        },
+        {
+          "text": "ткан..вый, приключенч..ский",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test159.xml#10",
+      "type": "SINGLE_ANSWER",
+      "title": "Укажите вариант ответа, в котором в обоих словах пропущена одна и та же буква.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "засушл..вый, кали..вый",
+          "correct": false
+        },
+        {
+          "text": "дешёв..нький, оптимистич..ский",
+          "correct": true
+        },
+        {
+          "text": "рассыпч..тый, жил..стый",
+          "correct": false
+        },
+        {
+          "text": "мал..нький, расчётл..вый",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

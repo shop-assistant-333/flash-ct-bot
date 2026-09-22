@@ -1,0 +1,127 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/2378366-6-klass-suffiksy-k-i-sk-v-imenakh-prilagatelnykh",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-22T09:32:23.684314118Z",
+  "lessonId": 8,
+  "subjectId": null,
+  "startOrder": 11,
+  "questions": [
+    {
+      "sourceId": "47747454",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nМолодец.",
+      "correctAnswer": "молодецкий",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747342",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nЯнварь",
+      "correctAnswer": "январский",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747420",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nЧеркес",
+      "correctAnswer": "черкесский",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747413",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nНемец",
+      "correctAnswer": "немецкий",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747338",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nНоябрь.",
+      "correctAnswer": "ноябрьский",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747449",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nМатрос",
+      "correctAnswer": "матросский",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747389",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nПассажир",
+      "correctAnswer": "пассажирский",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747409",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nПрага",
+      "correctAnswer": "пражский",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747442",
+      "type": "INPUT",
+      "title": "Образуйте имя прилагательное от данного существительного.\n\nКазак",
+      "correctAnswer": "казацкий",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "47747540",
+      "type": "MULTI_ANSWER",
+      "title": "Отметьте слова, в которых допущена ошибка.",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "французкий",
+          "correct": true
+        },
+        {
+          "text": "волгжский",
+          "correct": true
+        },
+        {
+          "text": "секретарский",
+          "correct": false
+        },
+        {
+          "text": "французский",
+          "correct": false
+        },
+        {
+          "text": "белорусский",
+          "correct": false
+        },
+        {
+          "text": "февральский",
+          "correct": false
+        },
+        {
+          "text": "богатырьский",
+          "correct": true
+        },
+        {
+          "text": "ткацкий",
+          "correct": false
+        },
+        {
+          "text": "францусский",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

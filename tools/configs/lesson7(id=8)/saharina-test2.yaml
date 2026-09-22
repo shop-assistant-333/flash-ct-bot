@@ -1,0 +1,12 @@
+# Урок 7: правописание суффиксов имён прилагательных.
+# Тест Захарьиной: все вопросы на одной странице, одна отправка формы — и разбор.
+url: https://saharina.ru/tests/test.php?name=test2.xml
+adapter: saharina
+
+lessonId: 8
+startOrder: 31
+
+delayMs: 400
+out: saharina-test2.json
+
+dedupeByTitle: false

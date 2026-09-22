@@ -1,0 +1,260 @@
+{
+  "source": "https://saharina.ru/tests/test.php?name=test2.xml",
+  "adapter": "saharina",
+  "harvestedAt": "2026-09-22T09:32:27.741983065Z",
+  "lessonId": 8,
+  "subjectId": null,
+  "startOrder": 31,
+  "questions": [
+    {
+      "sourceId": "test2.xml#1",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ИВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "ландыш..вый",
+          "correct": false
+        },
+        {
+          "text": "милост..вый",
+          "correct": true
+        },
+        {
+          "text": "поршн..вой",
+          "correct": false
+        },
+        {
+          "text": "ситц..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#2",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ЕВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "находч..вый",
+          "correct": false
+        },
+        {
+          "text": "гуттаперч..вый",
+          "correct": true
+        },
+        {
+          "text": "вкрадч..вый",
+          "correct": false
+        },
+        {
+          "text": "недоверч..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#3",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ЕВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "усидч..вый",
+          "correct": false
+        },
+        {
+          "text": "придирч..вый",
+          "correct": false
+        },
+        {
+          "text": "плеч..вой",
+          "correct": true
+        },
+        {
+          "text": "забывч..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#4",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове есть суффикс –ЕВ-?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "причудл..вый",
+          "correct": false
+        },
+        {
+          "text": "удушл..вый",
+          "correct": false
+        },
+        {
+          "text": "топол..вый",
+          "correct": true
+        },
+        {
+          "text": "услужл..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#5",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска пишется буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "затейл..вый",
+          "correct": true
+        },
+        {
+          "text": "диагонал..вый",
+          "correct": false
+        },
+        {
+          "text": "фланел..вый",
+          "correct": false
+        },
+        {
+          "text": "эмал..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#6",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска пишется буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "кольц..вой",
+          "correct": false
+        },
+        {
+          "text": "сбивч..вый",
+          "correct": true
+        },
+        {
+          "text": "кварц..вый",
+          "correct": false
+        },
+        {
+          "text": "замш..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#7",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска пишется буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "миндал..вый",
+          "correct": false
+        },
+        {
+          "text": "локт..вой",
+          "correct": false
+        },
+        {
+          "text": "магни..вый",
+          "correct": false
+        },
+        {
+          "text": "выносл..вый",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#8",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком слове на месте пропуска пишется буква Е?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "неряшл..вый",
+          "correct": false
+        },
+        {
+          "text": "приветл..вый",
+          "correct": false
+        },
+        {
+          "text": "марл..вый",
+          "correct": true
+        },
+        {
+          "text": "завистл..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#9",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах на месте пропуска пишется буква И?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "заманч..вый, кокетл..вый",
+          "correct": true
+        },
+        {
+          "text": "навязч..вый, бревенч..тый",
+          "correct": false
+        },
+        {
+          "text": "жалостл..вый, малюс..нький",
+          "correct": false
+        },
+        {
+          "text": "обидч..вый, плюш..вый",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "test2.xml#10",
+      "type": "SINGLE_ANSWER",
+      "title": "В каком ряду в обоих словах на месте пропуска пишется буква Е?",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "напор..стый, доказат..льный",
+          "correct": false
+        },
+        {
+          "text": "взрывч..тый, гуманистич..ский",
+          "correct": false
+        },
+        {
+          "text": "человеч..ский, веснушч..тый",
+          "correct": false
+        },
+        {
+          "text": "сторож..вой, доверит..льный",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}

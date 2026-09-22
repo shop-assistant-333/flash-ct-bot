@@ -1,0 +1,12 @@
+# Урок 6: правописание суффиксов имён существительных -чик- и -щик-.
+url: https://onlinetestpad.com/ru/test/2062-pravopisanie-suffiksov-imen-sushhestvitelnykh-chik-shhik-variant-1
+
+lessonId: 7
+startOrder: 40
+
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-2062-chik-shhik.json
+
+dedupeByTitle: false

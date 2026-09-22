@@ -1,0 +1,11 @@
+# Урок 6. «РЕШУ ЦТ»: тест из готовых заданий ЦТ/ЦЭ.
+url: https://rus_ct.sdamgia.ru/test?id=337947&nt=True&pub=False
+adapter: sdamgia
+
+lessonId: 7
+startOrder: 80
+
+delayMs: 400
+out: sdamgia-337947.json
+
+dedupeByTitle: false

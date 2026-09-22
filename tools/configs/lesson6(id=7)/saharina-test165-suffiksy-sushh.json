@@ -1,0 +1,199 @@
+{
+  "source" : "https://saharina.ru/tests/test.php?name=test165.xml",
+  "adapter" : "saharina",
+  "harvestedAt" : "2026-09-21T08:53:19.626997051Z",
+  "lessonId" : 7,
+  "subjectId" : null,
+  "startOrder" : 60,
+  "questions" : [ {
+    "sourceId" : "test165.xml#1",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква Е?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "череш..нка",
+      "correct" : true
+    }, {
+      "text" : "завал..нка",
+      "correct" : false
+    }, {
+      "text" : "трещ..на",
+      "correct" : false
+    }, {
+      "text" : "жемчуж..на",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#2",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква И?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "студенч..ство",
+      "correct" : false
+    }, {
+      "text" : "нищ..та",
+      "correct" : false
+    }, {
+      "text" : "одиноч..ство",
+      "correct" : false
+    }, {
+      "text" : "досто..нство",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "test165.xml#3",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква Е?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "больш..нство",
+      "correct" : false
+    }, {
+      "text" : "муж..ство",
+      "correct" : true
+    }, {
+      "text" : "тиш..на",
+      "correct" : false
+    }, {
+      "text" : "масл..це",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#4",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква И?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "сем..чко",
+      "correct" : false
+    }, {
+      "text" : "нищ..нка",
+      "correct" : false
+    }, {
+      "text" : "крив..зна",
+      "correct" : true
+    }, {
+      "text" : "характер..ц",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#5",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква Е?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "луж..ца",
+      "correct" : false
+    }, {
+      "text" : "луков..ца",
+      "correct" : false
+    }, {
+      "text" : "брат..ц",
+      "correct" : true
+    }, {
+      "text" : "кресл..це",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#6",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква И?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "письм..цо",
+      "correct" : false
+    }, {
+      "text" : "горош..нка",
+      "correct" : true
+    }, {
+      "text" : "ружь..цо",
+      "correct" : false
+    }, {
+      "text" : "врем..чко",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#7",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква И?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "плать..це",
+      "correct" : true
+    }, {
+      "text" : "бас..нка",
+      "correct" : false
+    }, {
+      "text" : "доч..нька",
+      "correct" : false
+    }, {
+      "text" : "книж..чка",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#8",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква Е?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "великан..ще",
+      "correct" : false
+    }, {
+      "text" : "книж..ца",
+      "correct" : false
+    }, {
+      "text" : "пугов..чка",
+      "correct" : false
+    }, {
+      "text" : "неж..нка",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "test165.xml#9",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква Е?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "здоровь..це",
+      "correct" : false
+    }, {
+      "text" : "рож..ца",
+      "correct" : false
+    }, {
+      "text" : "Сон..чка",
+      "correct" : true
+    }, {
+      "text" : "владел..ца",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "test165.xml#10",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове пропущена буква И?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "блюд..чко",
+      "correct" : false
+    }, {
+      "text" : "солом..нка",
+      "correct" : true
+    }, {
+      "text" : "француж..нка",
+      "correct" : false
+    }, {
+      "text" : "сит..чко",
+      "correct" : false
+    } ]
+  } ]
+}

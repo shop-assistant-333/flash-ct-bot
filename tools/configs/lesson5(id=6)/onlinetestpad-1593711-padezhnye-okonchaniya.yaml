@@ -1,0 +1,17 @@
+# Урок 6: правописание падежных окончаний имён существительных.
+url: https://onlinetestpad.com/ru/test/1593711-padezhnye-okonchaniya-sushhestvitelnykh
+
+# limit не задан — пройти тест целиком (12 вопросов).
+
+lessonId: 6
+startOrder: 20
+
+# Тест требует форму регистрации: t_rp_1359993 — «Фамилия, имя», t_rp_1359994 — «Класс».
+prefill:
+  t_rp_1359993: Иван Иванов
+  t_rp_1359994: 10
+
+delayMs: 400
+out: onlinetestpad-1593711-padezhnye-okonchaniya.json
+
+dedupeByTitle: false

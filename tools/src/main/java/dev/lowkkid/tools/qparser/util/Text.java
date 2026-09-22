@@ -23,6 +23,10 @@ public final class Text {
                 .replaceAll("(?i)</(p|div|li|tr)\\s*>", "\n\n");
         String text = Jsoup.parse(html).wholeText()
                 .replace('\u00a0', ' ')
+                .replace('\u202f', ' ')
+                // Soft hyphens mark where a word may break; some sites put one in every word,
+                // and they are invisible on screen but very much there in the database.
+                .replace("\u00ad", "")
                 .replaceAll("[ \\t]+", " ")
                 .replaceAll(" *\n *", "\n")
                 .replaceAll("\n{3,}", "\n\n")

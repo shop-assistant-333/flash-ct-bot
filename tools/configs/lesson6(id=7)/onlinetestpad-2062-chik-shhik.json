@@ -1,0 +1,92 @@
+{
+  "source" : "https://onlinetestpad.com/ru/test/2062-pravopisanie-suffiksov-imen-sushhestvitelnykh-chik-shhik-variant-1",
+  "adapter" : "onlinetestpad",
+  "harvestedAt" : "2026-09-21T08:52:59.164636539Z",
+  "lessonId" : 7,
+  "subjectId" : null,
+  "startOrder" : 40,
+  "questions" : [ {
+    "sourceId" : "36592",
+    "type" : "SINGLE_ANSWER",
+    "title" : "От какого глагола образуется имя существительное со значением профессии, рода деятельности с суффиксом -щик-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "Грузить",
+      "correct" : false
+    }, {
+      "text" : "Погонять",
+      "correct" : true
+    }, {
+      "text" : "Рассказывать",
+      "correct" : false
+    }, {
+      "text" : "Летать",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "36593",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком ряду все слова имеют суффикс -чик-?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "Перебеж..ик, спор..ик, налад..ик",
+      "correct" : false
+    }, {
+      "text" : "Руб..ик, камен..ик, паром..ик",
+      "correct" : false
+    }, {
+      "text" : "Донос..ик, обход..ик, автоответ..ик",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "36594",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Вставьте пропущенные буквы. Сма..ик, обра..ик.",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "-зч-.",
+      "correct" : true
+    }, {
+      "text" : "-щ-.",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "36595",
+    "type" : "SINGLE_ANSWER",
+    "title" : "Найдите слово, в котором перед суффиксом -щик- надо поставить ь.",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "Заговор..щик.",
+      "correct" : false
+    }, {
+      "text" : "Угон..щик.",
+      "correct" : false
+    }, {
+      "text" : "Угол..щик.",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "36596",
+    "type" : "SINGLE_ANSWER",
+    "title" : "В каком слове выделенная буква обозначает твёрдый согласный звук?",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "Рейс",
+      "correct" : false
+    }, {
+      "text" : "Деталь",
+      "correct" : false
+    }, {
+      "text" : "каФе",
+      "correct" : true
+    }, {
+      "text" : "фаНера",
+      "correct" : false
+    } ]
+  } ]
+}

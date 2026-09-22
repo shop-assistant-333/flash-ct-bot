@@ -1,0 +1,339 @@
+{
+  "source" : "https://rus_ct.sdamgia.ru/test?id=337945&nt=True&pub=False",
+  "adapter" : "sdamgia",
+  "harvestedAt" : "2026-09-21T08:58:24.771183507Z",
+  "lessonId" : 7,
+  "subjectId" : null,
+  "startOrder" : 140,
+  "questions" : [ {
+    "sourceId" : "problem?id=1214",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется о на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ж..лудь",
+      "correct" : false
+    }, {
+      "text" : "обреч..н",
+      "correct" : false
+    }, {
+      "text" : "стало очень горяч..",
+      "correct" : true
+    }, {
+      "text" : "струч..к",
+      "correct" : true
+    }, {
+      "text" : "ч..каться",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1015",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется о на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "рубаш..нка",
+      "correct" : true
+    }, {
+      "text" : "над плеч..м",
+      "correct" : true
+    }, {
+      "text" : "напряж..н",
+      "correct" : false
+    }, {
+      "text" : "деш..вый",
+      "correct" : false
+    }, {
+      "text" : "он приш..л",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=3255",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется о на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "деш..вый;",
+      "correct" : false
+    }, {
+      "text" : "крюч..к;",
+      "correct" : true
+    }, {
+      "text" : "копч..ная колбаса;",
+      "correct" : false
+    }, {
+      "text" : "с ковш..м;",
+      "correct" : true
+    }, {
+      "text" : "ровный ш..в.",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1174",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется о на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "растуш..вывать",
+      "correct" : false
+    }, {
+      "text" : "ш..рты",
+      "correct" : true
+    }, {
+      "text" : "с левш..й",
+      "correct" : true
+    }, {
+      "text" : "освещ..нный",
+      "correct" : false
+    }, {
+      "text" : "обж..ра",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=6480",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется О на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "трущ..ба",
+      "correct" : true
+    }, {
+      "text" : "розовощ..кий",
+      "correct" : false
+    }, {
+      "text" : "вход запрещ..н",
+      "correct" : false
+    }, {
+      "text" : "хомяч..к",
+      "correct" : true
+    }, {
+      "text" : "с ключ..м",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1131",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется а на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "непод..лёку",
+      "correct" : true
+    }, {
+      "text" : "заб..стовочный",
+      "correct" : true
+    }, {
+      "text" : "пан..рама",
+      "correct" : false
+    }, {
+      "text" : "проск..чить",
+      "correct" : false
+    }, {
+      "text" : "не пол..гается",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=6623",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется А на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "вык..пать яму",
+      "correct" : false
+    }, {
+      "text" : "осн..стить корабль",
+      "correct" : true
+    }, {
+      "text" : "к..менистая почва",
+      "correct" : true
+    }, {
+      "text" : "несг..раемый шкаф",
+      "correct" : false
+    }, {
+      "text" : "новое предпол..жение",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=401",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется А на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "сост .. вление плана",
+      "correct" : true
+    }, {
+      "text" : "кат .. клизм",
+      "correct" : true
+    }, {
+      "text" : "оз .. рить",
+      "correct" : true
+    }, {
+      "text" : "прик .. сновение",
+      "correct" : false
+    }, {
+      "text" : "погл .. щать",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=1696",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите слова, в корнях которых пишется буква о:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "р..внение",
+      "correct" : false
+    }, {
+      "text" : "об..няние",
+      "correct" : true
+    }, {
+      "text" : "к..сательная",
+      "correct" : false
+    }, {
+      "text" : "упл..тнить",
+      "correct" : true
+    }, {
+      "text" : "оч..ровательный",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=1736",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите слова, в корнях которых пишется буква о:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "предв..рительный",
+      "correct" : false
+    }, {
+      "text" : "погл..тить",
+      "correct" : true
+    }, {
+      "text" : "подг..реть",
+      "correct" : true
+    }, {
+      "text" : "р..стительность",
+      "correct" : false
+    }, {
+      "text" : "пан..рама",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=7400",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется е на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "зам..реть от испуга",
+      "correct" : true
+    }, {
+      "text" : "скр..пучая калитка",
+      "correct" : false
+    }, {
+      "text" : "незап..рающийся шкаф",
+      "correct" : false
+    }, {
+      "text" : "просторный каб..нет",
+      "correct" : false
+    }, {
+      "text" : "рассыпчатое п..ченье",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1132",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется е на месте всех пропусков в рядах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "зал..денеть, пр..слониться",
+      "correct" : false
+    }, {
+      "text" : "г..рбарий, раст..раться",
+      "correct" : false
+    }, {
+      "text" : "ф..олетовый, выж..гание",
+      "correct" : false
+    }, {
+      "text" : "пр..следовать врага, пр..рывающийся диалог",
+      "correct" : true
+    }, {
+      "text" : "т..лесный, пр..сытиться",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=892",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется е на месте всех пропусков в рядах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "раст..реть пятно, пр..курортная зона",
+      "correct" : false
+    }, {
+      "text" : "пр..пятствовать, осл..плён блеском",
+      "correct" : true
+    }, {
+      "text" : "пр..милый ребёнок, р..льеф",
+      "correct" : true
+    }, {
+      "text" : "ст..снённость в средствах, зав..зать бант",
+      "correct" : false
+    }, {
+      "text" : "соб..раться, в..рнисаж",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=2644",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется е на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "радостное воскл..цание",
+      "correct" : false
+    }, {
+      "text" : "совр..менник",
+      "correct" : true
+    }, {
+      "text" : "темп..раментный исполнитель",
+      "correct" : true
+    }, {
+      "text" : "прот..реть окно",
+      "correct" : true
+    }, {
+      "text" : "пр..ласкать котёнка",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=973",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется и на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "пр..рывистая связь",
+      "correct" : false
+    }, {
+      "text" : "пр..зентация книги",
+      "correct" : false
+    }, {
+      "text" : "пр..пудриться",
+      "correct" : true
+    }, {
+      "text" : "пр..клонить к земле",
+      "correct" : true
+    }, {
+      "text" : "пр..целиться",
+      "correct" : true
+    } ]
+  } ]
+}

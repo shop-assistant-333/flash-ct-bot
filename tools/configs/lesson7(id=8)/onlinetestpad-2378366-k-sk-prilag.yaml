@@ -1,0 +1,13 @@
+# Урок 7: суффиксы -к- и -ск- в именах прилагательных (6 класс).
+url: https://onlinetestpad.com/ru/test/2378366-6-klass-suffiksy-k-i-sk-v-imenakh-prilagatelnykh
+
+lessonId: 8
+startOrder: 11
+
+prefill:
+  t_rp_2035832: Иван Иванов
+
+delayMs: 400
+out: onlinetestpad-2378366-k-sk-prilag.json
+
+dedupeByTitle: false

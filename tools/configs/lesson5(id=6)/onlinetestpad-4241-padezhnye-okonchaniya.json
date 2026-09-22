@@ -1,0 +1,90 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/4241-padezhnye-okonchaniya-sushhestvitelnykh",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-10T08:33:38.070799907Z",
+  "lessonId": 6,
+  "subjectId": null,
+  "startOrder": 1,
+  "questions": [
+    {
+      "sourceId": "73523",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nна спектакл...",
+      "correctAnswer": "е",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73519",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nк сирен...",
+      "correctAnswer": "и",
+      "explanation": "Слово \"сирень\"",
+      "options": []
+    },
+    {
+      "sourceId": "73517",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nна обложк...",
+      "correctAnswer": "е",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73520",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nпо дорожк...",
+      "correctAnswer": "е",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73525",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nпри дочк...",
+      "correctAnswer": "е",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73521",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nбез помощ...",
+      "correctAnswer": "и",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73524",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nвдоль тропинк...",
+      "correctAnswer": "и",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73516",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nпо лестниц...",
+      "correctAnswer": "е",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73522",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nв честност...",
+      "correctAnswer": "и",
+      "explanation": null,
+      "options": []
+    },
+    {
+      "sourceId": "73518",
+      "type": "INPUT",
+      "title": "Прочитай слово. Определите склонение и падеж. Запиши окончание существительного.\nв рукопис...",
+      "correctAnswer": "и",
+      "explanation": null,
+      "options": []
+    }
+  ]
+}

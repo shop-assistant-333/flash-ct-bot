@@ -1,0 +1,204 @@
+{
+  "source" : "https://onlinetestpad.com/ru/test/235425-glasnye-v-suffiksakh-imen-sushhestvitelnykh-ek-i-ik",
+  "adapter" : "onlinetestpad",
+  "harvestedAt" : "2026-09-21T08:52:32.329507541Z",
+  "lessonId" : 7,
+  "subjectId" : null,
+  "startOrder" : 20,
+  "questions" : [ {
+    "sourceId" : "4875788",
+    "type" : "SINGLE_ANSWER",
+    "title" : "носоч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : true
+    }, {
+      "text" : "и",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "4875759",
+    "type" : "SINGLE_ANSWER",
+    "title" : "горшоч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : true
+    }, {
+      "text" : "и",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "4875687",
+    "type" : "SINGLE_ANSWER",
+    "title" : "ореш..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : true
+    }, {
+      "text" : "и",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "4875799",
+    "type" : "SINGLE_ANSWER",
+    "title" : "грибоч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : true
+    }, {
+      "text" : "и",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "4875858",
+    "type" : "SINGLE_ANSWER",
+    "title" : "цыпленоч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "е",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875709",
+    "type" : "SINGLE_ANSWER",
+    "title" : "хвост..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : false
+    }, {
+      "text" : "и",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875741",
+    "type" : "SINGLE_ANSWER",
+    "title" : "квадрат..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : false
+    }, {
+      "text" : "и",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875806",
+    "type" : "SINGLE_ANSWER",
+    "title" : "кот..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : true
+    }, {
+      "text" : "е",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "4875844",
+    "type" : "SINGLE_ANSWER",
+    "title" : "ножич..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "и",
+      "correct" : false
+    }, {
+      "text" : "е",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875698",
+    "type" : "SINGLE_ANSWER",
+    "title" : "луч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : false
+    }, {
+      "text" : "и",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875733",
+    "type" : "SINGLE_ANSWER",
+    "title" : "словар..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : false
+    }, {
+      "text" : "и",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875750",
+    "type" : "SINGLE_ANSWER",
+    "title" : "стол..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : false
+    }, {
+      "text" : "и",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875777",
+    "type" : "SINGLE_ANSWER",
+    "title" : "кусоч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : true
+    }, {
+      "text" : "и",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "4875819",
+    "type" : "SINGLE_ANSWER",
+    "title" : "апельсинч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : false
+    }, {
+      "text" : "и",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "4875871",
+    "type" : "SINGLE_ANSWER",
+    "title" : "сыноч..к",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "е",
+      "correct" : true
+    }, {
+      "text" : "и",
+      "correct" : false
+    } ]
+  } ]
+}

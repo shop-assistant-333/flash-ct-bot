@@ -257,14 +257,21 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
     private static String title(Element block) {
         Element qtext = block.selectFirst(".qtext");
         if (qtext != null) {
-            return Text.plain(qtext);
+            // Some tests keep the instruction ("write only the ending") in a separate block. It
+            // is part of the question: without it an INPUT answer of one letter makes no sense.
+            String instruction = Text.plain(block.selectFirst(".qgentext"));
+            String text = Text.plain(qtext);
+            if (instruction == null || text == null || text.contains(instruction)) {
+                return text;
+            }
+            return instruction + "\n" + text;
         }
         Element dictation = block.selectFirst(".fillinblank-contrainer");
         if (dictation == null) {
             return null;
         }
         Element withGaps = dictation.clone();
-        for (Element gap : withGaps.select(".otp-inter-dict")) {
+        for (Element gap : withGaps.select(".otp-inter-dict, select")) {
             gap.replaceWith(new TextNode("..."));
         }
         return Text.plain(withGaps);
@@ -311,7 +318,8 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
             // Nothing to correct, because the answer we sent was the right one — and the reveal
             // still carries it, ticked.
             for (int i = 0; i < revealWidget.options.size() && i < options.size(); i++) {
-                if (revealWidget.options.get(i).hasAttr("checked")) {
+                Element ticked = revealWidget.options.get(i);
+                if (ticked.hasAttr("checked") || ticked.hasAttr("selected")) {
                     options.get(i).setCorrect(true);
                     anyCorrect = true;
                 }
@@ -333,6 +341,9 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
     }
 
     private static String optionText(Element optionInput) {
+        if ("option".equals(optionInput.tagName())) {
+            return Text.oneLine(optionInput);
+        }
         Element label = optionInput.closest("label");
         if (label != null) {
             Element text = label.selectFirst("span");
@@ -414,12 +425,33 @@ public final class OnlineTestPadAdapter implements SiteAdapter {
                     null, fillAll(texts));
         }
         Elements selects = block.select("select[name^=t_ans_]");
+        if (selects.size() == 1) {
+            // A dictation can put its gap in a dropdown instead of inline radios. One dropdown
+            // is still one answer; several of them are a matching exercise.
+            Elements choices = realOptions(selects.first());
+            if (!choices.isEmpty()) {
+                return new Widget(QuestionType.SINGLE_ANSWER, null, choices,
+                        Map.of(selects.first().attr("name"), choices.first().attr("value")));
+            }
+        }
         if (!selects.isEmpty()) {
             return new Widget(null, "matching or ordering, which the database cannot store",
                     null, pickAny(selects));
         }
         return new Widget(null, "answer format not supported by the database schema", null,
                 Map.of());
+    }
+
+    /** The real choices of a dropdown; "0" is the empty placeholder standing for "unanswered". */
+    private static Elements realOptions(Element select) {
+        Elements choices = new Elements();
+        for (Element option : select.select("option")) {
+            String value = option.attr("value");
+            if (!value.isBlank() && !value.equals("0")) {
+                choices.add(option);
+            }
+        }
+        return choices;
     }
 
     /** How many separate things the question asks — one radio group is one answer. */

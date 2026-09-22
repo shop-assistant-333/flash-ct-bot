@@ -1,0 +1,727 @@
+{
+  "source" : "https://rus_ct.sdamgia.ru/test?id=337947&nt=True&pub=False",
+  "adapter" : "sdamgia",
+  "harvestedAt" : "2026-09-21T08:58:10.672300794Z",
+  "lessonId" : 7,
+  "subjectId" : null,
+  "startOrder" : 80,
+  "questions" : [ {
+    "sourceId" : "problem?id=325",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ц..ферблат, расц..нить",
+      "correct" : false
+    }, {
+      "text" : "цариц..ны хоромы, раз..грать",
+      "correct" : true
+    }, {
+      "text" : "эрудиц..я, меж..здательский",
+      "correct" : true
+    }, {
+      "text" : "р..яный, в..евшийся",
+      "correct" : false
+    }, {
+      "text" : "непозволительная роскош.., испеч..ся",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1095",
+    "type" : "MULTI_ANSWER",
+    "title" : "Одна и та же буква пропущена в рядах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "акц..онер, уц..нённый товар",
+      "correct" : false
+    }, {
+      "text" : "пред..юльский, сверх..ндустриальный",
+      "correct" : false
+    }, {
+      "text" : "обе фокусниц.., тигриц..н",
+      "correct" : true
+    }, {
+      "text" : "ударить наотмаш.., эта полноч..",
+      "correct" : true
+    }, {
+      "text" : "необ..езженный, пред..январский",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=5784",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "из..явить желание, заяч..я капуста",
+      "correct" : false
+    }, {
+      "text" : "пост..мпрессионист, в милиц..и",
+      "correct" : true
+    }, {
+      "text" : "ц..ркач, сконц..нтрироваться",
+      "correct" : false
+    }, {
+      "text" : "свежие устриц.., без..нициативный руководитель",
+      "correct" : true
+    }, {
+      "text" : "новая вещ.., купиш.. завтра",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=5739",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ц..мент, ц..кл телепередач",
+      "correct" : false
+    }, {
+      "text" : "идёш.., чёрная туш.. для ресниц",
+      "correct" : true
+    }, {
+      "text" : "пост..мпрессионистский, о петиц..и",
+      "correct" : true
+    }, {
+      "text" : "из..явительное наклонение, гнездов..е птиц",
+      "correct" : false
+    }, {
+      "text" : "солёные огурц.., без..сходное положение",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=2605",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "контр..гра, консервац..я овощей",
+      "correct" : true
+    }, {
+      "text" : "ц..рк, ц..ремония",
+      "correct" : false
+    }, {
+      "text" : "моё звер..ё, раз..езд",
+      "correct" : false
+    }, {
+      "text" : "чёрная туш.. для ресниц, зажеч..ся",
+      "correct" : true
+    }, {
+      "text" : "вкусные голубц.., от..скать",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=571",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется ь на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "точ..ность",
+      "correct" : false
+    }, {
+      "text" : "пересеч..ся",
+      "correct" : true
+    }, {
+      "text" : "раз..яснение",
+      "correct" : false
+    }, {
+      "text" : "много полчищ..",
+      "correct" : false
+    }, {
+      "text" : "интер..ер",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=3256",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "длинноухие зайц.., об..грать соперника;",
+      "correct" : true
+    }, {
+      "text" : "пишеш.. чернилами, жареная дич..;",
+      "correct" : true
+    }, {
+      "text" : "дорога в об..езд, неб..ющаяся чашка;",
+      "correct" : false
+    }, {
+      "text" : "информац..я, аукц..он;",
+      "correct" : true
+    }, {
+      "text" : "чудом уц..леть, пост..мпрессионизм.",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=1135",
+    "type" : "MULTI_ANSWER",
+    "title" : "Одна и та же буква пропущена в рядах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ц..клично, ц..пная связь",
+      "correct" : false
+    }, {
+      "text" : "роз..ск, без..скусный",
+      "correct" : true
+    }, {
+      "text" : "две луковиц.., дегустац..я",
+      "correct" : false
+    }, {
+      "text" : "сверх..ёмкий, об..единённый",
+      "correct" : true
+    }, {
+      "text" : "грязная ветош.., шепчеш..ся",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1215",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "об..грать, певчие птиц..",
+      "correct" : true
+    }, {
+      "text" : "меж..мпериалистический, позиц..я",
+      "correct" : true
+    }, {
+      "text" : "раз..ярённый, сер..ёзный",
+      "correct" : false
+    }, {
+      "text" : "необ..ятный, в..юга",
+      "correct" : false
+    }, {
+      "text" : "он пахуч.., разреж.. бумагу",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=815",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "раз..ярённый, от..явленный",
+      "correct" : true
+    }, {
+      "text" : "полная тиш.., много училищ..",
+      "correct" : false
+    }, {
+      "text" : "вакц..на, ц..фровой",
+      "correct" : true
+    }, {
+      "text" : "он темнолиц..й, от..граться",
+      "correct" : true
+    }, {
+      "text" : "без..дейный, сверх..нтуиция",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=3216",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "сер..ёзный, раз..ярённый;",
+      "correct" : false
+    }, {
+      "text" : "дез..нформатор, компенсац..я;",
+      "correct" : true
+    }, {
+      "text" : "вкусные леденц.., из..мать землю;",
+      "correct" : true
+    }, {
+      "text" : "иниц..атива, приц..ниться;",
+      "correct" : false
+    }, {
+      "text" : "откровенная лож.., увлекаеш..ся музыкой.",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=6504",
+    "type" : "INPUT",
+    "title" : "В словосочетаниях найдите слово, в котором на месте пропуска пишется мягкий знак. Запишите это слово, вставив пропущенную букву.\n\nВ..едливый начальник; шесть афиш..; сов..ют гнездо; талантливый скрипач..; немощ.ный человек.",
+    "correctAnswer" : "совьют",
+    "explanation" : null,
+    "options" : [ ]
+  }, {
+    "sourceId" : "problem?id=1295",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "роз..грыш, дез..нформировать",
+      "correct" : false
+    }, {
+      "text" : "такие глупц.., порц..онный",
+      "correct" : false
+    }, {
+      "text" : "четырёх..ядерный, об..ект",
+      "correct" : true
+    }, {
+      "text" : "комп..ютер , неб..ющийся",
+      "correct" : true
+    }, {
+      "text" : "один рубеж.., увлеч..ся.",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=81",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется ь на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "лесная глуш..",
+      "correct" : true
+    }, {
+      "text" : "отвлеч.. внимание",
+      "correct" : true
+    }, {
+      "text" : "пять краж..",
+      "correct" : false
+    }, {
+      "text" : "монтаж..",
+      "correct" : false
+    }, {
+      "text" : "сверх..яростный",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=451",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется ь на месте пропуска в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "карточ..ка",
+      "correct" : false
+    }, {
+      "text" : "зажеч..ся",
+      "correct" : true
+    }, {
+      "text" : "кур..ёзный",
+      "correct" : true
+    }, {
+      "text" : "много прозвищ..",
+      "correct" : false
+    }, {
+      "text" : "под..езд",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=6587",
+    "type" : "INPUT",
+    "title" : "В словосочетаниях найдите слово, в котором на месте пропуска пишется мягкий знак. Запишите это слово, вставив пропущенную букву.\n\nВкусный борщ..; много сокровищ..; один талон..чик; с..ёмные детали; улеч..ся на диван.",
+    "correctAnswer" : "улечься",
+    "explanation" : null,
+    "options" : [ ]
+  }, {
+    "sourceId" : "problem?id=2647",
+    "type" : "MULTI_ANSWER",
+    "title" : "Укажите ряды, в которых на месте двух пропусков пишется одна и та же буква:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "скрипучие половиц.., без..мянный герой",
+      "correct" : true
+    }, {
+      "text" : "уц..нённый товар, ц..вилизованный мир",
+      "correct" : false
+    }, {
+      "text" : "соб..ётся с пути, пред..являть претензии",
+      "correct" : false
+    }, {
+      "text" : "зажеч.. свечу, лошадиная упряж..",
+      "correct" : true
+    }, {
+      "text" : "навигац..я, сверх..ндивидуализм",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=2645",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ко(р/рр)ектный",
+      "correct" : true
+    }, {
+      "text" : "приви(л/лл)егия",
+      "correct" : false
+    }, {
+      "text" : "сгру(п/пп)ировать",
+      "correct" : true
+    }, {
+      "text" : "ра(с/сс)лабление",
+      "correct" : true
+    }, {
+      "text" : "и(с/сс)толковать",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=123",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "бе(с/сс)тыдство",
+      "correct" : true
+    }, {
+      "text" : "бе(с/сс)конечность",
+      "correct" : false
+    }, {
+      "text" : "ка(л/лл)ейдоскоп",
+      "correct" : false
+    }, {
+      "text" : "па(с/сс)ажир",
+      "correct" : true
+    }, {
+      "text" : "пле(н/нн)ый",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1173",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "би(c/cc)ектриса",
+      "correct" : true
+    }, {
+      "text" : "воробьи(н/нн)ый",
+      "correct" : false
+    }, {
+      "text" : "по(д/дд)акивать",
+      "correct" : true
+    }, {
+      "text" : "обе(л/лл)иск",
+      "correct" : false
+    }, {
+      "text" : "стекля(н/нн)ый",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=972",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные есть в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "приви(л/лл)егия",
+      "correct" : false
+    }, {
+      "text" : "ра(с/сс)рочка",
+      "correct" : true
+    }, {
+      "text" : "бе(с/сс)крайний",
+      "correct" : false
+    }, {
+      "text" : "те(р/рр)аса",
+      "correct" : true
+    }, {
+      "text" : "бро(с/сс)кий наряд",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=492",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные есть в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "бе(с/сс)трашный",
+      "correct" : true
+    }, {
+      "text" : "ка(л/лл)ория",
+      "correct" : false
+    }, {
+      "text" : "те(р/рр)итория",
+      "correct" : true
+    }, {
+      "text" : "инду(с/сс)кий",
+      "correct" : true
+    }, {
+      "text" : "ра(с/сс)торгнуть",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=853",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "во(с/сс)оединение",
+      "correct" : true
+    }, {
+      "text" : "ко(л/лл)оритный",
+      "correct" : false
+    }, {
+      "text" : "карма(н/нн)ый",
+      "correct" : true
+    }, {
+      "text" : "ми(л/лл)иард",
+      "correct" : true
+    }, {
+      "text" : "ра(с/сс)трясти",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=82",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные есть в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "катастро(ф/фф)a",
+      "correct" : false
+    }, {
+      "text" : "криста(л/лл)ический",
+      "correct" : true
+    }, {
+      "text" : "по(д/дд)анные короля",
+      "correct" : true
+    }, {
+      "text" : "во(с/сс)хождение",
+      "correct" : false
+    }, {
+      "text" : "тря(с/сс)кая езда",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=533",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "во(с/сс)тание",
+      "correct" : true
+    }, {
+      "text" : "гу(м / мм)анист",
+      "correct" : false
+    }, {
+      "text" : "многогра(н/нн)ый",
+      "correct" : true
+    }, {
+      "text" : "пара(л/лл)ель",
+      "correct" : true
+    }, {
+      "text" : "ра(с/сс)тяжение",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=363",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "э (л/лл)иксир",
+      "correct" : false
+    }, {
+      "text" : "сере(н / нн)ада",
+      "correct" : false
+    }, {
+      "text" : "профе(с/сс)ионал",
+      "correct" : true
+    }, {
+      "text" : "ра(з/зз)адоренный",
+      "correct" : true
+    }, {
+      "text" : "обе(с/сс)кроветь",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=1253",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "во(с/сс)тановление",
+      "correct" : true
+    }, {
+      "text" : "ки(л/лл)ометр",
+      "correct" : false
+    }, {
+      "text" : "пе(р/рр)он",
+      "correct" : true
+    }, {
+      "text" : "старору(с/сс)кий",
+      "correct" : true
+    }, {
+      "text" : "ра(с/сс)тягивать",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=323",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "бе(з/зз)аветный",
+      "correct" : true
+    }, {
+      "text" : "обе(с/сс)цвеченный",
+      "correct" : false
+    }, {
+      "text" : "э(ф/фф)ектный",
+      "correct" : true
+    }, {
+      "text" : "про(п/пп)агандист",
+      "correct" : false
+    }, {
+      "text" : "и(с/сс)целять",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=42",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные есть в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "бри(л/лл)иантовый",
+      "correct" : true
+    }, {
+      "text" : "тунгу(c/сс)кий",
+      "correct" : true
+    }, {
+      "text" : "ра(c/cc)путать",
+      "correct" : false
+    }, {
+      "text" : "бе(з/зз)емельный",
+      "correct" : true
+    }, {
+      "text" : "криста(л/лл)ьный",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=7401",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "а(к/кк)омпанемент",
+      "correct" : true
+    }, {
+      "text" : "сея(н/нн)ые травы",
+      "correct" : false
+    }, {
+      "text" : "сдержа(н/нн)ость",
+      "correct" : true
+    }, {
+      "text" : "ко(р/рр)идор",
+      "correct" : false
+    }, {
+      "text" : "дореформе(н/нн)ый период",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=813",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "капи(л/лл)ярный",
+      "correct" : true
+    }, {
+      "text" : "ло(т/тт)ерея",
+      "correct" : false
+    }, {
+      "text" : "ра(с/сс)таскивать",
+      "correct" : false
+    }, {
+      "text" : "ра(с/сс)ада",
+      "correct" : true
+    }, {
+      "text" : "таможе(н/нн)ый",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=1480",
+    "type" : "MULTI_ANSWER",
+    "title" : "Двойные согласные пишутся в словах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "ми(л/лл)иметр",
+      "correct" : true
+    }, {
+      "text" : "капиту(л/лл)яция",
+      "correct" : false
+    }, {
+      "text" : "компре(с/сс)",
+      "correct" : true
+    }, {
+      "text" : "во(с/сс)хождение",
+      "correct" : false
+    }, {
+      "text" : "ра(з/зз)накомиться",
+      "correct" : true
+    } ]
+  }, {
+    "sourceId" : "problem?id=2606",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется е на месте всех пропусков в рядах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "редкая ревнив..ца, в своём стремлени..",
+      "correct" : false
+    }, {
+      "text" : "любимый первен..ц, о страшном злоде..",
+      "correct" : true
+    }, {
+      "text" : "быть на гран., провала, застенч..вый",
+      "correct" : false
+    }, {
+      "text" : "нежный лепесточ..к, летящ..й походкой",
+      "correct" : true
+    }, {
+      "text" : "процеж..вать молоко, неряшл..вый вид",
+      "correct" : false
+    } ]
+  }, {
+    "sourceId" : "problem?id=896",
+    "type" : "MULTI_ANSWER",
+    "title" : "Пишется Е на месте всех пропусков в рядах:",
+    "correctAnswer" : null,
+    "explanation" : null,
+    "options" : [ {
+      "text" : "о плещущ..мся в воде пеликан..",
+      "correct" : true
+    }, {
+      "text" : "баш..нка, оранж..вый",
+      "correct" : true
+    }, {
+      "text" : "заботл..вый, быть на открыти..",
+      "correct" : false
+    }, {
+      "text" : "на пастушь..й свирел..",
+      "correct" : false
+    }, {
+      "text" : "журавл..к, имень..це",
+      "correct" : false
+    } ]
+  } ]
+}

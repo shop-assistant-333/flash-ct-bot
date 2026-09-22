@@ -1,0 +1,260 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/186143-pravopisanie-suffiksov-imen-prilagatelnykh",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-22T09:32:15.752345128Z",
+  "lessonId": 8,
+  "subjectId": null,
+  "startOrder": 1,
+  "questions": [
+    {
+      "sourceId": "4092893",
+      "type": "SINGLE_ANSWER",
+      "title": "1. Укажите верное продолжение предложения: «Одна -Н- пишется в суффиксах прилагательных»:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "-ян-, -ан-, -ин-",
+          "correct": true
+        },
+        {
+          "text": "-он-, -ен-, -ин-",
+          "correct": false
+        },
+        {
+          "text": "-ян-,- ен-, -ин-",
+          "correct": false
+        },
+        {
+          "text": "-ан-, -ин-, -ен-",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4093146",
+      "type": "SINGLE_ANSWER",
+      "title": "2. Укажите верное утверждение:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "- в суффиксах кратких прилагательных пишется одна -н-;",
+          "correct": false
+        },
+        {
+          "text": "- в суффиксах кратких прилагательных пишется столько -н-, сколько их было в полной форме;",
+          "correct": true
+        },
+        {
+          "text": "- в суффиксах кратких прилагательных пишется две -н-;",
+          "correct": false
+        },
+        {
+          "text": "- качественные прилагательные не образуют краткой формы",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4093151",
+      "type": "SINGLE_ANSWER",
+      "title": "3.В каком прилагательном -н- не является частью корня",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "румяный",
+          "correct": false
+        },
+        {
+          "text": "свиной",
+          "correct": false
+        },
+        {
+          "text": "ледяной",
+          "correct": true
+        },
+        {
+          "text": "юный",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4093158",
+      "type": "SINGLE_ANSWER",
+      "title": "4. Какое слово не подчиняется правилу: «Если существительное, от которого было образовано прилагательное, имело основу на -н или -мя, то оно преобразуется в прилагательное с помощью суффикса-нн-»:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "каменный",
+          "correct": false
+        },
+        {
+          "text": "временный",
+          "correct": false
+        },
+        {
+          "text": "чугунный",
+          "correct": false
+        },
+        {
+          "text": "стеклянный",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "4093169",
+      "type": "SINGLE_ANSWER",
+      "title": "Какое слово не подчиняется правилу: «В отыменных прилагательных, образованных с помощью суффиксов -енн- и -онн-, пишется две н»:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "традиционный",
+          "correct": false
+        },
+        {
+          "text": "промасленный",
+          "correct": true
+        },
+        {
+          "text": "торжественный",
+          "correct": false
+        },
+        {
+          "text": "авиационный",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4093176",
+      "type": "SINGLE_ANSWER",
+      "title": "6. Найдите ошибочное утверждение:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "суффиксы -чив-, -лив- – всегда пишутся с -и-;",
+          "correct": false
+        },
+        {
+          "text": "суффикс -ив- пишется в прилагательных под ударением;",
+          "correct": false
+        },
+        {
+          "text": "суффикс -енск- используется во всех прилагательных, образованных от географических наименований;",
+          "correct": true
+        },
+        {
+          "text": "-суффикс -оньк- употребляется, если основа прилагательного оканчивается на г, к, х.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4093185",
+      "type": "SINGLE_ANSWER",
+      "title": "7. Найдите ошибочное утверждение.\n\nСуффикс -к- используется",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "в качественных прилагательных;",
+          "correct": false
+        },
+        {
+          "text": "в относительных прилагательных, образованных от существительных на –ц;",
+          "correct": false
+        },
+        {
+          "text": "в относительных прилагательных, образованных от существительных на -к, -ч с чередованием на ц;",
+          "correct": false
+        },
+        {
+          "text": "в притяжательных прилагательных.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "4093198",
+      "type": "SINGLE_ANSWER",
+      "title": "8. В каком ряду во всех суффиксах прилагательных пишется одна и та же буква:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "крас..вый, ткан..вый, сол..вой",
+          "correct": false
+        },
+        {
+          "text": "отрасл..вой, мах..нький, опрометч..вый",
+          "correct": false
+        },
+        {
+          "text": "доверч..вый, крош..чный, дождл..вый",
+          "correct": false
+        },
+        {
+          "text": "оранж..вый, син..ватый,остр..нький,",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "4093207",
+      "type": "SINGLE_ANSWER",
+      "title": "9.В каком ряду во всех суффиксах прилагательных пишется одна и та же буква:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "неразборч..вый, гел..вый, ступенч..тый-",
+          "correct": false
+        },
+        {
+          "text": "завистл..вый, больш..нький, кольц..вой",
+          "correct": false
+        },
+        {
+          "text": "милост..вый, голуб..ный, улыбч..вый",
+          "correct": true
+        },
+        {
+          "text": "залив..стый, гост..вой, кост..ной",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "4093212",
+      "type": "SINGLE_ANSWER",
+      "title": "Найдите ряд прилагательных, в написании суффиксов которых допущена ошибка:",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "талантливый, семенной, юродивый",
+          "correct": false
+        },
+        {
+          "text": "июльский, рыбацкий, ткацкий",
+          "correct": false
+        },
+        {
+          "text": "выносливый, студенчиский, деловой",
+          "correct": true
+        },
+        {
+          "text": "милостивый, оловянный, ветреный",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

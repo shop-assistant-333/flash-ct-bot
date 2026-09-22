@@ -1,0 +1,14 @@
+# Урок 7: правописание суффиксов имён прилагательных.
+# Ссылка была на ua.onlinetestpad.com — этот домен отдаёт 403; тот же тест лежит на основном.
+url: https://onlinetestpad.com/ru/test/186143-pravopisanie-suffiksov-imen-prilagatelnykh
+
+lessonId: 8
+startOrder: 1
+
+prefill:
+  t_rp_114569: Иван Иванов
+
+delayMs: 400
+out: onlinetestpad-186143-suffiksy-prilag.json
+
+dedupeByTitle: false

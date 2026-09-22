@@ -1,0 +1,214 @@
+{
+  "source": "https://onlinetestpad.com/ru/test/1593711-padezhnye-okonchaniya-sushhestvitelnykh",
+  "adapter": "onlinetestpad",
+  "harvestedAt": "2026-09-10T08:32:52.021937344Z",
+  "lessonId": 6,
+  "subjectId": null,
+  "startOrder": 20,
+  "questions": [
+    {
+      "sourceId": "30688089",
+      "type": "SINGLE_ANSWER",
+      "title": "Упал с крыш...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": false
+        },
+        {
+          "text": "и",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "30688094",
+      "type": "SINGLE_ANSWER",
+      "title": "Слова в песн...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "и",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "30688128",
+      "type": "SINGLE_ANSWER",
+      "title": "Вышел без куртк...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": false
+        },
+        {
+          "text": "и",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "30688136",
+      "type": "SINGLE_ANSWER",
+      "title": "Написал на открытк...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "и",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "30688143",
+      "type": "SINGLE_ANSWER",
+      "title": "Рассказал по памят...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": false
+        },
+        {
+          "text": "и",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "30688255",
+      "type": "SINGLE_ANSWER",
+      "title": "Рад встреч...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "и",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "30688264",
+      "type": "SINGLE_ANSWER",
+      "title": "Ехал на лошад...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": false
+        },
+        {
+          "text": "и",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "30688271",
+      "type": "SINGLE_ANSWER",
+      "title": "Сидел в лодк...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "и",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "30688310",
+      "type": "SINGLE_ANSWER",
+      "title": "Играл в спортзал...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "и",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "sourceId": "30688377",
+      "type": "SINGLE_ANSWER",
+      "title": "Недалеко от деревн...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": false
+        },
+        {
+          "text": "и",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "30688384",
+      "type": "SINGLE_ANSWER",
+      "title": "Отбежал от собак...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": false
+        },
+        {
+          "text": "и",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "sourceId": "30688393",
+      "type": "SINGLE_ANSWER",
+      "title": "Подошли к сторожк...",
+      "correctAnswer": null,
+      "explanation": null,
+      "options": [
+        {
+          "text": "е",
+          "correct": true
+        },
+        {
+          "text": "и",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}

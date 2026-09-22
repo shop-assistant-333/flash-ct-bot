@@ -1,0 +1,13 @@
+# Урок 6: гласные в суффиксах имён существительных -ек- и -ик-.
+# Ссылка была на ua.onlinetestpad.com — этот домен отдаёт 403; тот же тест лежит на основном.
+url: https://onlinetestpad.com/ru/test/235425-glasnye-v-suffiksakh-imen-sushhestvitelnykh-ek-i-ik
+
+lessonId: 7
+startOrder: 20
+
+prefill: {}
+
+delayMs: 400
+out: onlinetestpad-235425-ek-ik.json
+
+dedupeByTitle: false
