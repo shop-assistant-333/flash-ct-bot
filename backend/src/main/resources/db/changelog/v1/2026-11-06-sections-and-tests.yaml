@@ -1,0 +1,105 @@
+databaseChangeLog:
+  - objectQuotingStrategy: QUOTE_ALL_OBJECTS
+
+  # The programme of a subject is split into topics: a few lessons about one thing and, after
+  # them, a test on that thing. A topic is only a heading with a place in the programme.
+  - changeSet:
+      id: 2026-11-06-01-create-table-sections
+      author: lowkkid
+      changes:
+        - createTable:
+            tableName: sections
+            columns:
+              - column:
+                  name: id
+                  type: integer
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: sections_pkey
+              - column:
+                  name: title
+                  type: varchar
+                  constraints:
+                    nullable: false
+              - column:
+                  name: order
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: subject_id
+                  type: integer
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: sections_subject_id_fkey
+            baseTableName: sections
+            baseColumnNames: subject_id
+            referencedTableName: subjects
+            referencedColumnNames: id
+        - createIndex:
+            indexName: sections_order_subject_id_idx
+            tableName: sections
+            unique: true
+            columns:
+              - column:
+                  name: order
+              - column:
+                  name: subject_id
+
+  # A test is a lesson of another kind: it is solved, scheduled and reviewed exactly like one,
+  # it only stays out of practice and statistics. The lessons already there are lessons.
+  # The type is named after the Java enum on purpose, unlike question_type: Hibernate writes an enum
+  # literal of a JPQL query as 'TEST'::LessonKind, and the queries filter by kind with literals.
+  - changeSet:
+      id: 2026-11-06-02-add-lesson-kind
+      author: lowkkid
+      changes:
+        - sql:
+            sql: CREATE TYPE lessonkind AS ENUM ('LESSON', 'TEST')
+        - addColumn:
+            tableName: lessons
+            columns:
+              - column:
+                  name: kind
+                  type: lessonkind
+                  defaultValue: LESSON
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropColumn:
+            tableName: lessons
+            columnName: kind
+        - sql:
+            sql: DROP TYPE lessonkind
+
+  # Lessons that were there before topics existed stay without one until the admin sorts them.
+  - changeSet:
+      id: 2026-11-06-03-add-lesson-section
+      author: lowkkid
+      changes:
+        - addColumn:
+            tableName: lessons
+            columns:
+              - column:
+                  name: section_id
+                  type: integer
+        - addForeignKeyConstraint:
+            constraintName: lessons_section_id_fkey
+            baseTableName: lessons
+            baseColumnNames: section_id
+            referencedTableName: sections
+            referencedColumnNames: id
+
+  # One test per topic. The service checks it first to answer with a proper code; the index is
+  # what holds under two concurrent requests.
+  - changeSet:
+      id: 2026-11-06-04-one-test-per-section
+      author: lowkkid
+      changes:
+        - sql:
+            sql: CREATE UNIQUE INDEX lessons_one_test_per_section_idx ON lessons (section_id) WHERE kind = 'TEST'
+      rollback:
+        - sql:
+            sql: DROP INDEX lessons_one_test_per_section_idx

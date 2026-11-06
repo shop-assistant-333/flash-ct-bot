@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Outlet, useLocation, useNavigation } from 'react-router'
+import { Outlet, ScrollRestoration, useLocation, useNavigation } from 'react-router'
 
 import { BottomNav } from '@/app/bottom-nav'
 import { useSessionTracking } from '@/features/session'
@@ -10,6 +10,10 @@ import { Spinner } from '@/shared/ui/spinner'
  * padding, …). Mounted behind `RequireRole role="USER"`, which is why session
  * tracking can live here — an admin never opens a session. Admin chrome is
  * `admin-layout.tsx`.
+ *
+ * `<ScrollRestoration />` sits in both layouts (the two branches share no
+ * parent route): a new screen opens at the top or at its `#hash`, and
+ * back/forward — the browser's or Telegram's — returns to where the user was.
  *
  * `pb-nav-safe` reserves the space the fixed tab bar covers, so no screen has to
  * know about it. Layout rules: ../../style-guide.md
@@ -29,6 +33,7 @@ export function RootLayout() {
 
   return (
     <>
+      <ScrollRestoration />
       <main className="mx-auto w-full max-w-app pt-safe px-gutter pb-nav-safe">
         <div className="py-4">
           {isNavigatingToNewPage ? (

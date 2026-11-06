@@ -1,6 +1,8 @@
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import type { ReactNode } from 'react'
 
+import { withSwapped } from '@/shared/lib/with-swapped'
+
 interface ReorderableListProps<T> {
   items: T[]
   getId: (item: T) => number
@@ -12,18 +14,6 @@ interface ReorderableListProps<T> {
 
 const MOVE_BUTTON =
   'flex size-11 shrink-0 items-center justify-center rounded-control text-subtle transition-colors duration-150 active:bg-surface-sunken disabled:opacity-40'
-
-function withSwapped(ids: number[], from: number, to: number): number[] {
-  const next = [...ids]
-  const moved = next[from]
-  const displaced = next[to]
-
-  if (moved === undefined || displaced === undefined) return ids
-
-  next[from] = displaced
-  next[to] = moved
-  return next
-}
 
 /**
  * Ordering by up/down buttons instead of drag and drop: inside the Telegram web

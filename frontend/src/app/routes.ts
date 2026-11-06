@@ -1,3 +1,5 @@
+import { questionAnchorId } from '@/shared/lib/question-anchor'
+
 /** Every path in one place — no string literals scattered across components. */
 export const ROUTES = {
   /** Landing tab: the mini-app always opens on the lesson list. */
@@ -65,8 +67,14 @@ export function adminSubjectQuestionNewPath(subjectId: number): string {
   return `/admin/subjects/${subjectId}/questions/new`
 }
 
-export function adminLessonPath(lessonId: number): string {
-  return `/admin/lessons/${lessonId}`
+/**
+ * With `focusQuestionId` the lesson screen scrolls to that question — the way
+ * back from editing a question lands where the teacher left off. A hash, not a
+ * query: it is a position on the page, not a different page.
+ */
+export function adminLessonPath(lessonId: number, focusQuestionId?: number): string {
+  const path = `/admin/lessons/${lessonId}`
+  return focusQuestionId === undefined ? path : `${path}#${questionAnchorId(focusQuestionId)}`
 }
 
 export function adminLessonQuestionNewPath(lessonId: number): string {

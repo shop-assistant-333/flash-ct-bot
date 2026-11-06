@@ -28,11 +28,15 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
 
     long countByAttempt_Id(Long attemptId);
 
-    /** Counters over every homework answer of the student in one subject. */
+    /**
+     * Counters over every homework answer of the student in one subject. Tests stay out of these
+     * and of every counter below: no statistic is kept on them.
+     */
     @Query("""
             select count(a) as answered, count(case when a.correct = true then 1 end) as correct
             from UserAnswer a
             where a.attempt.user.id = :userId
+              and a.attempt.lesson.kind = dev.lowkkid.backend.entity.LessonKind.LESSON
               and a.attempt.lesson.subject.id = :subjectId
             """)
     Counters countAll(@Param("userId") Integer userId, @Param("subjectId") Integer subjectId);
@@ -42,6 +46,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             select count(a) as answered, count(case when a.correct = true then 1 end) as correct
             from UserAnswer a
             where a.attempt.user.id = :userId
+              and a.attempt.lesson.kind = dev.lowkkid.backend.entity.LessonKind.LESSON
             """)
     Counters countAllSubjects(@Param("userId") Integer userId);
 
@@ -50,6 +55,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             select count(a) as answered, count(case when a.correct = true then 1 end) as correct
             from UserAnswer a
             where a.attempt.user.id = :userId
+              and a.attempt.lesson.kind = dev.lowkkid.backend.entity.LessonKind.LESSON
               and a.attempt.lesson.subject.id in :subjectIds
             """)
     Counters countAllOfSubjects(@Param("userId") Integer userId,
@@ -60,6 +66,7 @@ public interface UserAnswerRepository extends JpaRepository<UserAnswer, Long> {
             select count(a) as answered, count(case when a.correct = true then 1 end) as correct
             from UserAnswer a
             where a.attempt.user.id = :userId
+              and a.attempt.lesson.kind = dev.lowkkid.backend.entity.LessonKind.LESSON
               and a.attempt.lesson.subject.id = :subjectId
               and a.answeredAt >= :from
             """)

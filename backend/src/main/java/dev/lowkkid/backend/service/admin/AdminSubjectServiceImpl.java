@@ -7,6 +7,7 @@ import dev.lowkkid.backend.exception.NotFoundException;
 import dev.lowkkid.backend.model.admin.SubjectDto;
 import dev.lowkkid.backend.model.admin.SubjectRequest;
 import dev.lowkkid.backend.repository.LessonRepository;
+import dev.lowkkid.backend.repository.SectionRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.SubjectRepository;
 import dev.lowkkid.backend.repository.SubscriptionRepository;
@@ -29,6 +30,7 @@ public class AdminSubjectServiceImpl implements AdminSubjectService {
 
     private final SubjectRepository subjectRepository;
     private final LessonRepository lessonRepository;
+    private final SectionRepository sectionRepository;
     private final QuestionRepository questionRepository;
     private final SubscriptionRepository subscriptionRepository;
     private final UserRepository userRepository;
@@ -88,6 +90,9 @@ public class AdminSubjectServiceImpl implements AdminSubjectService {
             throw new ConflictException(ErrorCode.SUBJECT_HAS_TEACHERS,
                     "Subject " + subjectId + " is still assigned to " + teachers + " teachers");
         }
+        // Topics hold no content of their own: with the lessons gone, the empty headings go too.
+        sectionRepository.deleteAll(sectionRepository.findBySubject_IdOrderByOrderAsc(subjectId));
+        sectionRepository.flush();
         subjectRepository.delete(subject);
     }
 

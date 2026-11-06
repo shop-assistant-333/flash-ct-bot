@@ -60,6 +60,13 @@
   --streak-soft: #fff0e4;
   --streak-soft-fg: #9a3412;
 
+  /* Topic test in the programme — a lesson of another kind, set apart from the
+     indigo `primary` so it never reads as a selected or active item. */
+  --test: #9333ea;
+  --test-fg: #ffffff;
+  --test-soft: #f6edff;
+  --test-soft-fg: #6b21a8;
+
   /* Elevation. Light theme leans on shadow, dark theme on surface lightness. */
   --elevation-card: 0 1px 2px rgb(16 24 40 / 0.06), 0 1px 3px rgb(16 24 40 / 0.04);
   --elevation-nav: 0 -8px 24px rgb(16 24 40 / 0.08);
@@ -109,6 +116,11 @@
   --streak: #fb923c;
   --streak-soft: #2c1b10;
   --streak-soft-fg: #fdba74;
+
+  --test: #c084fc;
+  --test-fg: #1e0a33;
+  --test-soft: #241632;
+  --test-soft-fg: #e9d5ff;
 
   --elevation-card: 0 1px 2px rgb(0 0 0 / 0.5);
   --elevation-nav: 0 -8px 24px rgb(0 0 0 / 0.5);

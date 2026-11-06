@@ -2,6 +2,7 @@ package dev.lowkkid.backend.controller.admin;
 
 import dev.lowkkid.backend.model.admin.AdminLessonItem;
 import dev.lowkkid.backend.model.admin.AdminQuestionDto;
+import dev.lowkkid.backend.model.admin.AdminSectionItem;
 import dev.lowkkid.backend.model.admin.ReorderRequest;
 import dev.lowkkid.backend.model.admin.SubjectDto;
 import dev.lowkkid.backend.model.admin.SubjectRequest;
@@ -10,6 +11,7 @@ import dev.lowkkid.backend.security.CurrentUser;
 import dev.lowkkid.backend.security.SubjectAccessGuard;
 import dev.lowkkid.backend.service.admin.AdminLessonService;
 import dev.lowkkid.backend.service.admin.AdminQuestionService;
+import dev.lowkkid.backend.service.admin.AdminSectionService;
 import dev.lowkkid.backend.service.admin.AdminSubjectService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +41,7 @@ public class AdminSubjectController {
     private final AdminSubjectService adminSubjectService;
     private final AdminLessonService adminLessonService;
     private final AdminQuestionService adminQuestionService;
+    private final AdminSectionService adminSectionService;
     private final SubjectAccessGuard accessGuard;
 
     @GetMapping
@@ -75,13 +78,31 @@ public class AdminSubjectController {
         return ResponseEntity.ok(adminLessonService.findBySubject(subjectId));
     }
 
-    /** Sets the order in which the student unlocks the lessons of this subject. */
+    /**
+     * Sets the order the lessons are listed in. Which topic a lesson is under is not changed here,
+     * so the order only takes effect within every topic.
+     */
     @PutMapping("/{subjectId}/lessons/order")
     public ResponseEntity<List<AdminLessonItem>> reorderLessons(@AuthUser CurrentUser user,
                                                                 @PathVariable Integer subjectId,
                                                                 @Valid @RequestBody ReorderRequest request) {
         accessGuard.requireSubject(user, subjectId);
         return ResponseEntity.ok(adminLessonService.reorder(subjectId, request.ids()));
+    }
+
+    @GetMapping("/{subjectId}/sections")
+    public ResponseEntity<List<AdminSectionItem>> sections(@AuthUser CurrentUser user,
+                                                           @PathVariable Integer subjectId) {
+        accessGuard.requireSubject(user, subjectId);
+        return ResponseEntity.ok(adminSectionService.findBySubject(subjectId));
+    }
+
+    @PutMapping("/{subjectId}/sections/order")
+    public ResponseEntity<List<AdminSectionItem>> reorderSections(@AuthUser CurrentUser user,
+                                                                  @PathVariable Integer subjectId,
+                                                                  @Valid @RequestBody ReorderRequest request) {
+        accessGuard.requireSubject(user, subjectId);
+        return ResponseEntity.ok(adminSectionService.reorder(subjectId, request.ids()));
     }
 
     /** Extra questions of this subject that appear in the practice tab only. */

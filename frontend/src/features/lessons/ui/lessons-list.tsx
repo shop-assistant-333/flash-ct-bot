@@ -5,9 +5,12 @@ import { StateMessage } from '@/shared/ui/state-message'
 
 import type { LessonItem } from '../api/lessons-api'
 import { useLessons } from '../hooks/use-lessons'
+import { useSections } from '../hooks/use-sections'
+import { buildProgram, initialTopicId, type ProgramEntry } from '../lib/program'
 import { CompletedLessonsGroup } from './completed-lessons-group'
 import { LessonCard } from './lesson-card'
 import { LessonsProgress } from './lessons-progress'
+import { TopicSection } from './topic-section'
 
 interface LessonsListProps {
   subjectId: number
@@ -25,14 +28,41 @@ function LessonsSkeleton() {
   )
 }
 
-/** The homework programme of one subject, in the order the admin set. */
+interface LooseLessonsProps {
+  entries: ProgramEntry[]
+  hrefOf: (lesson: LessonItem) => string
+}
+
+/** Lessons outside every topic — the flat list, with finished ones folded away. */
+function LooseLessons({ entries, hrefOf }: LooseLessonsProps) {
+  const completed = entries.filter(({ lesson }) => lesson.status === 'COMPLETED')
+  const others = entries.filter(({ lesson }) => lesson.status !== 'COMPLETED')
+
+  return (
+    <>
+      {completed.length > 1 ? (
+        <CompletedLessonsGroup items={completed} hrefOf={hrefOf} />
+      ) : (
+        completed.map(({ lesson, number }) => (
+          <LessonCard key={lesson.id} lesson={lesson} number={number} href={hrefOf(lesson)} />
+        ))
+      )}
+      {others.map(({ lesson, number }) => (
+        <LessonCard key={lesson.id} lesson={lesson} number={number} href={hrefOf(lesson)} />
+      ))}
+    </>
+  )
+}
+
+/** The homework programme of one subject: topics in order, then lessons outside them. */
 export function LessonsList({ subjectId, hrefOf }: LessonsListProps) {
   const lessonsQuery = useLessons(subjectId)
+  const sectionsQuery = useSections(subjectId)
 
-  if (lessonsQuery.isPending) return <LessonsSkeleton />
+  if (lessonsQuery.isPending || sectionsQuery.isPending) return <LessonsSkeleton />
 
-  if (lessonsQuery.isError) {
-    const { error } = lessonsQuery
+  if (lessonsQuery.isError || sectionsQuery.isError) {
+    const error = lessonsQuery.error ?? sectionsQuery.error
 
     if (isApiError(error) && error.is('SUBSCRIPTION_EXPIRED')) {
       return (
@@ -49,7 +79,13 @@ export function LessonsList({ subjectId, hrefOf }: LessonsListProps) {
         icon={WifiOff}
         title="Не получилось загрузить уроки"
         description="Проверьте соединение и попробуйте ещё раз"
-        action={{ label: 'Повторить', onClick: () => void lessonsQuery.refetch() }}
+        action={{
+          label: 'Повторить',
+          onClick: () => {
+            void lessonsQuery.refetch()
+            void sectionsQuery.refetch()
+          },
+        }}
       />
     )
   }
@@ -66,25 +102,26 @@ export function LessonsList({ subjectId, hrefOf }: LessonsListProps) {
     )
   }
 
-  const numbered = lessons.map((lesson, index) => ({ lesson, number: index + 1 }))
-  const completedEntries = numbered.filter(({ lesson }) => lesson.status === 'COMPLETED')
-  const otherEntries = numbered.filter(({ lesson }) => lesson.status !== 'COMPLETED')
+  const program = buildProgram(lessons, sectionsQuery.data)
+  const openTopicId = initialTopicId(program.topics)
+  // Tests are left out of every statistic, the subject progress included.
+  const countable = lessons.filter((lesson) => lesson.kind === 'LESSON')
+  const completedCount = countable.filter((lesson) => lesson.status === 'COMPLETED').length
 
   return (
     <div className="flex flex-col gap-4">
-      <LessonsProgress completed={completedEntries.length} total={lessons.length} />
+      <LessonsProgress completed={completedCount} total={countable.length} />
 
       <ul className="flex flex-col gap-3">
-        {completedEntries.length > 1 ? (
-          <CompletedLessonsGroup items={completedEntries} hrefOf={hrefOf} />
-        ) : (
-          completedEntries.map(({ lesson, number }) => (
-            <LessonCard key={lesson.id} lesson={lesson} number={number} href={hrefOf(lesson)} />
-          ))
-        )}
-        {otherEntries.map(({ lesson, number }) => (
-          <LessonCard key={lesson.id} lesson={lesson} number={number} href={hrefOf(lesson)} />
+        {program.topics.map((topic) => (
+          <TopicSection
+            key={topic.section.id}
+            topic={topic}
+            initiallyExpanded={topic.section.id === openTopicId}
+            hrefOf={hrefOf}
+          />
         ))}
+        <LooseLessons entries={program.loose} hrefOf={hrefOf} />
       </ul>
     </div>
   )

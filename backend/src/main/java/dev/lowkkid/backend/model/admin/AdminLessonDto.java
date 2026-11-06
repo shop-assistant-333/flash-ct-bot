@@ -1,5 +1,7 @@
 package dev.lowkkid.backend.model.admin;
 
+import dev.lowkkid.backend.entity.LessonKind;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,5 +14,7 @@ public record AdminLessonDto(Integer id,
                              String description,
                              Integer order,
                              LocalDateTime opensAt,
-                             List<AdminQuestionDto> questions) {
+                             List<AdminQuestionDto> questions,
+                             LessonKind kind,
+                             Integer sectionId) {
 }

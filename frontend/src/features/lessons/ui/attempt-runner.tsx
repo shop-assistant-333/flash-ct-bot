@@ -18,12 +18,12 @@ interface AttemptRunnerProps {
   onCompleted: (result: AttemptResultDto) => void
 }
 
-function submitErrorText(error: unknown): string {
+function submitErrorText(error: unknown, noun: string): string {
   if (isApiError(error) && error.is('QUESTION_ALREADY_ANSWERED')) {
     return 'Ответ на этот вопрос уже сохранён. Обновите экран.'
   }
   if (isApiError(error) && error.is('ATTEMPT_ALREADY_COMPLETED')) {
-    return 'Урок уже завершён. Обновите экран.'
+    return `${noun} уже завершён. Обновите экран.`
   }
   return 'Не получилось отправить ответ. Попробуйте ещё раз.'
 }
@@ -37,6 +37,7 @@ export function AttemptRunner({ attempt, refreshing, onCompleted }: AttemptRunne
   const [answerText, setAnswerText] = useState('')
 
   const questions = attempt.lesson.questions
+  const isTest = attempt.lesson.kind === 'TEST'
   const verdict = submitMutation.data
   // While the verdict is on screen the attempt has already moved on server-side,
   // so the answered question is looked up by id rather than by the cursor.
@@ -87,12 +88,16 @@ export function AttemptRunner({ attempt, refreshing, onCompleted }: AttemptRunne
         <p className="text-xs text-muted tabular-nums">
           Вопрос {position} из {questions.length}
         </p>
-        <ProgressBar value={answeredCount} max={questions.length} label="Прогресс по уроку" />
+        <ProgressBar
+          value={answeredCount}
+          max={questions.length}
+          label={isTest ? 'Прогресс по тесту' : 'Прогресс по уроку'}
+        />
       </div>
 
       {question === undefined ? (
         <p className="text-base text-fg">
-          Все вопросы отвечены. Завершите урок, чтобы увидеть результат и открыть следующий.
+          Все вопросы отвечены. Завершите {isTest ? 'тест' : 'урок'}, чтобы увидеть результат.
         </p>
       ) : (
         <>
@@ -112,7 +117,7 @@ export function AttemptRunner({ attempt, refreshing, onCompleted }: AttemptRunne
       <div className="sticky bottom-nav-safe">
         {question === undefined || verdict?.lastQuestion ? (
           <Button onClick={handleComplete} loading={completeMutation.isPending}>
-            Завершить урок
+            {isTest ? 'Завершить тест' : 'Завершить урок'}
           </Button>
         ) : verdict ? (
           <Button onClick={handleNext} loading={refreshing}>
@@ -127,12 +132,12 @@ export function AttemptRunner({ attempt, refreshing, onCompleted }: AttemptRunne
 
       {submitMutation.isError ? (
         <p role="status" className="text-sm text-danger">
-          {submitErrorText(submitMutation.error)}
+          {submitErrorText(submitMutation.error, isTest ? 'Тест' : 'Урок')}
         </p>
       ) : null}
       {completeMutation.isError ? (
         <p role="status" className="text-sm text-danger">
-          Не получилось завершить урок. Попробуйте ещё раз.
+          Не получилось завершить {isTest ? 'тест' : 'урок'}. Попробуйте ещё раз.
         </p>
       ) : null}
     </div>

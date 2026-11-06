@@ -1,5 +1,6 @@
 package dev.lowkkid.backend.service;
 
+import dev.lowkkid.backend.entity.LessonKind;
 import dev.lowkkid.backend.entity.Subject;
 import dev.lowkkid.backend.entity.Subscription;
 import dev.lowkkid.backend.model.SubjectItem;
@@ -47,7 +48,7 @@ public class SubjectService {
                 subject.getName(),
                 subscription.getPaidUntil(),
                 SubscriptionAccess.isActive(subscription),
-                lessonRepository.countBySubject_Id(subject.getId()),
+                lessonRepository.countBySubject_IdAndKind(subject.getId(), LessonKind.LESSON),
                 completed.getOrDefault(subject.getId(), 0L).intValue());
     }
 }

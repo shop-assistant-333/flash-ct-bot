@@ -19,7 +19,9 @@ export function AttemptReview({ attempt }: AttemptReviewProps) {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between gap-3 rounded-card bg-surface p-4 shadow-card">
         <div className="flex flex-col gap-1">
-          <span className="text-sm text-muted">Урок пройден</span>
+          <span className="text-sm text-muted">
+            {attempt.lesson.kind === 'TEST' ? 'Тест пройден' : 'Урок пройден'}
+          </span>
           <span className="text-base font-medium text-fg">Разбор ответов</span>
         </div>
         <span className="text-2xl font-semibold text-fg tabular-nums">

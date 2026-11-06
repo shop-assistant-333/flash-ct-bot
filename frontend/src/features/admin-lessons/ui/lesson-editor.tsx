@@ -14,17 +14,21 @@ interface LessonEditorProps {
   lessonId: number
   /** The subject is known only once the lesson is loaded, hence the callbacks. */
   lessonsHrefOf: (subjectId: number) => string
-  hrefOfQuestion: (questionId: number) => string
-  newQuestionHref: string
+  questionHrefs: {
+    question: (questionId: number) => string
+    newQuestion: string
+  }
+  /** Set when the teacher returns from a question: the list scrolls back to it. */
+  focusQuestionId: number | undefined
   onDeleted: (subjectId: number) => void
 }
 
-/** One lesson: its fields, its questions and the way to delete it. */
+/** One lesson or test: its fields, its questions and the way to delete it. */
 export function LessonEditor({
   lessonId,
   lessonsHrefOf,
-  hrefOfQuestion,
-  newQuestionHref,
+  questionHrefs,
+  focusQuestionId,
   onDeleted,
 }: LessonEditorProps) {
   const lessonQuery = useAdminLesson(lessonId)
@@ -70,14 +74,16 @@ export function LessonEditor({
 
       <LessonQuestions
         lessonId={lesson.id}
+        kind={lesson.kind}
         questions={lesson.questions}
-        hrefOfQuestion={hrefOfQuestion}
-        newQuestionHref={newQuestionHref}
+        focusQuestionId={focusQuestionId}
+        hrefs={questionHrefs}
       />
 
       <LessonDelete
         lessonId={lesson.id}
         subjectId={lesson.subjectId}
+        kind={lesson.kind}
         onDeleted={() => onDeleted(lesson.subjectId)}
       />
     </div>

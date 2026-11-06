@@ -23,22 +23,24 @@ public interface UserAttemptRepository extends JpaRepository<UserAttempt, Long> 
     /** Every run of one lesson: the lesson takes them with it when it is deleted. */
     List<UserAttempt> findByLesson_Id(Integer lessonId);
 
-    /** Finished attempts with their lesson, newest first, for the progress card of the admin. */
+    /** Finished lessons (tests left out), newest first, for the progress card of the admin. */
     @Query("""
             select a
             from UserAttempt a
             join fetch a.lesson lesson
             join fetch lesson.subject
             where a.user.id = :userId and a.completedAt is not null
+              and lesson.kind = dev.lowkkid.backend.entity.LessonKind.LESSON
             order by a.completedAt desc
             """)
     List<UserAttempt> findCompletedWithLesson(@Param("userId") Integer userId);
 
-    /** Lessons the student has finished, per subject, for the subject and progress cards. */
+    /** Lessons the student has finished, per subject, for the subject and progress cards; tests do not count. */
     @Query("""
             select a.lesson.subject.id as subjectId, count(a) as count
             from UserAttempt a
             where a.user.id = :userId and a.completedAt is not null
+              and a.lesson.kind = dev.lowkkid.backend.entity.LessonKind.LESSON
             group by a.lesson.subject.id
             """)
     List<SubjectAttemptCount> countCompletedBySubject(@Param("userId") Integer userId);

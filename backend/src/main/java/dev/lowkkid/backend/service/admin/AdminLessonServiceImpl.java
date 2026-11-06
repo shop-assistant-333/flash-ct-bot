@@ -1,8 +1,12 @@
 package dev.lowkkid.backend.service.admin;
 
 import dev.lowkkid.backend.entity.Lesson;
+import dev.lowkkid.backend.entity.LessonKind;
+import dev.lowkkid.backend.entity.Section;
 import dev.lowkkid.backend.entity.Subject;
 import dev.lowkkid.backend.exception.BadRequestException;
+import dev.lowkkid.backend.exception.ConflictException;
+import dev.lowkkid.backend.exception.ErrorCode;
 import dev.lowkkid.backend.exception.NotFoundException;
 import dev.lowkkid.backend.model.admin.AdminLessonDto;
 import dev.lowkkid.backend.model.admin.AdminLessonItem;
@@ -10,6 +14,7 @@ import dev.lowkkid.backend.model.admin.LessonRequest;
 import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.QuestionRepository.LessonQuestionCount;
+import dev.lowkkid.backend.repository.SectionRepository;
 import dev.lowkkid.backend.repository.SubjectRepository;
 import dev.lowkkid.backend.repository.UserAnswerRepository;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
@@ -23,12 +28,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * Lessons of a subject: the order they are listed in and the date every one of them opens on.
+ * Lessons and tests of a subject: the topic each one is under, the order they are listed in and the
+ * date every one of them opens on.
  *
- * <p>The order is not a free number: it is unique per subject in the database. Every write here
- * therefore ends with the whole subject renumbered to a clean {@code 1..n}, so a gap or a
- * duplicate can never appear in the first place. What the students may open is a separate matter
- * and comes from {@code opensAt} alone.
+ * <p>The order is not a free number: it is unique per subject in the database and always reads
+ * the programme top to bottom (see {@link ProgramOrder}). Every write here therefore ends with the
+ * whole subject renumbered to a clean {@code 1..n}, so a gap or a duplicate can never appear in
+ * the first place. What the students may open is a separate matter and comes from {@code opensAt}
+ * alone — a test too, whatever the lessons of its topic.
  */
 @Service
 @RequiredArgsConstructor
@@ -37,6 +44,8 @@ public class AdminLessonServiceImpl implements AdminLessonService {
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final SubjectRepository subjectRepository;
+    private final SectionRepository sectionRepository;
+    private final ProgramOrder programOrder;
     private final UserAttemptRepository attemptRepository;
     private final UserAnswerRepository answerRepository;
     private final AdminContentMapper contentMapper;
@@ -58,12 +67,17 @@ public class AdminLessonServiceImpl implements AdminLessonService {
     @Transactional
     public AdminLessonDto create(LessonRequest request) {
         Subject subject = subject(request.subjectId());
+        LessonKind kind = request.kind() == null ? LessonKind.LESSON : request.kind();
+        Section section = section(request.sectionId(), subject.getId());
+        requireRoomForTest(kind, section, null);
 
         Lesson lesson = new Lesson();
         lesson.setSubject(subject);
         lesson.setTitle(request.title().trim());
         lesson.setDescription(request.description());
         lesson.setOpensAt(request.opensAt());
+        lesson.setKind(kind);
+        lesson.setSection(section);
         lesson.setOrder(null);
         lessonRepository.save(lesson);
 
@@ -71,13 +85,21 @@ public class AdminLessonServiceImpl implements AdminLessonService {
         return contentMapper.toLesson(lesson, List.of());
     }
 
-    /** Also moves the lesson between subjects, renumbering both sides so neither is left ragged. */
+    /**
+     * Also moves the lesson between topics and subjects, renumbering both sides so neither is left
+     * ragged. A lesson moved to another subject has to name a topic of that subject, or none.
+     */
     @Override
     @Transactional
     public AdminLessonDto update(Integer lessonId, LessonRequest request) {
         Lesson lesson = lesson(lessonId);
         Integer previousSubjectId = lesson.getSubject().getId();
+        LessonKind kind = request.kind() == null ? lesson.getKind() : request.kind();
+        Section section = section(request.sectionId(), request.subjectId());
+        requireRoomForTest(kind, section, lessonId);
 
+        lesson.setKind(kind);
+        lesson.setSection(section);
         lesson.setTitle(request.title().trim());
         lesson.setDescription(request.description());
         lesson.setOpensAt(request.opensAt());
@@ -88,7 +110,7 @@ public class AdminLessonServiceImpl implements AdminLessonService {
 
         boolean moved = !previousSubjectId.equals(request.subjectId());
         if (moved) {
-            resequence(others(previousSubjectId, lessonId));
+            programOrder.arrange(previousSubjectId, others(previousSubjectId, lessonId));
         }
         // An omitted order means "leave it where it is", unlike on create where it means "append".
         Integer wantedOrder = request.order() == null && !moved ? lesson.getOrder() : request.order();
@@ -117,7 +139,7 @@ public class AdminLessonServiceImpl implements AdminLessonService {
         Integer subjectId = lesson.getSubject().getId();
         lessonRepository.delete(lesson);
         lessonRepository.flush();
-        resequence(lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId));
+        programOrder.arrange(subjectId);
     }
 
     @Override
@@ -136,11 +158,13 @@ public class AdminLessonServiceImpl implements AdminLessonService {
             throw new BadRequestException("Reorder lists a lesson of subject " + subjectId + " twice");
         }
 
-        resequence(reordered);
-        return toItems(reordered, subjectId);
+        return toItems(programOrder.arrange(subjectId, reordered), subjectId);
     }
 
-    /** Puts the lesson at the wanted position of its subject, or at the end when none was given. */
+    /**
+     * Puts the lesson at the wanted position of its subject, or at the end when none was given; the
+     * topic then pulls it into its own block, so "the end" is the end of its topic.
+     */
     private void placeAt(Lesson lesson, Integer subjectId, Integer wantedOrder) {
         List<Lesson> siblings = others(subjectId, lesson.getId());
         int index = wantedOrder == null
@@ -149,32 +173,13 @@ public class AdminLessonServiceImpl implements AdminLessonService {
 
         List<Lesson> sequence = new ArrayList<>(siblings);
         sequence.add(index, lesson);
-        resequence(sequence);
+        programOrder.arrange(subjectId, sequence);
     }
 
     private List<Lesson> others(Integer subjectId, Integer excludedLessonId) {
         return lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId).stream()
                 .filter(lesson -> !lesson.getId().equals(excludedLessonId))
                 .toList();
-    }
-
-    /**
-     * Rewrites the positions to {@code 1..n}. The order is unique per subject in the database, so
-     * the rows are first parked on negative positions no real lesson uses: assigning the final
-     * numbers straight away would collide with the rows still holding them.
-     */
-    private void resequence(List<Lesson> inWantedOrder) {
-        for (int index = 0; index < inWantedOrder.size(); index++) {
-            inWantedOrder.get(index).setOrder(-(index + 1));
-        }
-        lessonRepository.saveAll(inWantedOrder);
-        lessonRepository.flush();
-
-        for (int index = 0; index < inWantedOrder.size(); index++) {
-            inWantedOrder.get(index).setOrder(index + 1);
-        }
-        lessonRepository.saveAll(inWantedOrder);
-        lessonRepository.flush();
     }
 
     private List<AdminLessonItem> toItems(List<Lesson> lessons, Integer subjectId) {
@@ -189,6 +194,32 @@ public class AdminLessonServiceImpl implements AdminLessonService {
     private Lesson lesson(Integer lessonId) {
         return lessonRepository.findById(lessonId)
                 .orElseThrow(() -> NotFoundException.of("Lesson", lessonId));
+    }
+
+    /**
+     * The topic a lesson goes under, which has to be a topic of the lesson's subject. A missing
+     * topic and a foreign one get the same answer, so a teacher cannot probe the ids of others.
+     */
+    private Section section(Integer sectionId, Integer subjectId) {
+        if (sectionId == null) {
+            return null;
+        }
+        return sectionRepository.findById(sectionId)
+                .filter(section -> section.getSubject().getId().equals(subjectId))
+                .orElseThrow(() -> new BadRequestException(
+                        "Section " + sectionId + " does not belong to subject " + subjectId));
+    }
+
+    /** One test per topic; a test outside every topic is not limited. */
+    private void requireRoomForTest(LessonKind kind, Section section, Integer lessonId) {
+        if (kind != LessonKind.TEST || section == null) {
+            return;
+        }
+        // A lesson being created has no id yet, and no real lesson has id 0 to collide with.
+        if (lessonRepository.hasOtherTest(section.getId(), lessonId == null ? 0 : lessonId)) {
+            throw new ConflictException(ErrorCode.SECTION_HAS_TEST,
+                    "Section " + section.getId() + " already has a test");
+        }
     }
 
     private Subject subject(Integer subjectId) {

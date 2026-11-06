@@ -3,6 +3,8 @@ package dev.lowkkid.backend.entity;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -49,9 +53,19 @@ public class Lesson {
     @Column(name = "opens_at")
     private LocalDateTime opensAt;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "kind", columnDefinition = "lessonkind", nullable = false)
+    private LessonKind kind = LessonKind.LESSON;
+
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
+
+    /** Topic the lesson is listed under; {@code null} for a lesson outside every topic. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "section_id")
+    private Section section;
 
     @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("order")

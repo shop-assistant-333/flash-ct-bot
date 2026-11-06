@@ -62,6 +62,11 @@
   --color-streak-soft: var(--streak-soft);
   --color-streak-soft-fg: var(--streak-soft-fg);
 
+  --color-test: var(--test);
+  --color-test-fg: var(--test-fg);
+  --color-test-soft: var(--test-soft);
+  --color-test-soft-fg: var(--test-soft-fg);
+
   --shadow-card: var(--elevation-card);
   --shadow-nav: var(--elevation-nav);
   --shadow-pop: var(--elevation-pop);

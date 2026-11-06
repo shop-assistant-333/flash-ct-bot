@@ -1,5 +1,7 @@
 package dev.lowkkid.backend.model;
 
+import dev.lowkkid.backend.entity.LessonKind;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,5 +17,6 @@ public record LessonDto(Integer id,
                         Integer order,
                         LocalDateTime opensAt,
                         LessonStatus status,
-                        List<QuestionDto> questions) {
+                        List<QuestionDto> questions,
+                        LessonKind kind) {
 }

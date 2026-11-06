@@ -1,19 +1,26 @@
-import { Check, ChevronRight, Lock } from 'lucide-react'
+import { Check, ChevronRight, ClipboardCheck, Lock } from 'lucide-react'
 import { Link } from 'react-router'
 
+import type { LessonKind } from '@/shared/api'
 import { formatDateTime } from '@/shared/lib/local-date-time'
 
 import type { LessonItem } from '../api/lessons-api'
 
 interface LessonCardProps {
   lesson: LessonItem
-  /** Position in the list — the lesson number the student sees. */
-  number: number
+  /** The lesson number the student sees; null for a test, which is not numbered. */
+  number: number | null
   href: string
 }
 
 const CARD_CLASSES =
-  'flex w-full min-h-11 items-center gap-3 rounded-card bg-surface p-4 text-left shadow-card'
+  'flex w-full min-h-11 items-center gap-3 rounded-card p-4 text-left shadow-card'
+
+/** A test is set apart by its own colour group — style guide §6, «Тест темы». */
+const SURFACE: Record<LessonKind, string> = {
+  LESSON: 'bg-surface active:bg-surface-sunken',
+  TEST: 'bg-test-soft transition-transform active:scale-98',
+}
 
 function plural(count: number): string {
   const lastTwo = count % 100
@@ -47,11 +54,19 @@ function meta(lesson: LessonItem): string {
 export function LessonCard({ lesson, number, href }: LessonCardProps) {
   const locked = lesson.status === 'LOCKED'
   const completed = lesson.status === 'COMPLETED'
+  const surface = SURFACE[lesson.kind]
 
   const body = (
     <>
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <span className="text-xs text-subtle">Урок {number}</span>
+        {lesson.kind === 'TEST' ? (
+          <span className="flex items-center gap-1 text-xs font-medium text-test-soft-fg">
+            <ClipboardCheck aria-hidden className="size-3.5" />
+            Тест
+          </span>
+        ) : (
+          <span className="text-xs text-subtle">Урок {number}</span>
+        )}
         <span className="text-base font-medium break-words">{lesson.title}</span>
         {lesson.description && !locked ? (
           <span className="line-clamp-2 text-sm text-muted">{lesson.description}</span>
@@ -78,14 +93,14 @@ export function LessonCard({ lesson, number, href }: LessonCardProps) {
           type="button"
           disabled
           aria-disabled
-          className={`${CARD_CLASSES} text-subtle opacity-60`}
+          className={`${CARD_CLASSES} ${surface} text-subtle opacity-60`}
         >
           {body}
         </button>
       ) : (
         <Link
           to={href}
-          className={`${CARD_CLASSES} text-fg transition-colors duration-150 active:bg-surface-sunken ${completed ? 'opacity-75' : ''}`}
+          className={`${CARD_CLASSES} ${surface} text-fg transition-colors duration-150 ${completed ? 'opacity-75' : ''}`}
         >
           {body}
         </Link>

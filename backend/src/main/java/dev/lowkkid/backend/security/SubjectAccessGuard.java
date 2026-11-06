@@ -4,6 +4,7 @@ import dev.lowkkid.backend.exception.ForbiddenException;
 import dev.lowkkid.backend.exception.NotFoundException;
 import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
+import dev.lowkkid.backend.repository.SectionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +31,7 @@ public class SubjectAccessGuard {
 
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
+    private final SectionRepository sectionRepository;
 
     /** @throws ForbiddenException if the caller is not an admin */
     public void requireAdmin(CurrentUser user) {
@@ -54,6 +56,18 @@ public class SubjectAccessGuard {
                 .orElseThrow(() -> NotFoundException.of("Lesson", lessonId));
         if (!user.manages(subjectId)) {
             throw NotFoundException.of("Lesson", lessonId);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public void requireSection(CurrentUser user, Integer sectionId) {
+        if (user.isAdmin()) {
+            return;
+        }
+        Integer subjectId = sectionRepository.findSubjectId(sectionId)
+                .orElseThrow(() -> NotFoundException.of("Section", sectionId));
+        if (!user.manages(subjectId)) {
+            throw NotFoundException.of("Section", sectionId);
         }
     }
 

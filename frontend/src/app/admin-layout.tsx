@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { Outlet, useLocation, useNavigation } from 'react-router'
+import { Outlet, ScrollRestoration, useLocation, useNavigation } from 'react-router'
 
 import { AdminNav } from '@/app/admin-nav'
 import { Spinner } from '@/shared/ui/spinner'
@@ -20,6 +20,7 @@ export function AdminLayout() {
 
   return (
     <>
+      <ScrollRestoration />
       <main className="mx-auto w-full max-w-app pt-safe px-gutter pb-nav-safe">
         <div className="py-4">
           {isNavigatingToNewPage ? (

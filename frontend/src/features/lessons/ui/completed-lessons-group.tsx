@@ -2,21 +2,18 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 import { useState } from 'react'
 
 import type { LessonItem } from '../api/lessons-api'
+import type { ProgramEntry } from '../lib/program'
 import { LessonCard } from './lesson-card'
 
-interface CompletedLessonEntry {
-  lesson: LessonItem
-  number: number
-}
-
 interface CompletedLessonsGroupProps {
-  items: CompletedLessonEntry[]
+  items: ProgramEntry[]
   hrefOf: (lesson: LessonItem) => string
 }
 
 /**
  * Collapsed by default so a student with a long history isn't scrolling past
- * finished lessons to reach the current one. Renders as siblings of the
+ * finished lessons to reach the current one. Only the flat list outside topics
+ * needs it — a topic is collapsible on its own. Renders as siblings of the
  * toggle row (not nested inside it) so expanded cards sit at the same list
  * level as the open and upcoming lessons.
  */

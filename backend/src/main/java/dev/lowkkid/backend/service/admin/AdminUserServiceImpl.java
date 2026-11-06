@@ -1,5 +1,6 @@
 package dev.lowkkid.backend.service.admin;
 
+import dev.lowkkid.backend.entity.LessonKind;
 import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.Subject;
 import dev.lowkkid.backend.entity.Subscription;
@@ -369,7 +370,7 @@ public class AdminUserServiceImpl implements AdminUserService {
                     last == null ? null : last.getId(),
                     last == null ? null : last.getTitle(),
                     completed.getOrDefault(subject.getId(), 0L).intValue(),
-                    lessonRepository.countBySubject_Id(subject.getId())));
+                    lessonRepository.countBySubject_IdAndKind(subject.getId(), LessonKind.LESSON)));
         }
         return items;
     }

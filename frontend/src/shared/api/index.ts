@@ -5,6 +5,7 @@ export type {
   AdminQuestionDto,
   AnswerOptionDto,
   AnswerResultDto,
+  LessonKind,
   LocalDateTime,
   PageResponse,
   QuestionDto,

@@ -29,7 +29,8 @@ public class ContentMapper {
                 lesson.getOrder(),
                 lesson.getOpensAt(),
                 status,
-                toQuestions(questions));
+                toQuestions(questions),
+                lesson.getKind());
     }
 
     public List<QuestionDto> toQuestions(List<Question> questions) {

@@ -25,6 +25,9 @@ export interface PageResponse<T> {
   totalPages: number
 }
 
+/** A test is a lesson of another kind: same attempt, same statuses, no statistics. */
+export type LessonKind = 'LESSON' | 'TEST'
+
 export type QuestionType = 'SINGLE_ANSWER' | 'MULTI_ANSWER' | 'INPUT'
 
 export interface AnswerOptionDto {

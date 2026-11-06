@@ -34,6 +34,8 @@ public final class ErrorCode {
     public static final String SUBJECT_HAS_SUBSCRIPTIONS = "SUBJECT_HAS_SUBSCRIPTIONS";
     /** The subject is still assigned to teachers. */
     public static final String SUBJECT_HAS_TEACHERS = "SUBJECT_HAS_TEACHERS";
+    /** The topic already has its test; a topic holds one at most. */
+    public static final String SECTION_HAS_TEST = "SECTION_HAS_TEST";
 
     /** No questions available for the requested practice subject. */
     public static final String PRACTICE_DECK_EMPTY = "PRACTICE_DECK_EMPTY";

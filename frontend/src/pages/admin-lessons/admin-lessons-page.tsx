@@ -2,7 +2,12 @@ import { ChevronLeft, SearchX } from 'lucide-react'
 import { Link, useParams } from 'react-router'
 
 import { adminLessonPath, adminSubjectPath } from '@/app/routes'
-import { AdminLessonsList, LessonCreate, type AdminLessonItem } from '@/features/admin-lessons'
+import {
+  AdminLessonsList,
+  LessonCreate,
+  SectionCreate,
+  type AdminLessonItem,
+} from '@/features/admin-lessons'
 import { PageHeader } from '@/shared/ui/page-header'
 import { StateMessage } from '@/shared/ui/state-message'
 
@@ -23,7 +28,7 @@ export function AdminLessonsPage() {
         </Link>
       )}
 
-      <PageHeader title="Уроки" description="Студенты проходят их в этом порядке" />
+      <PageHeader title="Уроки" description="Программа по темам: уроки темы, затем её тест" />
 
       {subject === undefined ? (
         <StateMessage
@@ -33,7 +38,13 @@ export function AdminLessonsPage() {
         />
       ) : (
         <>
-          <LessonCreate subjectId={subject} />
+          <div className="flex flex-col gap-2">
+            <LessonCreate subjectId={subject} kind="LESSON" />
+            <div className="grid grid-cols-2 gap-2">
+              <SectionCreate subjectId={subject} />
+              <LessonCreate subjectId={subject} kind="TEST" />
+            </div>
+          </div>
           <AdminLessonsList
             subjectId={subject}
             hrefOf={(lesson: AdminLessonItem) => adminLessonPath(lesson.id)}

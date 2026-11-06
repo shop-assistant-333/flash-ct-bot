@@ -1,5 +1,6 @@
 package dev.lowkkid.backend.service;
 
+import dev.lowkkid.backend.entity.LessonKind;
 import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.Subscription;
 import dev.lowkkid.backend.entity.UserPracticeStats;
@@ -94,7 +95,7 @@ public class StatsServiceImpl implements StatsService {
     public StatsDto statsOf(CurrentUser user, Integer subjectId) {
         subscriptionAccess.require(user.id(), subjectId);
 
-        List<Lesson> lessons = lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId);
+        List<Lesson> lessons = lessonRepository.findBySubject_IdAndKindOrderByOrderAsc(subjectId, LessonKind.LESSON);
         return new StatsDto(
                 subjectId,
                 toPeriod(userAnswerRepository.countAll(user.id(), subjectId)),
@@ -147,7 +148,7 @@ public class StatsServiceImpl implements StatsService {
     private void refresh(Integer userId, Integer subjectId, String subjectName,
                          StudentKey studentKey, PredictionKey key, Counters window) {
         try {
-            List<Lesson> lessons = lessonRepository.findBySubject_IdOrderByOrderAsc(subjectId);
+            List<Lesson> lessons = lessonRepository.findBySubject_IdAndKindOrderByOrderAsc(subjectId, LessonKind.LESSON);
             ScorePredictor.Prediction prediction = scorePredictor.predict(new ScorePredictor.Input(
                     subjectName,
                     (int) predictionWindow.toDays(),

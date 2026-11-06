@@ -3,10 +3,12 @@ package dev.lowkkid.backend.service.admin;
 import dev.lowkkid.backend.entity.AnswerOption;
 import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.Question;
+import dev.lowkkid.backend.entity.Section;
 import dev.lowkkid.backend.model.admin.AdminAnswerOptionDto;
 import dev.lowkkid.backend.model.admin.AdminLessonDto;
 import dev.lowkkid.backend.model.admin.AdminLessonItem;
 import dev.lowkkid.backend.model.admin.AdminQuestionDto;
+import dev.lowkkid.backend.model.admin.AdminSectionItem;
 import org.springframework.stereotype.Component;
 
 import java.util.Comparator;
@@ -27,7 +29,9 @@ public class AdminContentMapper {
                 lesson.getDescription(),
                 lesson.getOrder(),
                 lesson.getOpensAt(),
-                questionCount);
+                questionCount,
+                lesson.getKind(),
+                sectionIdOf(lesson));
     }
 
     public AdminLessonDto toLesson(Lesson lesson, List<Question> questions) {
@@ -38,7 +42,18 @@ public class AdminContentMapper {
                 lesson.getDescription(),
                 lesson.getOrder(),
                 lesson.getOpensAt(),
-                toQuestions(questions));
+                toQuestions(questions),
+                lesson.getKind(),
+                sectionIdOf(lesson));
+    }
+
+    public AdminSectionItem toSection(Section section) {
+        return new AdminSectionItem(
+                section.getId(), section.getSubject().getId(), section.getTitle(), section.getOrder());
+    }
+
+    private static Integer sectionIdOf(Lesson lesson) {
+        return lesson.getSection() == null ? null : lesson.getSection().getId();
     }
 
     public List<AdminQuestionDto> toQuestions(List<Question> questions) {

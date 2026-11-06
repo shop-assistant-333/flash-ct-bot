@@ -52,6 +52,7 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `SUBJECT_HAS_PRACTICE_QUESTIONS` | 409 | удаление предмета, в котором остались вопросы практики |
 | `SUBJECT_HAS_SUBSCRIPTIONS` | 409 | удаление предмета, выданного студентам |
 | `SUBJECT_HAS_TEACHERS` | 409 | удаление предмета, закреплённого за учителями |
+| `SECTION_HAS_TEST` | 409 | второй тест в одну тему |
 | `PRACTICE_DECK_EMPTY` | 404 | по предмету нет доступных вопросов для практики |
 | `PREDICTION_UNAVAILABLE` | 503 | ИИ-прогноз не удалось получить |
 | `INTERNAL_ERROR` | 500 | всё остальное |
@@ -82,6 +83,7 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 |---|---|---|
 | `GET` | `/api/subjects` | `SubjectItem[]` |
 | `GET` | `/api/lessons?subjectId={id}` | `LessonItem[]` |
+| `GET` | `/api/sections?subjectId={id}` | `SectionItem[]` |
 | `POST` | `/api/lessons/{lessonId}/attempt` | `AttemptDto` |
 | `GET` | `/api/attempts/{attemptId}` | `AttemptDto` |
 | `POST` | `/api/attempts/{attemptId}/answers` | `AnswerResultDto` |
@@ -96,6 +98,17 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 быть сколько угодно и проходить их можно в любом порядке. Пустой `opensAt` означает, что урок ещё
 не поставили в расписание, и он тоже под замком — плашка при этом видна, но без даты. Уже начатый
 урок остаётся доступным, даже если админ потом сдвинул дату вперёд.
+
+Программа делится на **темы** (`SectionItem`). Урок либо лежит в теме (`sectionId`), либо без
+темы (`sectionId: null`) — такие показываются плоским списком под темами. Кроме уроков в программе
+есть **тесты** (`kind: 'TEST'`) — в теме не больше одного. Тест — это урок другого вида: та же
+попытка, те же ответы, тот же `opensAt` и те же статусы. От прохождения уроков темы доступ к тесту
+не зависит. Вопросы тестов не попадают в практику и не учитываются ни в какой статистике.
+
+`order` сквозной по предмету и уже отражает программу: темы по порядку, внутри темы — уроки, тест
+последним, затем всё без темы. Фронту достаточно сгруппировать список по `sectionId`, сохранив
+порядок. Номер урока для студента («Урок 9») считается по урокам `kind = 'LESSON'`, тесты в
+нумерацию не входят. `GET /api/sections` отдаёт темы предмета в их порядке, в том числе пустые.
 
 `POST /api/lessons/{id}/attempt` открывает урок. Вызов идемпотентный: он либо создаёт попытку,
 либо возвращает уже существующую целиком — с вопросами, всеми ранее данными ответами и
@@ -187,6 +200,8 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `POST/PUT/DELETE /api/admin/subjects` | ✓ | 403 |
 | `GET/PUT /api/admin/subjects/{id}/lessons`, `.../lessons/order` | ✓ | если предмет его |
 | `GET /api/admin/subjects/{id}/practice-questions` | ✓ | если предмет его |
+| `GET/PUT /api/admin/subjects/{id}/sections`, `.../sections/order` | ✓ | если предмет его |
+| `POST/PUT/DELETE /api/admin/sections/**` | ✓ | если тема в его предмете |
 | `GET/POST/PUT/DELETE /api/admin/lessons/**` | ✓ | если урок в его предмете |
 | `GET/POST/PUT/DELETE /api/admin/questions/**` | ✓ | если вопрос в его предмете |
 
@@ -240,6 +255,8 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 | `GET` | `/api/admin/subjects/{subjectId}/lessons` | `AdminLessonItem[]` |
 | `PUT` | `/api/admin/subjects/{subjectId}/lessons/order` | `AdminLessonItem[]` |
 | `GET` | `/api/admin/subjects/{subjectId}/practice-questions` | `AdminQuestionDto[]` |
+| `GET` | `/api/admin/subjects/{subjectId}/sections` | `AdminSectionItem[]` |
+| `PUT` | `/api/admin/subjects/{subjectId}/sections/order` | `AdminSectionItem[]` |
 
 Предмет удаляется только пустым. Пока в нём есть уроки, вопросы практики, выданный студентам
 доступ или закреплённый учитель, `DELETE` отвечает 409 с соответствующим кодом
@@ -265,6 +282,27 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 
 `opensAt` в `LessonRequest` пишется как передан: отсутствующее или `null` поле стирает дату и
 возвращает урок под замок. Дата в прошлом — обычный способ открыть урок прямо сейчас.
+
+### Темы
+
+| метод | путь | ответ |
+|---|---|---|
+| `POST` | `/api/admin/sections` | 201 `AdminSectionItem` |
+| `PUT` | `/api/admin/sections/{sectionId}` | `AdminSectionItem` |
+| `DELETE` | `/api/admin/sections/{sectionId}` | 204 |
+
+Тема — только заголовок и место в программе. Новая тема встаёт в конец. `DELETE` удаляет одну
+тему: её уроки и тест остаются и переезжают в «без темы». `PUT .../sections/order` принимает
+`{"ids": [...]}` — полный список тем предмета; уроки после него перенумеровываются под новый порядок
+тем. `PUT` темы в другой предмет её не переносит: `subjectId` в теле должен совпадать.
+
+Тест заводится тем же `POST /api/admin/lessons` с `kind: "TEST"`. В тему кладётся через
+`sectionId` в `LessonRequest`; второй тест в ту же тему → 409 `SECTION_HAS_TEST`, тема чужого
+предмета → 400 `BAD_REQUEST`.
+
+`PUT .../lessons/order` по-прежнему принимает полный список уроков предмета, но в какой теме урок,
+решает только его `sectionId`: сервер раскладывает присланный порядок по темам (тест — в конец
+темы) и отдаёт итоговый. Переставлять имеет смысл внутри темы.
 
 ### Вопросы
 
@@ -294,6 +332,7 @@ X-Telegram-Init-Data: <window.Telegram.WebApp.initData>
 ```ts
 type QuestionType = 'SINGLE_ANSWER' | 'MULTI_ANSWER' | 'INPUT';
 type LessonStatus = 'LOCKED' | 'AVAILABLE' | 'IN_PROGRESS' | 'COMPLETED';
+type LessonKind = 'LESSON' | 'TEST';
 type UserRole = 'USER' | 'ADMIN';
 
 // Даты — ISO local date-time без зоны: "2026-12-31T23:59:59".
@@ -321,8 +360,12 @@ interface SubjectItem {
   lessonsTotal: number; lessonsCompleted: number;
 }
 
+interface SectionItem { id: number; title: string; order: number; }
+
 interface LessonItem {
   id: number; title: string; description: string; order: number;
+  kind: LessonKind;
+  sectionId: number | null;         // null — урок без темы
   opensAt: LocalDateTime | null;    // null — урок не в расписании, под замком
   status: LessonStatus;
   questionCount: number;
@@ -331,7 +374,7 @@ interface LessonItem {
 
 interface LessonDto {
   id: number; subjectId: number; title: string; description: string;
-  order: number; opensAt: LocalDateTime | null;
+  order: number; opensAt: LocalDateTime | null; kind: LessonKind;
   status: LessonStatus; questions: QuestionDto[];
 }
 
@@ -471,21 +514,29 @@ interface SubjectDto {
 }
 interface SubjectRequest { name: string; }
 
+interface AdminSectionItem { id: number; subjectId: number; title: string; order: number; }
+
+interface SectionRequest { subjectId: number; title: string; }
+
 interface AdminLessonItem {
   id: number; subjectId: number; title: string; description: string;
   order: number; opensAt: LocalDateTime | null; questionCount: number;
+  kind: LessonKind; sectionId: number | null;
 }
 
 interface AdminLessonDto {
   id: number; subjectId: number; title: string; description: string;
   order: number; opensAt: LocalDateTime | null; questions: AdminQuestionDto[];
+  kind: LessonKind; sectionId: number | null;
 }
 
 interface LessonRequest {
   subjectId: number; title: string;
   description?: string;
-  order?: number;                    // без него — в конец списка
+  order?: number;                    // без него — в конец темы
   opensAt?: LocalDateTime;           // без него — урок под замком
+  kind?: LessonKind;                 // при создании без него — LESSON; при правке без него — не меняется
+  sectionId?: number;                // пишется как передан: без него — урок без темы
 }
 
 interface AdminQuestionDto {

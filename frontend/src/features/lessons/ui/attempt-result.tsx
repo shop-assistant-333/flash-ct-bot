@@ -4,6 +4,8 @@ import type { AttemptResultDto } from '../api/lessons-api'
 
 interface AttemptResultProps {
   result: AttemptResultDto
+  /** A test's questions are not in practice, so the practice hint is left out. */
+  isTest: boolean
   lessonsHref: string
 }
 
@@ -15,7 +17,7 @@ function comment(accuracyPercent: number): string {
 }
 
 /** Summary right after the lesson is finished — style guide §6. */
-export function AttemptResult({ result, lessonsHref }: AttemptResultProps) {
+export function AttemptResult({ result, isTest, lessonsHref }: AttemptResultProps) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-center gap-2 rounded-card bg-surface p-4 text-center shadow-card">
@@ -27,7 +29,8 @@ export function AttemptResult({ result, lessonsHref }: AttemptResultProps) {
       </div>
 
       <p className="text-center text-sm text-muted">
-        Остальные уроки открываются по расписанию. Закрепить тему можно на вкладке «Практика».
+        Остальные уроки открываются по расписанию.
+        {isTest ? null : ' Закрепить тему можно на вкладке «Практика».'}
       </p>
 
       <LinkButton to={lessonsHref}>К списку уроков</LinkButton>

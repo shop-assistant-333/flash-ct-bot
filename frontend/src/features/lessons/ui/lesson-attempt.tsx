@@ -1,4 +1,4 @@
-import { LockKeyhole, SearchX, WifiOff } from 'lucide-react'
+import { ClipboardCheck, LockKeyhole, SearchX, WifiOff } from 'lucide-react'
 import { useState } from 'react'
 
 import { isApiError } from '@/shared/api'
@@ -70,13 +70,22 @@ export function LessonAttempt({ lessonId, lessonsHref }: LessonAttemptProps) {
   }
 
   const attempt = attemptQuery.data
+  const isTest = attempt.lesson.kind === 'TEST'
 
   return (
     <section className="flex flex-col gap-6">
-      <PageHeader title={attempt.lesson.title} description={attempt.lesson.description} />
+      <div className="flex flex-col gap-2">
+        {isTest ? (
+          <span className="flex items-center gap-1 self-start rounded-control bg-test-soft px-2 py-0.5 text-xs font-medium text-test-soft-fg">
+            <ClipboardCheck aria-hidden className="size-3.5" />
+            Тест
+          </span>
+        ) : null}
+        <PageHeader title={attempt.lesson.title} description={attempt.lesson.description} />
+      </div>
 
       {result ? (
-        <AttemptResult result={result} lessonsHref={lessonsHref} />
+        <AttemptResult result={result} isTest={isTest} lessonsHref={lessonsHref} />
       ) : attempt.completedAt ? (
         <AttemptReview attempt={attempt} />
       ) : (

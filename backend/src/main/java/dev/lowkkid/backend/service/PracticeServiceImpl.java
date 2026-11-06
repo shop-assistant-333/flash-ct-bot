@@ -1,5 +1,6 @@
 package dev.lowkkid.backend.service;
 
+import dev.lowkkid.backend.entity.LessonKind;
 import dev.lowkkid.backend.entity.Question;
 import dev.lowkkid.backend.entity.UserPracticeStats;
 import dev.lowkkid.backend.exception.BadRequestException;
@@ -127,7 +128,7 @@ public class PracticeServiceImpl implements PracticeService {
      */
     private List<Integer> shuffledQuestionIds(Integer subjectId) {
         List<Integer> ids = new ArrayList<>();
-        questionRepository.findByLesson_Subject_Id(subjectId).forEach(question -> ids.add(question.getId()));
+        questionRepository.findByLesson_Subject_IdAndLesson_Kind(subjectId, LessonKind.LESSON).forEach(question -> ids.add(question.getId()));
         questionRepository.findBySubject_IdOrderByIdAsc(subjectId).forEach(question -> ids.add(question.getId()));
 
         if (ids.isEmpty()) {

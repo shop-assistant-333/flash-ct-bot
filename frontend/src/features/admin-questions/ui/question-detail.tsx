@@ -1,8 +1,8 @@
-import { ChevronLeft, SearchX, TriangleAlert, WifiOff } from 'lucide-react'
+import { ChevronLeft, ChevronRight, SearchX, TriangleAlert, WifiOff } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 
-import { isApiError } from '@/shared/api'
+import { isApiError, type LessonKind } from '@/shared/api'
 import { Button } from '@/shared/ui/button'
 import { ConfirmDialog } from '@/shared/ui/confirm-dialog'
 import { Spinner } from '@/shared/ui/spinner'
@@ -21,13 +21,39 @@ import { QuestionForm } from './question-form'
 
 interface QuestionDetailProps {
   questionId: number
-  /** Where the question belongs — known only after it is loaded, hence builders. */
-  lessonHref: (lessonId: number) => string
+  /**
+   * Where the question belongs — known only after it is loaded, hence builders.
+   * With `focusQuestionId` the lesson screen scrolls back to that question.
+   */
+  lessonHref: (lessonId: number, focusQuestionId?: number) => string
   practiceHref: (subjectId: number) => string
+  /** Kind of the owning lesson, from the lessons feature; undefined while unknown. */
+  lessonKind: LessonKind | undefined
+  /** The question asked after this one; undefined on the last one and outside lessons. */
+  nextQuestionHref: string | undefined
+}
+
+const NOTE: Record<LessonKind, string> = {
+  LESSON: 'Вопрос урока — входит в программу и в практику',
+  TEST: 'Вопрос теста — в практику не входит',
+}
+
+const PRACTICE_NOTE = 'Только практика — вопрос не входит ни в один урок'
+
+/** Undefined while the owning lesson is still loading: its kind decides the wording. */
+function noteOf(inLesson: boolean, lessonKind: LessonKind | undefined): string | undefined {
+  if (!inLesson) return PRACTICE_NOTE
+  return lessonKind === undefined ? undefined : NOTE[lessonKind]
 }
 
 /** One existing question: load, edit, delete. */
-export function QuestionDetail({ questionId, lessonHref, practiceHref }: QuestionDetailProps) {
+export function QuestionDetail({
+  questionId,
+  lessonHref,
+  practiceHref,
+  lessonKind,
+  nextQuestionHref,
+}: QuestionDetailProps) {
   const navigate = useNavigate()
   const questionQuery = useAdminQuestion(questionId)
   const updateQuestion = useUpdateQuestion(questionId)
@@ -71,7 +97,12 @@ export function QuestionDetail({ questionId, lessonHref, practiceHref }: Questio
   }
 
   const inLesson = 'lessonId' in owner
-  const backHref = 'lessonId' in owner ? lessonHref(owner.lessonId) : practiceHref(owner.subjectId)
+  const backHref =
+    'lessonId' in owner ? lessonHref(owner.lessonId, question.id) : practiceHref(owner.subjectId)
+  // After a delete there is no row to return to — the lesson opens as usual.
+  const afterDeleteHref =
+    'lessonId' in owner ? lessonHref(owner.lessonId) : practiceHref(owner.subjectId)
+  const note = noteOf(inLesson, lessonKind)
 
   const handleSubmit = (values: QuestionValues) => {
     updateQuestion.mutate(toQuestionRequest(values, owner, question.order))
@@ -80,26 +111,30 @@ export function QuestionDetail({ questionId, lessonHref, practiceHref }: Questio
   const handleDelete = () => {
     deleteQuestion.mutate(undefined, {
       onSuccess: () => {
-        void navigate(backHref, { replace: true })
+        void navigate(afterDeleteHref, { replace: true })
       },
     })
   }
 
   return (
     <div className="flex flex-col gap-4">
-      <Link
-        to={backHref}
-        className="-ml-1 flex min-h-11 items-center gap-1 self-start text-sm text-muted"
-      >
-        <ChevronLeft aria-hidden className="size-4" />
-        {inLesson ? 'К уроку' : 'К вопросам практики'}
-      </Link>
+      <nav className="flex items-center justify-between gap-3">
+        <Link to={backHref} className="-ml-1 flex min-h-11 items-center gap-1 text-sm text-muted">
+          <ChevronLeft aria-hidden className="size-4" />
+          {inLesson ? (lessonKind === 'TEST' ? 'К тесту' : 'К уроку') : 'К вопросам практики'}
+        </Link>
+        {nextQuestionHref === undefined ? null : (
+          <Link
+            to={nextQuestionHref}
+            className="-mr-1 flex min-h-11 items-center gap-1 text-sm text-link"
+          >
+            Следующий вопрос
+            <ChevronRight aria-hidden className="size-4" />
+          </Link>
+        )}
+      </nav>
 
-      <p className="text-sm text-muted">
-        {inLesson
-          ? 'Вопрос урока — входит в программу и в практику'
-          : 'Только практика — вопрос не входит ни в один урок'}
-      </p>
+      {note === undefined ? null : <p className="text-sm text-muted">{note}</p>}
 
       <QuestionForm
         key={question.id}
@@ -123,7 +158,7 @@ export function QuestionDetail({ questionId, lessonHref, practiceHref }: Questio
       <ConfirmDialog
         open={confirmOpen}
         title="Удалить вопрос?"
-        description="Вопрос исчезнет из урока и из практики вместе со всеми вариантами ответа. Отменить удаление нельзя."
+        description="Вопрос исчезнет вместе со всеми вариантами ответа. Отменить удаление нельзя."
         confirmLabel="Удалить"
         onConfirm={handleDelete}
         onClose={() => setConfirmOpen(false)}

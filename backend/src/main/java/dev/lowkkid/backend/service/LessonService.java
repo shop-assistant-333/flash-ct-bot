@@ -4,9 +4,11 @@ import dev.lowkkid.backend.entity.Lesson;
 import dev.lowkkid.backend.entity.UserAttempt;
 import dev.lowkkid.backend.model.LessonItem;
 import dev.lowkkid.backend.model.LessonStatus;
+import dev.lowkkid.backend.model.SectionItem;
 import dev.lowkkid.backend.repository.LessonRepository;
 import dev.lowkkid.backend.repository.QuestionRepository;
 import dev.lowkkid.backend.repository.QuestionRepository.LessonQuestionCount;
+import dev.lowkkid.backend.repository.SectionRepository;
 import dev.lowkkid.backend.repository.UserAnswerRepository;
 import dev.lowkkid.backend.repository.UserAnswerRepository.LessonCounters;
 import dev.lowkkid.backend.repository.UserAttemptRepository;
@@ -23,7 +25,8 @@ import java.util.stream.Collectors;
 
 /**
  * Homework tab: the list of lesson cards with their padlocks, which come from the schedule the
- * admin set up rather than from how far the student got.
+ * admin set up rather than from how far the student got, and the topics they are grouped under.
+ * A test is one more card of the list: it opens on its own date, whatever the lessons of its topic.
  */
 @Service
 @RequiredArgsConstructor
@@ -31,6 +34,7 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
+    private final SectionRepository sectionRepository;
     private final UserAttemptRepository attemptRepository;
     private final UserAnswerRepository userAnswerRepository;
     private final SubscriptionAccess subscriptionAccess;
@@ -67,9 +71,25 @@ public class LessonService {
                     lesson.getOpensAt(),
                     statusOf(lesson, attempt),
                     questionCounts.getOrDefault(lesson.getId(), 0L).intValue(),
-                    attempt == null ? null : correctAnswers.getOrDefault(lesson.getId(), 0L).intValue()));
+                    attempt == null ? null : correctAnswers.getOrDefault(lesson.getId(), 0L).intValue(),
+                    lesson.getKind(),
+                    lesson.getSection() == null ? null : lesson.getSection().getId()));
         }
         return items;
+    }
+
+    /**
+     * Topics of a subject in their order, empty ones included; the list of lessons already comes
+     * in the same order, so grouping it by {@code sectionId} gives the programme.
+     *
+     * @throws dev.lowkkid.backend.exception.ForbiddenException if the subject is not paid for
+     */
+    @Transactional(readOnly = true)
+    public List<SectionItem> sectionsOf(CurrentUser user, Integer subjectId) {
+        subscriptionAccess.requireActive(user.id(), subjectId);
+        return sectionRepository.findBySubject_IdOrderByOrderAsc(subjectId).stream()
+                .map(section -> new SectionItem(section.getId(), section.getTitle(), section.getOrder()))
+                .toList();
     }
 
     /**
